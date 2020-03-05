@@ -1,9 +1,11 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -69,6 +71,13 @@ public class MainMenu extends BorderPane {
 			btnAdmin = new Button("Admin");
 			btnAdmin.setPrefSize(135, 30);
 			btnAdmin.setId("btnAdmin");
+			btnAdmin.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					//TODO
+					event.consume();
+				}
+			});
 		}
 		return btnAdmin;
 	}

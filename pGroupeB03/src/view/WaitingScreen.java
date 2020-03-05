@@ -48,7 +48,7 @@ public class WaitingScreen extends BorderPane {
 	}
 	public Label getLblPressToContinue() {
 		if(lblPressToContinue==null) {
-			lblPressToContinue = new Label("Press any key to continue");
+			lblPressToContinue = new Label("Click to continue");
 		}
 		return lblPressToContinue;
 	}
