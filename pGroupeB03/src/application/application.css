@@ -1,0 +1,22 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.root{
+	-fx-background-color: rgb(1,39,146);
+	-fx-background-image: url("./../../src/resources/images/background_menu.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 100%;
+	-fx-opacity: 1;
+}
+
+.button{
+	-fx-background-color: #FFAB58;
+	-fx-border-color: #000000;
+	-fx-border-style: solid;
+	-fx-border-width: 2px;
+	-fx-border-radius: 20;
+	-fx-background-radius: 22;
+	-fx-font-size: 20;
+	-fx-font-family: Candara, sans-serif;
+	-fx-font-weight: bold;
+}
+

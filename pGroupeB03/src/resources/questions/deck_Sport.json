@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am a cyclist, born June 17, 1945.",
+        "Nicknamed the cannibal, I am one of the few cyclists to have won five Tours of France.",
+        "I am Belgian, my name is Edouard Louis Joseph better known by the name of ..."
+      ],
+      "answer": "Eddy Merckx"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am a small wooden ball that serves as a goal.",
+        "I have a diameter of 3 cm and I have the name of a small animal.",
+        "I am throw at the start of a petanque game, I am ..."
+      ],
+      "answer": "Jack"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am the oldest tennis tournament in the world and is regarded by many as the most prestigious.",
+        "I am one of the Grand Slam tournaments and I\u0027m playing on outdoor grass courts.",
+        "I am located in the city of London I am…"
+      ],
+      "answer": "Wimbledon"
+    }
+  ]
+}
