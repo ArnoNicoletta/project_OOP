@@ -1,12 +1,9 @@
-package controller;
+package view;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import view.AdminLogin;
-import view.MainMenu;
-import view.WaitingScreen;
 
 public class GameController extends StackPane {
 	
