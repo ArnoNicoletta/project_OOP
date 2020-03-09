@@ -20,3 +20,8 @@
 	-fx-font-weight: bold;
 }
 
+
+.label{
+	-fx-font-family: Candara, sans-serif;
+	-fx-text-fill: #FFAB58;
+}
