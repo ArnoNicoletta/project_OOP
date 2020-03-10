@@ -16,7 +16,6 @@ import com.google.gson.GsonBuilder;
 /**
  * This class manages lists of Question.
  * @author ArRaLo
- * @version 1.0
  * @see model.Question
  */
 public class Deck {

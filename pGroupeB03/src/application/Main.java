@@ -4,32 +4,19 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import view.GameController;
-import view.MainMenu;
-<<<<<<< HEAD
-=======
 import view.PlayerSelection;
 import view.WaitingScreen;
->>>>>>> branch 'master' of https://arnonicoletta@bitbucket.org/arralo/groupeb03.git
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//test des interfaces
-			GameController gc = new GameController();
-<<<<<<< HEAD
-			Scene scene = new Scene(gc,700,500);
-=======
-			PlayerSelection ps = new PlayerSelection();
-			MainMenu mm = new MainMenu();
-			WaitingScreen ws = new WaitingScreen();
+			PlayerSelection root = new PlayerSelection();
 			
 			//test des interfaces
 			
-			Scene scene = new Scene(ws,700,500);
->>>>>>> branch 'master' of https://arnonicoletta@bitbucket.org/arralo/groupeb03.git
+			Scene scene = new Scene(root,700,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

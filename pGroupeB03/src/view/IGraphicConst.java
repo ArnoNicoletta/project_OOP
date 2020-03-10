@@ -2,6 +2,6 @@ package view;
 
 public interface IGraphicConst {
 	
-	double WIDTH_RADIOBUTTON = 100; 
+	final double WIDTH_RADIOBUTTON = 100; 
 	
 }
