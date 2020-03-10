@@ -18,6 +18,8 @@
 	-fx-font-size: 20;
 	-fx-font-family: Candara, sans-serif;
 	-fx-font-weight: bold;
+	-fx-background-image: url("./../../src/resources/images/logo.png");
+	-fx-background-repeat: no-repeat ;
 }
 
 
