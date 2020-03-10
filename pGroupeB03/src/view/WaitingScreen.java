@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 
 public class WaitingScreen extends BorderPane {
 	
-	private Label lblPressToContinue;
+	//private Label lblPressToContinue;
 	
 	public WaitingScreen() {
 		
@@ -18,7 +18,7 @@ public class WaitingScreen extends BorderPane {
 		HBox hbBottom = new HBox();
 		hbBottom.setPadding(new Insets(5));
 		hbBottom.setSpacing(5);
-		hbBottom.getChildren().addAll(this.getLblPressToContinue());
+		//hbBottom.getChildren().addAll(this.getLblPressToContinue());
 		hbBottom.setAlignment(Pos.TOP_CENTER);
 		this.setBottom(hbBottom);
 		
@@ -31,11 +31,11 @@ public class WaitingScreen extends BorderPane {
 		});
 	}
 	
-	public Label getLblPressToContinue() {
-		if(lblPressToContinue==null) {
-			lblPressToContinue = new Label("Click to continue");
-		}
-		return lblPressToContinue;
-	}
+//	public Label getLblPressToContinue() {
+//		if(lblPressToContinue==null) {
+//			lblPressToContinue = new Label("Click to continue");
+//		}
+//		return lblPressToContinue;
+//	}
 	
 }
