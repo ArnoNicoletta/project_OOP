@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 
 public class Credit extends BorderPane {
 
-	private Label labelCredit;
+	private Label lblCredit;
 	private Button btnOK;
 	
 	public Credit() {
@@ -14,10 +14,10 @@ public class Credit extends BorderPane {
 	}
 	
 	public Label getLabelCredit() {
-		if(labelCredit==null) {
-			labelCredit = new Label();
+		if(lblCredit==null) {
+			lblCredit = new Label();
 		}
-		return labelCredit;
+		return lblCredit;
 	}
 	public Button getBtnOK() {
 		if(btnOK==null) {

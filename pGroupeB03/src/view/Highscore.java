@@ -10,9 +10,9 @@ import javafx.scene.layout.VBox;
 
 public class Highscore extends BorderPane{
 
-	private Label labelTopLeft;
-	private Label labelCenterLeft;
-	private Label labelTopRight;
+	private Label lblTopLeft;
+	private Label lblCenterLeft;
+	private Label lblTopRight;
 	private Button btnPlay;
 	private Button btnHome;
 	public Highscore() {
@@ -34,22 +34,22 @@ public class Highscore extends BorderPane{
 		this.setRight(hbRight);
 	}
 	public Label getLabelTopLeft() {
-		if(labelTopLeft==null) {
-			labelTopLeft = new Label();
+		if(lblTopLeft==null) {
+			lblTopLeft = new Label();
 		}
-		return labelTopLeft;
+		return lblTopLeft;
 	}
 	public Label getLabelCenterLeft() {
-		if(labelCenterLeft==null) {
-			labelCenterLeft = new Label();
+		if(lblCenterLeft==null) {
+			lblCenterLeft = new Label();
 		}
-		return labelTopLeft;
+		return lblTopLeft;
 	}
 	public Label getLabelTopRight() {
-		if(labelTopRight==null) {
-			labelTopRight = new Label();
+		if(lblTopRight==null) {
+			lblTopRight = new Label();
 		}
-		return labelTopRight;
+		return lblTopRight;
 	}
 	public Button getBtnPlay() {
 		if(btnPlay==null) {
