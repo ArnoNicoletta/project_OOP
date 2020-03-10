@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.GameController;
 import view.MainMenu;
+import view.PlayerSelection;
 
 
 public class Main extends Application {
@@ -13,7 +14,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			GameController gc = new GameController();
-			Scene scene = new Scene(gc,700,500);
+			PlayerSelection ps = new PlayerSelection();
+			Scene scene = new Scene(ps,700,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
