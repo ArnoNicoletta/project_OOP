@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.font.ImageGraphicAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class PlayerSelection extends BorderPane{
 			for(EnumNumberPlayer tmp : EnumNumberPlayer.values()) {
 				RadioButton r = new RadioButton(tmp.toString());
 				r.setToggleGroup(getTgPlayer());
-				r.setPrefWidth(IConstantesGraphiques.LARGEUR_RADIOBUTTON);
+				r.setPrefWidth(IGraphicConst.WIDTH_RADIOBUTTON);
 				listRadPlayer.add(r);
 			}
 		}
