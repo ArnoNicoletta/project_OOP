@@ -8,9 +8,14 @@ public class GameController extends StackPane {
 	private GamePane gamePane;
 	
 	public GameController() {
-		
+		this.getChildren().addAll(getPlayerSelection());
 	}
-	
+	public PlayerSelection getPlayerSelection() {
+		if(playerSelection==null) {
+			playerSelection = new PlayerSelection();
+		}
+		return playerSelection;
+	}
 	
 	
 }
