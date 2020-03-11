@@ -4,18 +4,14 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import view.PlayerSelection;
-import view.WaitingScreen;
+import view.MainController;
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			PlayerSelection root = new PlayerSelection();
-			
-			//test des interfaces
-			
+			MainController root = new MainController();
 			Scene scene = new Scene(root,700,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

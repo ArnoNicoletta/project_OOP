@@ -1,5 +1,7 @@
 package view;
 
-public class Settings {
+import javafx.scene.layout.StackPane;
+
+public class Settings extends StackPane {
 
 }

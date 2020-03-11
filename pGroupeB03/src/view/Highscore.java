@@ -10,16 +10,16 @@ import javafx.scene.layout.VBox;
 
 public class Highscore extends BorderPane{
 
-	private Label labelTopLeft;
-	private Label labelCenterLeft;
-	private Label labelTopRight;
+	private Label lblTopLeft;
+	private Label lblCenterLeft;
+	private Label lblTopRight;
 	private Button btnPlay;
 	private Button btnHome;
 	public Highscore() {
 		
 		//LEFT
 		VBox vbLeft = new VBox();
-		vbLeft.getChildren().addAll(getLabelTopLeft(),getLabelCenterLeft());
+		vbLeft.getChildren().addAll(getLblTopLeft(),getLblCenterLeft());
 		vbLeft.setSpacing(10);
 		vbLeft.setPadding(new Insets(20,20,20,20));
 		vbLeft.setAlignment(Pos.CENTER);
@@ -27,29 +27,29 @@ public class Highscore extends BorderPane{
 		
 		//RIGHT
 		HBox hbRight = new HBox();
-		hbRight.getChildren().addAll(getLabelTopRight(),getBtnPlay(),getBtnHome());
+		hbRight.getChildren().addAll(getLblTopRight(),getBtnPlay(),getBtnHome());
 		hbRight.setSpacing(10);
 		hbRight.setPadding(new Insets(20,20,20,20));
 		hbRight.setAlignment(Pos.CENTER);
 		this.setRight(hbRight);
 	}
-	public Label getLabelTopLeft() {
-		if(labelTopLeft==null) {
-			labelTopLeft = new Label();
+	public Label getLblTopLeft() {
+		if(lblTopLeft==null) {
+			lblTopLeft = new Label();
 		}
-		return labelTopLeft;
+		return lblTopLeft;
 	}
-	public Label getLabelCenterLeft() {
-		if(labelCenterLeft==null) {
-			labelCenterLeft = new Label();
+	public Label getLblCenterLeft() {
+		if(lblCenterLeft==null) {
+			lblCenterLeft = new Label();
 		}
-		return labelTopLeft;
+		return lblCenterLeft;
 	}
-	public Label getLabelTopRight() {
-		if(labelTopRight==null) {
-			labelTopRight = new Label();
+	public Label getLblTopRight() {
+		if(lblTopRight==null) {
+			lblTopRight = new Label();
 		}
-		return labelTopRight;
+		return lblTopRight;
 	}
 	public Button getBtnPlay() {
 		if(btnPlay==null) {
