@@ -1,131 +1,161 @@
 package view;
 
-import java.awt.font.ImageGraphicAttribute;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.geometry.Insets;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import model.EnumNumberPlayer;
+import model.IRulesConst;
 
+/**
+ * This {@link BorderPane} manages selection of players.
+ * @author ArRaLo
+ * 
+ */
 public class PlayerSelection extends BorderPane{
-
-	private Label labelTop;
 	
-	private List<RadioButton>listRadPlayer;
-	private ToggleGroup tgPlayer;
+	private int count = 0;
 	
-	private Label labelPlayerOne;
-	private TextField txtPlayerOne;
-	private Label labelPlayerTwo;
-	private TextField txtPlayerTwo;
-	private Label labelPlayerThree;
-	private TextField txtPlayerThree;
+	private GridPane gpCenter;
 	
-	private Button btnOK;
-	//UTILISE UN TOOGLEGROUPE POUR LES RADIOBUTTON + ENUM 
+	private List<Label> lLblPlayer;
+	private List<TextField> lTxtPlayer;
+	private List<ImageView> lIvPlayer;
+	
+	private Button btnPlay;
 	
 	public PlayerSelection() {
 		
-		//TOP
-		HBox hbTop = new HBox();
-		hbTop.getChildren().add(getLabelTop());
-		hbTop.setAlignment(Pos.TOP_CENTER);
-		hbTop.setPadding(new Insets(10,10,10,10));
-		
-		this.setTop(hbTop);
+		addPlayer();
 		//CENTER
-		VBox vbCenter = new VBox();
-		vbCenter.getChildren().addAll(getListRadPlayer());
-		vbCenter.setSpacing(10);
-		vbCenter.setAlignment(Pos.CENTER);
-		this.setCenter(vbCenter);
-	}
-
-	public Label getLabelTop() {
-		if(labelTop==null) {
-			labelTop = new Label("ENTREZ LE NOMBRE DE JOUEUR");
-		}
-		return labelTop;
+		this.setCenter(getGpCenter());
+		
+		//BOTTOM
+		HBox hbBottom = new HBox(getBtnPlay());
+		hbBottom.setAlignment(Pos.BASELINE_RIGHT);
+		this.setBottom(hbBottom);
+		
 	}
 	
-
-	public List<RadioButton> getListRadPlayer() {
-		if(listRadPlayer==null) {
-			listRadPlayer = new ArrayList<RadioButton>();
-			for(EnumNumberPlayer tmp : EnumNumberPlayer.values()) {
-				RadioButton r = new RadioButton(tmp.toString());
-				r.setToggleGroup(getTgPlayer());
-				r.setPrefWidth(IGraphicConst.WIDTH_RADIOBUTTON);
-				listRadPlayer.add(r);
+	/**
+	 * Adds a player.
+	 * Called by an {@link ImageView} from getIvAdd()
+	 * @see getIvAdd()
+	 */
+	private void addPlayer() {
+		if(this.count>=IRulesConst.MAX_PLAYER) {
+			return;
+		}
+		getlLblPlayer().add(new Label("Player " + (this.count+1)));
+		getlTxtPlayer().add(new TextField());
+		getlIvPlayer().add(getIvAdd());
+		
+		getGpCenter().add(getlLblPlayer().get(count), 0, count);
+		getGpCenter().add(getlTxtPlayer().get(count), 1, count);
+		getGpCenter().add(getlIvPlayer().get(count), 2, count);
+		
+		if(count!=0) {
+			getGpCenter().getChildren().remove(getlIvPlayer().get(count-1));
+			getlIvPlayer().set(count-1, getIvDel());
+			getGpCenter().add(getlIvPlayer().get(count-1), 2, count-1);
+		}
+		
+		count++;
+	}
+	
+	/**
+	 * Removes a player.
+	 * Called by an {@link ImageView} from getIvDel()
+	 * @see getIvDel()
+	 */
+	private void removePlayer() {
+		if(count<=1) {
+			return;
+		}
+		count--;
+		getGpCenter().getChildren().remove(getlLblPlayer().get(count));
+		getGpCenter().getChildren().remove(getlTxtPlayer().get(count));
+		getGpCenter().getChildren().remove(getlIvPlayer().get(count));
+		
+		getGpCenter().getChildren().remove(getlIvPlayer().get(count-1));
+		getlIvPlayer().set(count-1, getIvAdd());
+		getGpCenter().add(getlIvPlayer().get(count-1), 2, count-1);
+	}
+	
+	/**
+	 * Gives an ImageView with an {@link EventHandler} that calls add a player.
+	 * @see addPlayer
+	 * @return {@link ImageView}.
+	 */
+	private ImageView getIvAdd() {
+		ImageView iv = new ImageView("file:./src/resources/images/logo.png");
+		iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				addPlayer();
+				setCenter(getGpCenter());
 			}
-		}
-		return listRadPlayer;
-	}
-
-	public ToggleGroup getTgPlayer() {
-		if(tgPlayer==null) {
-			tgPlayer = new ToggleGroup();
-		}
-		return tgPlayer;
-	}
-
-	public Label getLabelPlayerOne() {
-		if(labelPlayerOne == null) {
-			labelPlayerOne = new Label("Pseudo player one");
-		}
-		return labelPlayerOne;
-	}
-
-	public TextField getTxtPlayerOne() {
-		if(txtPlayerOne==null) {
-			txtPlayerOne = new TextField();
-		}
-		return txtPlayerOne;
-	}
-
-	public Label getLabelPlayerTwo() {
-		if(labelPlayerTwo == null) {
-			labelPlayerTwo = new Label("Pseudo player two");
-		}
-		return labelPlayerTwo;
-	}
-
-	public TextField getTxtPlayerTwo() {
-		if(txtPlayerTwo==null) {
-			txtPlayerTwo = new TextField();
-		}
-		return txtPlayerTwo;
-	}
-
-	public Label getLabelPlayerThree() {
-		if(labelPlayerThree == null) {
-			labelPlayerThree = new Label("Pseudo player three");
-		}
-		return labelPlayerThree;
-	}
-
-	public TextField getTxtPlayerThree() {
-		if(txtPlayerThree==null) {
-			txtPlayerThree = new TextField();
-		}
-		return txtPlayerThree;
-	}
-
-	public Button getBtnOK() {
-		if(btnOK==null) {
-			btnOK = new Button("OK");
-		}
-		return btnOK;
+		});
+		return iv;
 	}
 	
+	/**
+	 * Gives an ImageView with an {@link EventHandler} that calls removePlayer.
+	 * @see removePlayer
+	 * @return {@link ImageView}.
+	 */
+	private ImageView getIvDel() {
+		ImageView ivDel = new ImageView("file:./src/resources/images/Icon_25px.png");
+		ivDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				removePlayer();
+				setCenter(getGpCenter());
+			}
+		});
+		return ivDel;
+	}
 	
+	public GridPane getGpCenter() {
+		if(gpCenter==null) {
+			gpCenter = new GridPane();
+			gpCenter.setAlignment(Pos.CENTER);
+			gpCenter.setVgap(10);
+			gpCenter.setHgap(10);
+		}
+		return gpCenter;
+	}
+	public List<Label> getlLblPlayer() {
+		if(lLblPlayer==null) {
+			lLblPlayer = new ArrayList<>();
+		}
+		return lLblPlayer;
+	}
+	public List<TextField> getlTxtPlayer() {
+		if(lTxtPlayer==null) {
+			lTxtPlayer = new ArrayList<>();
+		}
+		return lTxtPlayer;
+	}
+	public List<ImageView> getlIvPlayer() {
+		if(lIvPlayer==null) {
+			lIvPlayer = new ArrayList<>();
+		}
+		return lIvPlayer;
+	}
+	public Button getBtnPlay() {
+		if(btnPlay==null) {
+			btnPlay = new Button("Play");
+		}
+		return btnPlay;
+	}
 }

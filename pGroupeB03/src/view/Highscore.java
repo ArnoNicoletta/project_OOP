@@ -19,7 +19,7 @@ public class Highscore extends BorderPane{
 		
 		//LEFT
 		VBox vbLeft = new VBox();
-		vbLeft.getChildren().addAll(getLabelTopLeft(),getLabelCenterLeft());
+		vbLeft.getChildren().addAll(getLblTopLeft(),getLblCenterLeft());
 		vbLeft.setSpacing(10);
 		vbLeft.setPadding(new Insets(20,20,20,20));
 		vbLeft.setAlignment(Pos.CENTER);
@@ -27,25 +27,25 @@ public class Highscore extends BorderPane{
 		
 		//RIGHT
 		HBox hbRight = new HBox();
-		hbRight.getChildren().addAll(getLabelTopRight(),getBtnPlay(),getBtnHome());
+		hbRight.getChildren().addAll(getLblTopRight(),getBtnPlay(),getBtnHome());
 		hbRight.setSpacing(10);
 		hbRight.setPadding(new Insets(20,20,20,20));
 		hbRight.setAlignment(Pos.CENTER);
 		this.setRight(hbRight);
 	}
-	public Label getLabelTopLeft() {
+	public Label getLblTopLeft() {
 		if(lblTopLeft==null) {
 			lblTopLeft = new Label();
 		}
 		return lblTopLeft;
 	}
-	public Label getLabelCenterLeft() {
+	public Label getLblCenterLeft() {
 		if(lblCenterLeft==null) {
 			lblCenterLeft = new Label();
 		}
-		return lblTopLeft;
+		return lblCenterLeft;
 	}
-	public Label getLabelTopRight() {
+	public Label getLblTopRight() {
 		if(lblTopRight==null) {
 			lblTopRight = new Label();
 		}

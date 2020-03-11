@@ -4,25 +4,15 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import view.GameController;
-import view.MainMenu;
-import view.PlayerSelection;
-import view.WaitingScreen;
+import view.MainController;
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//test des interfaces
-			GameController gc = new GameController();
-			PlayerSelection ps = new PlayerSelection();
-			MainMenu mm = new MainMenu();
-			WaitingScreen ws = new WaitingScreen();
-			
-			//test des interfaces
-			
-			Scene scene = new Scene(ws,700,500);
+			MainController root = new MainController();
+			Scene scene = new Scene(root,700,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * This class manages one question.
  * @author ArRaLo
- * @version 1.0
  * @see model.Deck
  */
 public class Question {
