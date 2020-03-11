@@ -1,5 +1,7 @@
 package view;
 
-public class GamePane {
+import javafx.scene.layout.BorderPane;
+
+public class GamePane extends BorderPane {
 
 }

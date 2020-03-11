@@ -48,10 +48,10 @@ public class MainController extends StackPane {
 			ivHome = new ImageView("file:./src/resources/images/logo.png");
 			ivHome.setVisible(false);
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
 				@Override
 				public void handle(MouseEvent event) {
-					
+					hideVisible();
+					getMainMenu().setVisible(true);
 				}
 			});
 		}
@@ -102,7 +102,7 @@ public class MainController extends StackPane {
 	
 	
 	
-	class WaitingScreen extends BorderPane {
+class WaitingScreen extends BorderPane {
 	
 	private Label lblPressToContinue;
 	

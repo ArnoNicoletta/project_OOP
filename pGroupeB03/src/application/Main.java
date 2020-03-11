@@ -17,8 +17,8 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			//primaryStage.setFullScreen(true);
-			primaryStage.getIcons().add(new Image(("file:./src/resources/images/logo.png")));
-			primaryStage.setTitle("The 4TUNE");
+			primaryStage.getIcons().addAll(new Image("file:./src/resources/images/logo.png"));
+			primaryStage.setTitle("FOUR THE WIN");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -33,5 +33,6 @@ public class Main extends Application {
 //		g.addDeck(new File("./src/resources/questions/deck_Social Networks.json"));
 //		g.addDeck(new File("./src/resources/questions/deck_Academy Awards winners.json"));
 //		g.play();
+		
 	}
 }

@@ -1,25 +1,23 @@
 package view;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class MainMenu extends BorderPane {
 	
-	private static final double WIDTH_BUTTON = 350, HEIGHT_BUTTON = 50;
-	
 	
 	
 	private Button btnPlay;
-	private Button btnHighScores;
+	private Button btnHighscores;
 	private Button btnCredits;
-	private Button btnAdmin;
+	private Button btnRules;
+	
+	private ImageView ivSettings;
 	
 	public MainMenu() {
 		
@@ -28,7 +26,7 @@ public class MainMenu extends BorderPane {
 		VBox vbCenter = new VBox();
 		vbCenter.setPadding(new Insets(5));
 		vbCenter.setSpacing(5);
-		vbCenter.getChildren().addAll(getBtnPlay(),getBtnHighScores(),getBtnCredits());
+		vbCenter.getChildren().addAll(getBtnPlay(), getBtnHighScores(), getBtnRules(), getBtnCredits());
 		vbCenter.setAlignment(Pos.CENTER);
 		this.setCenter(vbCenter);
 		
@@ -36,7 +34,7 @@ public class MainMenu extends BorderPane {
 		HBox hbBottom = new HBox();
 		hbBottom.setPadding(new Insets(5));
 		hbBottom.setSpacing(5);
-		hbBottom.getChildren().addAll(getBtnAdmin());
+		hbBottom.getChildren().addAll(getIvSettings());
 		hbBottom.setAlignment(Pos.CENTER_RIGHT);
 		this.setBottom(hbBottom);
 	}
@@ -45,41 +43,38 @@ public class MainMenu extends BorderPane {
 	public Button getBtnPlay() {
 		if(btnPlay==null) {
 			btnPlay = new Button("Play");
-			btnPlay.setPrefSize(WIDTH_BUTTON, HEIGHT_BUTTON);
+			btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 		}
 		return btnPlay;
 	}
 	
 	public Button getBtnHighScores() {
-		if(btnHighScores==null) {
-			btnHighScores = new Button("Highscores");
-			btnHighScores.setPrefSize(WIDTH_BUTTON, HEIGHT_BUTTON);
+		if(btnHighscores==null) {
+			btnHighscores = new Button("Highscores");
+			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 		}
-		return btnHighScores;
+		return btnHighscores;
 	}
 	
 	public Button getBtnCredits() {
 		if(btnCredits==null) {
 			btnCredits = new Button("Credits");
-			btnCredits.setPrefSize(WIDTH_BUTTON, HEIGHT_BUTTON);
+			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 		}
 		return btnCredits;
 	}
-	
-	public Button getBtnAdmin() {
-		if(btnAdmin==null) {
-			btnAdmin = new Button("Admin");
-			btnAdmin.setPrefSize(135, 30);
-			btnAdmin.setId("btnAdmin");
-			btnAdmin.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent event) {
-					//TODO
-					event.consume();
-				}
-			});
+	public Button getBtnRules() {
+		if(btnRules==null) {
+			btnRules = new Button("Rules");
+			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 		}
-		return btnAdmin;
+		return btnRules;
+	}
+	public ImageView getIvSettings() {
+		if(ivSettings==null) {
+			ivSettings = new ImageView("file:./src/resources/images/Icon_25px.png");
+		}
+		return ivSettings;
 	}
 	
 	

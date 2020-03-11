@@ -1,5 +1,7 @@
 package view;
 
-public class Ranking {
+import javafx.scene.layout.BorderPane;
+
+public class Ranking extends BorderPane {
 
 }
