@@ -55,7 +55,7 @@ public class PlayerSelection extends BorderPane{
 		if(this.count>=IRulesConst.MAX_PLAYER) {
 			return;
 		}
-		getlLblPlayer().add(new Label("Player : " + (this.count+1)));
+		getlLblPlayer().add(new Label("Player " + (this.count+1)));
 		getlTxtPlayer().add(new TextField());
 		getlIvPlayer().add(getIvAdd());
 		
@@ -92,7 +92,7 @@ public class PlayerSelection extends BorderPane{
 	}
 	
 	/**
-	 * Gives an ImageView with a an {@link EventHandler} that calls add a player.
+	 * Gives an ImageView with an {@link EventHandler} that calls add a player.
 	 * @see addPlayer
 	 * @return {@link ImageView}.
 	 */
@@ -109,7 +109,7 @@ public class PlayerSelection extends BorderPane{
 	}
 	
 	/**
-	 * Gives an ImageView with a an {@link EventHandler} that calls removePlayer.
+	 * Gives an ImageView with an {@link EventHandler} that calls removePlayer.
 	 * @see removePlayer
 	 * @return {@link ImageView}.
 	 */
