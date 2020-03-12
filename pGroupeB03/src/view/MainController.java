@@ -1,5 +1,6 @@
 package view;
 
+import application.Main;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,6 +29,8 @@ public class MainController extends BorderPane {
 	
 	
 	public MainController() {
+		
+		this.setId("maincontroller");
 		
 		//TOP
 		this.setTop(getIvHome());
@@ -84,6 +87,7 @@ public class MainController extends BorderPane {
 	public WaitingScreen getWaitingScreen() {
 		if(waitingScreen==null) {
 			waitingScreen = new WaitingScreen();
+			
 		}
 		return waitingScreen;
 	}
@@ -128,14 +132,17 @@ public class MainController extends BorderPane {
 	
 class WaitingScreen extends BorderPane {
 	
+	private Label lblTitle;
 	private Label lblPressToContinue;
 	
 	public WaitingScreen() {
 		
+		HBox hbTop = new HBox();
+		hbTop.getChildren().addAll(this.getLblTitle());
+		hbTop.setAlignment(Pos.TOP_CENTER);
+		this.setTop(hbTop);		
 		
 		HBox hbBottom = new HBox();
-		hbBottom.setPadding(new Insets(5));
-		hbBottom.setSpacing(5);
 		hbBottom.getChildren().addAll(this.getLblPressToContinue());
 		hbBottom.setAlignment(Pos.TOP_CENTER);
 		this.setBottom(hbBottom);
@@ -150,9 +157,20 @@ class WaitingScreen extends BorderPane {
 		});
 	}
 	
+	public Label getLblTitle() {
+		if(lblTitle==null) {
+			lblTitle = new Label("FOUR THE WIN");
+			lblTitle.setId("lblTitle");
+			lblTitle.setPrefSize(800, 100);
+		}
+		return lblTitle;
+	}
+	
 	public Label getLblPressToContinue() {
 		if(lblPressToContinue==null) {
-			lblPressToContinue = new Label("Click to continue");
+			lblPressToContinue = new Label("CLICK TO CONTINUE");
+			lblPressToContinue.setId("lblPressToContinue");
+			lblPressToContinue.setPrefSize(500, 50);
 		}
 		return lblPressToContinue;
 	}
