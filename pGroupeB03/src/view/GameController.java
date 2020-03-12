@@ -1,13 +1,16 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import exception.IdenticalPseudoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +20,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import model.Deck;
 import model.IRulesConst;
 import model.Player;
 
@@ -24,16 +29,30 @@ public class GameController extends StackPane {
 	
 	//Game vars
 	private List<Player> players;
+	private List<Deck> decks;
 	private int current;
 	
 	private PlayerSelection playerSelection;
+	private ThemeSelection themeSelection;
 	private GamePane gamePane;
 	
 	public GameController() {
 		
-		this.getChildren().addAll(getPlayerSelection());
+		this.getChildren().addAll(getPlayerSelection(), getThemeSelection());
+		this.showElement(getPlayerSelection());
 	}
 	
+	private void hideVisible() {
+		for(Node n : this.getChildren()) {
+			if(n.isVisible()) {
+				n.setVisible(false);
+			}
+		}
+	}
+	private void showElement(Node element) {
+		hideVisible();
+		element.setVisible(true);
+	}
 	public List<Player> getPlayers() {
 		if(players==null) {
 			players = new ArrayList<>();
@@ -44,14 +63,39 @@ public class GameController extends StackPane {
 		}
 		return ret;
 	}
+	public List<Deck> getDecks() {
+		if(decks==null) {
+			decks = new ArrayList<>();
+			for(File f : new File("./src/resources/questions/").listFiles()) {
+				System.out.println(f);
+				decks.add(Deck.fromJson(f));
+			}
+			System.out.println(decks);
+		}
+		List<Deck> ret = new ArrayList<>();
+		for(Deck d : decks) {
+			ret.add(d);
+		}
+		return ret;
+	}
 	public PlayerSelection getPlayerSelection() {
 		if(playerSelection==null) {
 			playerSelection = new PlayerSelection();
 		}
 		return playerSelection;
 	}
-	
-	
+	public ThemeSelection getThemeSelection() {
+		if(themeSelection==null) {
+			themeSelection = new ThemeSelection();
+		}
+		return themeSelection;
+	}
+	public GamePane getGamePane() {
+		if(gamePane==null) {
+			gamePane = new GamePane();
+		}
+		return gamePane;
+	}
 	
 	/*
 	 * *****************************
@@ -205,10 +249,8 @@ public class GameController extends StackPane {
 				btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println("CLICK");
 						HashSet<Player> tmp = new HashSet<>();
 						for(TextField p : getlTxtPlayer()) {
-							System.out.println(p.getText());
 							if(!tmp.add(new Player(p.getText()))){
 								Exception e = new IdenticalPseudoException(p.getText());
 								MsgBox.dispalyOk("Error", e.getMessage());
@@ -216,6 +258,7 @@ public class GameController extends StackPane {
 							}
 						}
 						GameController.this.getPlayers().addAll(tmp);
+						GameController.this.showElement(getThemeSelection());
 					}
 				});
 			}
@@ -230,11 +273,33 @@ public class GameController extends StackPane {
 		private Label lblPlayer;
 		private List<Button> lBtnTheme;
 		
+		public ThemeSelection() {
+			
+			//Center
+			VBox vbCenter = new VBox(10);
+			vbCenter.getChildren().add(getLblPlayer());
+			vbCenter.getChildren().addAll(getlBtnTheme());
+		}
+		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label( "**************, SELECT A THEME ");
+				lblPlayer = new Label("**************, SELECT A THEME ");
 			}
 			return lblPlayer;
 		}
+		public List<Button> getlBtnTheme() {
+			if(lBtnTheme==null) {
+				lBtnTheme = new ArrayList<>();
+				for(int i=1;i<=getPlayers().size();i++) {
+					Random rand = new Random();
+					Button b = new Button(GameController.this.getDecks().
+							get(rand.nextInt(GameController.this.getDecks().size())).getTheme());
+					b.setOnAction(e -> GameController.this.showElement(getGamePane()));
+					lBtnTheme.add(b);
+				}
+			}
+			return lBtnTheme;
+		}
+		
 	}
 }
