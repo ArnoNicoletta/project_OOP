@@ -21,6 +21,7 @@ public class MsgBox{
 		window.setTitle(title);
 		window.setMinWidth(275);
 		window.setMinHeight(125);
+		window.setResizable(false);
 		
 		Label lbl = new Label(message);
 		lbl.setAlignment(Pos.CENTER);
@@ -59,6 +60,7 @@ public class MsgBox{
 		window.setTitle(title);
 		window.setMinWidth(300);
 		window.setMinHeight(100);
+		window.setResizable(false);
 		
 		Label lbl = new Label(message);
 		lbl.setAlignment(Pos.CENTER);

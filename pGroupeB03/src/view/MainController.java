@@ -53,7 +53,6 @@ public class MainController extends BorderPane {
 	}
 	
 	private void showElement(Node element) {
-		System.out.println(element);
 		hideVisible();
 		getIvHome().setVisible(true);
 		element.setVisible(true);
