@@ -160,7 +160,7 @@ class WaitingScreen extends BorderPane {
 	public Label getLblTitle() {
 		if(lblTitle==null) {
 			lblTitle = new Label("FOUR THE WIN");
-			lblTitle.setId("lblTitle");
+			lblTitle.setId("lblTitleWaitingScreen");
 			lblTitle.setPrefSize(800, 100);
 		}
 		return lblTitle;
@@ -169,15 +169,13 @@ class WaitingScreen extends BorderPane {
 	public Label getLblPressToContinue() {
 		if(lblPressToContinue==null) {
 			lblPressToContinue = new Label("CLICK TO CONTINUE");
-			lblPressToContinue.setId("lblPressToContinue");
+			lblPressToContinue.setId("lblClickContinueWaitingScreen");
 			lblPressToContinue.setPrefSize(500, 50);
 		}
 		return lblPressToContinue;
 	}
 }
 class MainMenu extends BorderPane {
-	
-	
 	
 	private Button btnPlay;
 	private Button btnHighscores;
@@ -188,63 +186,63 @@ class MainMenu extends BorderPane {
 	
 	public MainMenu() {
 		
+		this.setId("mainMenu");
 		
 		//CENTER
 		VBox vbCenter = new VBox();
-		vbCenter.setPadding(new Insets(5));
-		vbCenter.setSpacing(5);
-		vbCenter.getChildren().addAll(getBtnPlay(), getBtnHighScores(), getBtnRules(), getBtnCredits());
+		vbCenter.getChildren().addAll(getBtnPlay(), getBtnHighScores(), getBtnRules(), getBtnCredits(), getIvSettings());
 		vbCenter.setAlignment(Pos.CENTER);
+		vbCenter.setSpacing(15);
 		this.setCenter(vbCenter);
+		vbCenter.setTranslateY(50);
 		
-		//BOTTOM
-		HBox hbBottom = new HBox();
-		hbBottom.setPadding(new Insets(5));
-		hbBottom.setSpacing(5);
-		hbBottom.getChildren().addAll(getIvSettings());
-		hbBottom.setAlignment(Pos.CENTER_RIGHT);
-		this.setBottom(hbBottom);
 	}
 
 	
 	public Button getBtnPlay() {
 		if(btnPlay==null) {
-			btnPlay = new Button("Play");
+			btnPlay = new Button("PLAY");
 			btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnPlay.setOnAction(e -> MainController.this.showElement(MainController.this.getGameController()));
+			btnPlay.getStyleClass().add("btnMainMenu");
 		}
 		return btnPlay;
 	}
 	
 	public Button getBtnHighScores() {
 		if(btnHighscores==null) {
-			btnHighscores = new Button("Highscores");
+			btnHighscores = new Button("HIGHSCORES");
 			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnHighscores.setOnAction(e -> MainController.this.showElement(MainController.this.getHighscore()));
+			btnHighscores.getStyleClass().add("btnMainMenu");
 		}
 		return btnHighscores;
 	}
 	
 	public Button getBtnCredits() {
 		if(btnCredits==null) {
-			btnCredits = new Button("Credits");
+			btnCredits = new Button("CREDITS");
 			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnCredits.setOnAction(e -> MainController.this.showElement(MainController.this.getCredit()));
+			btnCredits.getStyleClass().add("btnMainMenu");
 		}
 		return btnCredits;
 	}
 	public Button getBtnRules() {
 		if(btnRules==null) {
-			btnRules = new Button("Rules");
+			btnRules = new Button("RULES");
 			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnRules.setOnAction(e -> MainController.this.showElement(MainController.this.getRules()));
+			btnRules.getStyleClass().add("btnMainMenu");
 		}
 		return btnRules;
 	}
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
-			ivSettings = new ImageView("file:./src/resources/images/Icon_25px.png");
+			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
 			ivSettings.setOnMouseClicked(e -> MainController.this.showElement(MainController.this.getSettings()));
+			ivSettings.setTranslateX(260);
+			ivSettings.setTranslateY(-15);
 		}
 		return ivSettings;
 	}

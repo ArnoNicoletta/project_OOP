@@ -12,60 +12,82 @@
 	-fx-background-size: 100%;
 }
 
-/* Label Title FOUR THE WIN */
-#lblTitle{
-	-fx-alignment: center;
-	-fx-font-family: "K2D Medium", sans-serif;
-	-fx-font-weight: bold;
-	-fx-text-fill: #FBC680;
-	-fx-font-size: 100px;
-}
+/* WAITING SCREEN */
 
-/* Border around the text */
-#lblTitle .text{
-    -fx-stroke: black;
-    -fx-stroke-width: 5px;
-    -fx-stroke-type: outside;
-}
+	/* Label Title FOUR THE WIN */
+	#lblTitleWaitingScreen{
+		-fx-alignment: center;
+		-fx-font-family: "K2D Medium", sans-serif;
+		-fx-font-weight: bold;
+		-fx-text-fill: #FBC680;
+		-fx-font-size: 100px;
+	}
+	
+	/* Border around the text */
+	#lblTitleWaitingScreen .text{
+	    -fx-stroke: black;
+	    -fx-stroke-width: 5px;
+	    -fx-stroke-type: outside;
+	}
+	
+	/* Label on the Waiting Screen "Press to continue" */
+	#lblClickContinueWaitingScreen{
+		-fx-border-width: 5px;
+		-fx-border-color: black;
+		-fx-border-radius: 40px;
+		-fx-background-color: #793F54;
+		-fx-background-radius: 45px;
+		-fx-alignment: center;
+		-fx-font-family: "Roboto Black", sans-serif;
+		-fx-font-weight: bold;
+		-fx-text-fill: #FFF;
+		-fx-font-size: 30px;
+		-fx-padding: 15px 0;
+		-fx-border-insets: 40px 0;
+		-fx-background-insets: 40px 0;
+	}
+	
+	/* Border around the text */
+	#lblClickContinueWaitingScreen .text{
+	    -fx-stroke: black;
+	    -fx-stroke-width: 2px;
+	    -fx-stroke-type: outside;
+	}
+	
+	
+/* MAIN MENU */
 
-/* Label on the Waiting Screen "Press to continue" */
-#lblPressToContinue{
-	-fx-border-width: 5px;
-	-fx-border-color: black;
-	-fx-border-radius: 40px;
-	-fx-background-color: #793F54;
-	-fx-background-radius: 45px;
-	-fx-alignment: center;
-	-fx-font-family: "Roboto Black", sans-serif;
-	-fx-font-weight: bold;
-	-fx-text-fill: #FFF;
-	-fx-font-size: 30px;
-	-fx-padding: 15px 0;
-	-fx-border-insets: 40px 0;
-	-fx-background-insets: 40px 0;
-}
+	/* Background */
+	#mainMenu{
+		-fx-background-image: url("./../../src/resources/images/background_mainmenu.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+	}
+	
+	/* Buttons */
+	.btnMainMenu{
+		-fx-pref-width: 350px;
+		-fx-pref-height: 40px;
+	}
+	
 
-/* Border around the text */
-#lblPressToContinue .text{
-    -fx-stroke: black;
-    -fx-stroke-width: 2px;
-    -fx-stroke-type: outside;
-}
-
+/* Default CSS for the buttons */
 .button{
-	-fx-background-color: #FFAB58;
+	-fx-background-color: #793F54;
 	-fx-border-color: #000000;
-	-fx-border-style: solid;
+	-fx-text-fill: #FFFFFF;
 	-fx-border-width: 2px;
 	-fx-border-radius: 20;
 	-fx-background-radius: 22;
-	-fx-font-size: 20;
-	-fx-font-family: Candara, sans-serif;
+	-fx-font-size: 24;
+	-fx-font-family: "Roboto Black", sans-serif;
 	-fx-font-weight: bold;
 }
 
-
-.label{
-	-fx-font-family: Candara, sans-serif;
-	-fx-text-fill: #FFAB58;
+.button .text{
+	-fx-stroke: black;
+	-fx-stroke-width: 2px;
+ 	-fx-stroke-type: outside;
 }
+
+
