@@ -14,11 +14,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * {@link BorderPane} that manages all the views.
+ * @author ArRaLo
+ * @see {@link WaitingScreen}
+ * @see {@link MainMenu}
+ * @see {@link GameController}
+ * @see {@link Highscore}
+ * @see {@link Rules}
+ * @see {@link Credit}
+ * @see {@link Settings}
+ */
 public class MainController extends BorderPane {
 	
+	// Element of this pane
 	private ImageView ivHome;
 	private StackPane stack;
 	
+	// Other Panes include in stack
 	private WaitingScreen waitingScreen;
 	private MainMenu mainMenu;
 	private GameController gameController;
@@ -70,6 +83,8 @@ public class MainController extends BorderPane {
 					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you wanna go back to menu?");
 					if(sure) {
 						hideVisible();
+						gameController = new GameController();
+						settings = new Settings();
 						getMainMenu().setVisible(true);
 						ivHome.setVisible(false);
 					}

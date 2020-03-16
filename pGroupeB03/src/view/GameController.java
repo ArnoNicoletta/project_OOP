@@ -25,6 +25,14 @@ import model.Deck;
 import model.IRulesConst;
 import model.Player;
 
+/**
+ * {@link StackPane} of the game which includes all views needed to play the game
+ * @author ArRaLo
+ * @see {@link PlayerSelection}
+ * @see {@link ThemeSelection}
+ * @see {@link GamePane}
+ * @see {@link Ranking}
+ */
 public class GameController extends StackPane {
 	
 	//Game vars
@@ -32,6 +40,7 @@ public class GameController extends StackPane {
 	private List<Deck> decks;
 	private int current;
 	
+	//Pane vars
 	private PlayerSelection playerSelection;
 	private ThemeSelection themeSelection;
 	private GamePane gamePane;
@@ -65,8 +74,9 @@ public class GameController extends StackPane {
 	}
 	public List<Deck> getDecks() {
 		if(decks==null) {
+			System.out.println("GETDECKS");
 			decks = new ArrayList<>();
-			for(File f : new File("./src/resources/questions/").listFiles()) {
+			for(File f : new File("./src/resources/questions").listFiles()) {
 				System.out.println(f);
 				decks.add(Deck.fromJson(f));
 			}
@@ -279,11 +289,13 @@ public class GameController extends StackPane {
 			VBox vbCenter = new VBox(10);
 			vbCenter.getChildren().add(getLblPlayer());
 			vbCenter.getChildren().addAll(getlBtnTheme());
+			vbCenter.setAlignment(Pos.CENTER);
+			this.setCenter(vbCenter);
 		}
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label("**************, SELECT A THEME ");
+				lblPlayer = new Label("********, SELECT A THEME ");
 			}
 			return lblPlayer;
 		}
@@ -300,6 +312,26 @@ public class GameController extends StackPane {
 			}
 			return lBtnTheme;
 		}
+		
+	}
+	
+	
+	/**
+	 * The view of the game itself.
+	 * @author ArRaLo
+	 *
+	 */
+	class GamePane extends BorderPane {
+		
+	}
+	
+	
+	/**
+	 * The ranking of the current game played.
+	 * @author ArRaLo
+	 *
+	 */
+	class Ranking extends BorderPane {
 		
 	}
 }
