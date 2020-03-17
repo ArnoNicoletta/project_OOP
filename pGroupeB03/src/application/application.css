@@ -70,6 +70,26 @@
 		-fx-pref-height: 40px;
 	}
 	
+	
+/* SELECT PLAYERS */
+
+	/* Background */
+	#playerSelection{
+		-fx-background-image: url("./../../src/resources/images/background_select_players.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+	}
+	
+	/* Button Play */	
+	#btnPlaySelectPlayers{
+		-fx-pref-width: 200px;
+		-fx-pref-height: 40px;
+	}
+	
+	.lblPlayer{
+		-fx-text-fill: white;
+	}
+	
 
 /* Default CSS for the buttons */
 .button{

@@ -91,6 +91,8 @@ public class GameController extends StackPane {
 	public PlayerSelection getPlayerSelection() {
 		if(playerSelection==null) {
 			playerSelection = new PlayerSelection();
+			playerSelection.setId("playerSelection");
+			playerSelection.setTranslateY(-30);
 		}
 		return playerSelection;
 	}
@@ -155,7 +157,7 @@ public class GameController extends StackPane {
 			if(this.count>=IRulesConst.MAX_PLAYER) {
 				return;
 			}
-			getlLblPlayer().add(new Label("Player " + (this.count+1)));
+			getlLblPlayer().add(new Label("PLAYER " + (this.count+1)));
 			getlTxtPlayer().add(new TextField());
 			getlIvPlayer().add(getIvAdd());
 			
@@ -198,7 +200,7 @@ public class GameController extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvAdd() {
-			ImageView iv = new ImageView("file:./src/resources/images/logo.png");
+			ImageView iv = new ImageView("file:./src/resources/images/icon_add_player.png");
 			iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -215,7 +217,7 @@ public class GameController extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvDel() {
-			ImageView ivDel = new ImageView("file:./src/resources/images/Icon_25px.png");
+			ImageView ivDel = new ImageView("file:./src/resources/images/icon_remove_player.png");
 			ivDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -255,7 +257,10 @@ public class GameController extends StackPane {
 		}
 		public Button getBtnPlay() {
 			if(btnPlay==null) {
-				btnPlay = new Button("Play");
+				btnPlay = new Button("PLAY");
+				btnPlay.setId("btnPlaySelectPlayers");
+				btnPlay.setTranslateX(-220);
+				btnPlay.setTranslateY(-45);
 				btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
