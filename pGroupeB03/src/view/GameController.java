@@ -17,8 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.Deck;
@@ -139,6 +141,7 @@ public class GameController extends StackPane {
 			
 			addPlayer();
 			//CENTER
+			getGpCenter().setTranslateY(50);
 			this.setCenter(getGpCenter());
 			
 			//BOTTOM
