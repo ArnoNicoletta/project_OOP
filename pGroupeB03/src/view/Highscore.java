@@ -1,8 +1,8 @@
 package view;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -10,60 +10,57 @@ import javafx.scene.layout.VBox;
 
 public class Highscore extends BorderPane{
 
-	private Label lblTopLeft;
-	private Label lblCenterLeft;
-	private Label lblTopRight;
-	private Button btnPlay;
-	private Button btnHome;
+	private List<HBox>lhbox;
+	private int i;
+	private Label lblname;
+	private Label lblscore;
+	private Label lbltime;
+	
 	public Highscore() {
 		
-		//LEFT
-		VBox vbLeft = new VBox();
-		vbLeft.getChildren().addAll(getLblTopLeft(),getLblCenterLeft());
-		vbLeft.setSpacing(10);
-		vbLeft.setPadding(new Insets(20,20,20,20));
-		vbLeft.setAlignment(Pos.CENTER);
-		this.setLeft(vbLeft);
-		
-		//RIGHT
-		HBox hbRight = new HBox();
-		hbRight.getChildren().addAll(getLblTopRight(),getBtnPlay(),getBtnHome());
-		hbRight.setSpacing(10);
-		hbRight.setPadding(new Insets(20,20,20,20));
-		hbRight.setAlignment(Pos.CENTER);
-		this.setRight(hbRight);
-	}
-	public Label getLblTopLeft() {
-		if(lblTopLeft==null) {
-			lblTopLeft = new Label();
-		}
-		return lblTopLeft;
-	}
-	public Label getLblCenterLeft() {
-		if(lblCenterLeft==null) {
-			lblCenterLeft = new Label();
-		}
-		return lblCenterLeft;
-	}
-	public Label getLblTopRight() {
-		if(lblTopRight==null) {
-			lblTopRight = new Label();
-		}
-		return lblTopRight;
-	}
-	public Button getBtnPlay() {
-		if(btnPlay==null) {
-			btnPlay = new Button("Play");
-		}
-		return btnPlay;
-	}
-	public Button getBtnHome() {
-		if(btnHome==null) {
-			btnHome = new Button("Home");
-		}
-		return btnHome;
+		VBox vb = new VBox();
+		addHbox(lhbox);
+		vb.getChildren().addAll(lhbox);
+		this.setCenter(vb);	
 	}
 	
+	//création d'une liste de 5 hbox que l'on va insérer dans une vbox
+	public List<HBox> getLhbox(){
+		if(lhbox == null) {
+			lhbox = new ArrayList<HBox>();
+		}
+		return lhbox;
+	}
+
+	public void addHbox(List<HBox> l) {
+		for(i=0;i<5;i++) {
+			HBox hb = new HBox();
+			//il faut faire en sorte que les get renvoient les infomations sur 1 joueur spécifique
+			
+			hb.getChildren().addAll(getLblname(),getLblscore(),getLbltime());
+			l.add(hb);
+		}
+	}
 	
+	public Label getLblname() {
+		if(lblname == null) {
+			lblname = new Label("ok");
+		}
+		return lblname;
+	}
+
+	public Label getLblscore() {
+		if(lblscore == null) {
+			lblscore = new Label("score");
+		}
+		return lblscore;
+	}
+
+	public Label getLbltime() {
+		if(lbltime == null) {
+			lbltime = new Label("time");
+		}
+		return lbltime;
+	}
 	
 }
