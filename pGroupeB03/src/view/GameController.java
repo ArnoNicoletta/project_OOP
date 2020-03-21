@@ -44,10 +44,11 @@ public class GameController extends StackPane {
 	private PlayerSelection playerSelection;
 	private ThemeSelection themeSelection;
 	private GamePane gamePane;
+	private Ranking ranking;
 	
 	public GameController() {
-		this.getChildren().addAll(getPlayerSelection(), getThemeSelection());
-		this.showElement(getPlayerSelection());
+		this.getChildren().addAll(getPlayerSelection(), getThemeSelection(), getGamePane(), getRanking());
+		this.showElement(getRanking());
 	}
 	public void reset() {
 		
@@ -109,6 +110,14 @@ public class GameController extends StackPane {
 		}
 		return gamePane;
 	}
+	public Ranking getRanking() {
+		if(ranking==null) {
+			ranking = new Ranking();
+		}
+		return ranking;
+	}
+	
+	
 	
 	/*
 	 * *****************************
@@ -342,7 +351,57 @@ public class GameController extends StackPane {
 	 * @author ArRaLo
 	 *
 	 */
-	class Ranking extends BorderPane {
+	class Ranking extends GridPane {
 		
+		private Label lblRank;
+		private Label lblPseudo;
+		private Label lblScore;
+		private Label lblTime;
+		
+		private List<HBox> hboxes;
+		
+		public Ranking() {
+			
+			//Setup positioning
+			this.setAlignment(Pos.CENTER);
+			this.setHgap(10);
+			this.setVgap(15);
+			//Setup elements
+			this.add(getLblRank(), 0, 0);
+			this.add(getLblPseudo(), 1, 0);
+			this.add(getLblScore(), 2, 0);
+			this.add(getLblTime(), 3, 0);
+		}
+		
+		public Label getLblRank() {
+			if(lblRank==null) {
+				lblRank = new Label("Rank");
+			}
+			return lblRank;
+		}
+		public Label getLblPseudo() {
+			if(lblPseudo==null) {
+				lblPseudo = new Label("Pseudo");
+			}
+			return lblPseudo;
+		}
+		public Label getLblScore() {
+			if(lblScore==null) {
+				lblScore = new Label("Score");
+			}
+			return lblScore;
+		}
+		public Label getLblTime() {
+			if(lblTime==null) {
+				lblTime = new Label("Time");
+			}
+			return lblTime;
+		}
+		public List<HBox> getHboxes() {
+			if(hboxes==null) {
+				
+			}
+			return hboxes;
+		}
 	}
 }
