@@ -1,8 +1,6 @@
 package view;
 
-import application.Main;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -31,7 +29,7 @@ public class MainController extends BorderPane {
 	private ImageView ivHome;
 	private StackPane stack;
 	
-	// Other Panes include in stack
+	// Other Panes included in stack
 	private WaitingScreen waitingScreen;
 	private MainMenu mainMenu;
 	private GameController gameController;

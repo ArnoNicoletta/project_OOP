@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.MainController;
-import view.MsgBox;
 
 
 public class Main extends Application {
