@@ -80,13 +80,13 @@ public class MainController extends BorderPane {
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you wanna go back to menu?");
+					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you want to go back to menu?");
 					if(sure) {
 						hideVisible();
-						gameController = new GameController();
-						settings = new Settings();
 						getMainMenu().setVisible(true);
 						ivHome.setVisible(false);
+						settings = new Settings();
+						gameController = new GameController();
 					}
 				}
 			});

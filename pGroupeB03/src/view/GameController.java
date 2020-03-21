@@ -38,7 +38,7 @@ public class GameController extends StackPane {
 	//Game vars
 	private List<Player> players;
 	private List<Deck> decks;
-	private int current;
+	private int currentPlayer;
 	
 	//Pane vars
 	private PlayerSelection playerSelection;
@@ -46,11 +46,12 @@ public class GameController extends StackPane {
 	private GamePane gamePane;
 	
 	public GameController() {
-		
 		this.getChildren().addAll(getPlayerSelection(), getThemeSelection());
 		this.showElement(getPlayerSelection());
 	}
-	
+	public void reset() {
+		
+	}
 	private void hideVisible() {
 		for(Node n : this.getChildren()) {
 			if(n.isVisible()) {
@@ -330,7 +331,9 @@ public class GameController extends StackPane {
 	class GamePane extends BorderPane {
 		
 		private Label lblPlayer;
-		private 
+		private ImageView ivScore;
+		private Label lblTimer;
+		
 	}
 	
 	

@@ -16,13 +16,13 @@ public class Highscore extends BorderPane{
 	private Label lblscore;
 	private Label lbltime;
 	
-	public Highscore() {
-		
-		VBox vb = new VBox();
-		addHbox(lhbox);
-		vb.getChildren().addAll(lhbox);
-		this.setCenter(vb);	
-	}
+//	public Highscore() {
+//		
+//		VBox vb = new VBox();
+//		addHbox(lhbox);
+//		vb.getChildren().addAll(lhbox);
+//		this.setCenter(vb);	
+//	}
 	
 	//création d'une liste de 5 hbox que l'on va insérer dans une vbox
 	public List<HBox> getLhbox(){
