@@ -357,20 +357,34 @@ public class GameController extends StackPane {
 		private Label lblPseudo;
 		private Label lblScore;
 		private Label lblTime;
-		
-		private List<HBox> hboxes;
-		
+				
 		public Ranking() {
 			
 			//Setup positioning
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(10);
 			this.setVgap(15);
-			//Setup elements
+			
+			//Titles
 			this.add(getLblRank(), 0, 0);
 			this.add(getLblPseudo(), 1, 0);
 			this.add(getLblScore(), 2, 0);
 			this.add(getLblTime(), 3, 0);
+			
+			//Content
+			this.addPlayer(1);
+		}
+		
+		private void addPlayer(int rank) {
+			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/icon_add_player.png");
+			Label lblPlayerPseudo = new Label("Arno");
+			Label lblPlayerScore = new Label("4");
+			Label lblPlayerTime = new Label("23:45");
+			
+			this.add(ivPlayerRank, 0, rank);
+			this.add(lblPlayerPseudo, 1, rank);
+			this.add(lblPlayerScore, 2, rank);
+			this.add(lblPlayerTime, 3, rank);
 		}
 		
 		public Label getLblRank() {
@@ -396,12 +410,6 @@ public class GameController extends StackPane {
 				lblTime = new Label("Time");
 			}
 			return lblTime;
-		}
-		public List<HBox> getHboxes() {
-			if(hboxes==null) {
-				
-			}
-			return hboxes;
 		}
 	}
 }
