@@ -94,7 +94,6 @@ public class GameController extends StackPane {
 		if(playerSelection==null) {
 			playerSelection = new PlayerSelection();
 			playerSelection.setId("playerSelection");
-			playerSelection.setTranslateY(-30);
 		}
 		return playerSelection;
 	}
@@ -113,6 +112,7 @@ public class GameController extends StackPane {
 	public Ranking getRanking() {
 		if(ranking==null) {
 			ranking = new Ranking();
+			ranking.setId("ranking");
 		}
 		return ranking;
 	}
@@ -270,8 +270,6 @@ public class GameController extends StackPane {
 			if(btnPlay==null) {
 				btnPlay = new Button("PLAY");
 				btnPlay.setId("btnPlaySelectPlayers");
-				btnPlay.setTranslateX(-220);
-				btnPlay.setTranslateY(-45);
 				btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -370,16 +368,21 @@ public class GameController extends StackPane {
 			this.add(getLblPseudo(), 1, 0);
 			this.add(getLblScore(), 2, 0);
 			this.add(getLblTime(), 3, 0);
+
 			
 			//Content
 			this.addPlayer(1);
 		}
 		
 		private void addPlayer(int rank) {
-			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/icon_add_player.png");
-			Label lblPlayerPseudo = new Label("Arno");
+			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
+			Label lblPlayerPseudo = new Label("ARNO");
 			Label lblPlayerScore = new Label("4");
 			Label lblPlayerTime = new Label("23:45");
+			ivPlayerRank.getStyleClass().add("positionRank");
+			lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
+			lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
+			lblPlayerTime.getStyleClass().addAll("positionTime", "lblRanking");
 			
 			this.add(ivPlayerRank, 0, rank);
 			this.add(lblPlayerPseudo, 1, rank);
@@ -389,25 +392,33 @@ public class GameController extends StackPane {
 		
 		public Label getLblRank() {
 			if(lblRank==null) {
-				lblRank = new Label("Rank");
+				lblRank = new Label("RANK");
+				lblRank.getStyleClass().add("positionRank");
+				lblRank.getStyleClass().add("titleRanking");
 			}
 			return lblRank;
 		}
 		public Label getLblPseudo() {
 			if(lblPseudo==null) {
-				lblPseudo = new Label("Pseudo");
+				lblPseudo = new Label("PSEUDO");
+				lblPseudo.getStyleClass().add("positionPseudo");
+				lblPseudo.getStyleClass().add("titleRanking");
 			}
 			return lblPseudo;
 		}
 		public Label getLblScore() {
 			if(lblScore==null) {
-				lblScore = new Label("Score");
+				lblScore = new Label("SCORE");
+				lblScore.getStyleClass().add("positionScore");
+				lblScore.getStyleClass().add("titleRanking");
 			}
 			return lblScore;
 		}
 		public Label getLblTime() {
 			if(lblTime==null) {
-				lblTime = new Label("Time");
+				lblTime = new Label("TIME");
+				lblTime.getStyleClass().add("positionTime");
+				lblTime.getStyleClass().add("titleRanking");
 			}
 			return lblTime;
 		}

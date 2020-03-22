@@ -75,8 +75,7 @@ public class MainController extends BorderPane {
 	public ImageView getIvHome() {
 		if(ivHome==null) {
 			ivHome = new ImageView("file:./src/resources/images/icon_home.png");
-			ivHome.setTranslateX(20);
-			ivHome.setTranslateY(20);
+			ivHome.setId("buttonHome");
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -202,7 +201,6 @@ class MainMenu extends BorderPane {
 	public MainMenu() {
 		
 		this.setId("mainMenu");
-		this.setTranslateY(-30);
 		
 		//CENTER
 		VBox vbCenter = new VBox();
@@ -257,8 +255,7 @@ class MainMenu extends BorderPane {
 		if(ivSettings==null) {
 			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
 			ivSettings.setOnMouseClicked(e -> MainController.this.showElement(MainController.this.getSettings()));
-			ivSettings.setTranslateX(260);
-			ivSettings.setTranslateY(-15);
+			ivSettings.setId("ivsettings");
 		}
 		return ivSettings;
 	}

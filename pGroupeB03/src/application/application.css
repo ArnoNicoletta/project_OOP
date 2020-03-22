@@ -12,6 +12,11 @@
 	-fx-background-size: 100%;
 }
 
+#buttonHome{
+	-fx-translate-x: 20;
+	-fx-translate-y: 20;
+}
+
 /* WAITING SCREEN */
 
 	/* Label Title FOUR THE WIN */
@@ -62,12 +67,18 @@
 		-fx-background-image: url("./../../src/resources/images/background_mainmenu.png");
 		-fx-background-position: top;
 		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -30;
 	}
 	
 	/* Buttons */
 	.btnMainMenu{
 		-fx-pref-width: 350px;
 		-fx-pref-height: 40px;
+	}
+	
+	#ivsettings{
+		-fx-translate-x: 260;
+		-fx-translate-y: -15;
 	}
 	
 	
@@ -78,12 +89,15 @@
 		-fx-background-image: url("./../../src/resources/images/background_select_players.png");
 		-fx-background-position: top;
 		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -30;
 	}
 	
 	/* Button Play */	
 	#btnPlaySelectPlayers{
 		-fx-pref-width: 200px;
 		-fx-pref-height: 40px;
+		-fx-translate-x: -220;
+		-fx-translate-y: -45;
 	}
 	
 	/* Warning ! Find a better way to select these labels and textfields */
@@ -117,6 +131,35 @@
 		-fx-background-insets: 10px 0;
 	}
 	
+
+/* RANKING */
+
+	/* Background */
+	#ranking{
+		-fx-background-image: url("./../../src/resources/images/background_ranking.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -40;
+	}
+	.positionRank{
+		-fx-translate-x: -110;
+	}
+	.positionPseudo{
+		-fx-translate-x: -40;
+	}
+	.positionScore{
+		-fx-translate-x: 25;
+	}
+	.positionTime{
+		-fx-translate-x: 110;
+	}
+	.titleRanking{
+		-fx-translate-y: -20;
+	}
+	.lblRanking{
+		-fx-font-size: 25;
+		-fx-translate-y: -5;
+	}
 
 	
 
