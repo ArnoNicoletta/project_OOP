@@ -24,8 +24,6 @@ public class AdminSettings extends StackPane {
 	private AdminDelete adminDelete;
 	private AdminAdd adminAdd;
 	
-	//private StackPane stackPane;
-	
 	public AdminSettings() {
 		this.getChildren().addAll(getAdminLogin(),getAdminMenu(),getAdminDelete(),getAdminAdd());
 		this.showElement(getAdminLogin());
@@ -36,11 +34,6 @@ public class AdminSettings extends StackPane {
 			if(n.isVisible()) {
 				n.setVisible(false);
 			}
-		}
-	}
-	private void hideAll() {
-		for(Node node : this.getChildren()) {
-			node.setVisible(false);
 		}
 	}
 	private void showElement(Node element) {
