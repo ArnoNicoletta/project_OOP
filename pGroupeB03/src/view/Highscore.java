@@ -1,66 +1,85 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
-public class Highscore extends BorderPane{
 
-	private List<HBox>lhbox;
-	private int i;
-	private Label lblname;
-	private Label lblscore;
-	private Label lbltime;
-	
-//	public Highscore() {
-//		
-//		VBox vb = new VBox();
-//		addHbox(lhbox);
-//		vb.getChildren().addAll(lhbox);
-//		this.setCenter(vb);	
-//	}
-	
-	//création d'une liste de 5 hbox que l'on va insérer dans une vbox
-	public List<HBox> getLhbox(){
-		if(lhbox == null) {
-			lhbox = new ArrayList<HBox>();
-		}
-		return lhbox;
-	}
-
-	public void addHbox(List<HBox> l) {
-		for(i=0;i<5;i++) {
-			HBox hb = new HBox();
-			//il faut faire en sorte que les get renvoient les infomations sur 1 joueur spécifique
+public class Highscore extends GridPane{
+	private Label lblRank;
+	private Label lblPseudo;
+	private Label lblScore;
+	private Label lblTime;
 			
-			hb.getChildren().addAll(getLblname(),getLblscore(),getLbltime());
-			l.add(hb);
+	public Highscore() {
+		
+		//Setup positioning
+		this.setAlignment(Pos.CENTER);
+		this.setHgap(10);
+		this.setVgap(15);
+		
+		//Titles
+		this.add(getLblRank(), 0, 0);
+		this.add(getLblPseudo(), 1, 0);
+		this.add(getLblScore(), 2, 0);
+		this.add(getLblTime(), 3, 0);
+
+		
+		//Content
+		for(int i=1;i<=5;i++) {
+			this.addPlayer(i);
 		}
+		
 	}
 	
-	public Label getLblname() {
-		if(lblname == null) {
-			lblname = new Label("ok");
-		}
-		return lblname;
-	}
-
-	public Label getLblscore() {
-		if(lblscore == null) {
-			lblscore = new Label("score");
-		}
-		return lblscore;
-	}
-
-	public Label getLbltime() {
-		if(lbltime == null) {
-			lbltime = new Label("time");
-		}
-		return lbltime;
+	private void addPlayer(int rank) {
+		ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
+		Label lblPlayerPseudo = new Label("joueur" + rank);
+		Label lblPlayerScore = new Label("sonScore");
+		Label lblPlayerTime = new Label("sonTemps");
+		ivPlayerRank.getStyleClass().add("positionRank");
+		lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
+		lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
+		lblPlayerTime.getStyleClass().addAll("positionTime", "lblRanking");
+		
+		this.add(ivPlayerRank, 0, rank);
+		this.add(lblPlayerPseudo, 1, rank);
+		this.add(lblPlayerScore, 2, rank);
+		this.add(lblPlayerTime, 3, rank);
+		//idem pour les 4 suivants
 	}
 	
+	public Label getLblRank() {
+		if(lblRank==null) {
+			lblRank = new Label("RANK");
+			lblRank.getStyleClass().add("positionRank");
+			lblRank.getStyleClass().add("titleRanking");
+		}
+		return lblRank;
+	}
+	public Label getLblPseudo() {
+		if(lblPseudo==null) {
+			lblPseudo = new Label("PSEUDO");
+			lblPseudo.getStyleClass().add("positionPseudo");
+			lblPseudo.getStyleClass().add("titleRanking");
+		}
+		return lblPseudo;
+	}
+	public Label getLblScore() {
+		if(lblScore==null) {
+			lblScore = new Label("SCORE");
+			lblScore.getStyleClass().add("positionScore");
+			lblScore.getStyleClass().add("titleRanking");
+		}
+		return lblScore;
+	}
+	public Label getLblTime() {
+		if(lblTime==null) {
+			lblTime = new Label("TIME");
+			lblTime.getStyleClass().add("positionTime");
+			lblTime.getStyleClass().add("titleRanking");
+		}
+		return lblTime;
+	}
 }

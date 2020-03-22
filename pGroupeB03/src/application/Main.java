@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import view.AdminSettings;
 import view.GameController;
 import view.Highscore;
 import view.MainController;
@@ -13,6 +14,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			//AdminSettings root = new AdminSettings();
 			MainController root = new MainController();
 			Scene scene = new Scene(root,1024,576);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
