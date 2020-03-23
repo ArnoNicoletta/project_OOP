@@ -19,7 +19,7 @@ public class Settings extends StackPane {
 	
 	
 	public Settings() {
-		this.getChildren().addAll(getMenuSettings(),getUserSettings());
+		this.getChildren().addAll(getMenuSettings(),getUserSettings(), getAdminSettings());
 		this.showElement(getMenuSettings());
 	}
 	
@@ -103,7 +103,7 @@ public class Settings extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						hideVisible();
-						Settings.this.showElement(getAdminSettings()); //TODO NE S'AFFICHE PAS
+						Settings.this.showElement(Settings.this.getAdminSettings());
 					}
 				});
 			}
