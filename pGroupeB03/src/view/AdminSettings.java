@@ -144,7 +144,6 @@ public class AdminSettings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						hideVisible();
 						getAdminMenu().setVisible(true);
 					}
@@ -176,7 +175,6 @@ public class AdminSettings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						hideVisible();
 						getAdminAdd().setVisible(true);
 					}
@@ -193,7 +191,6 @@ public class AdminSettings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						hideVisible();
 						getAdminDelete().setVisible(true);
 					}
