@@ -47,11 +47,9 @@ public class GameController extends StackPane {
 	private Ranking ranking;
 	
 	public GameController() {
-		this.getChildren().addAll(getPlayerSelection(), getThemeSelection(), getGamePane(), getRanking());
-		this.showElement(getRanking());
-	}
-	public void reset() {
-		
+		getDecks();
+		this.getChildren().addAll(getPlayerSelection());
+		this.showElement(getPlayerSelection());
 	}
 	private void hideVisible() {
 		for(Node n : this.getChildren()) {
@@ -65,24 +63,24 @@ public class GameController extends StackPane {
 		element.setVisible(true);
 	}
 	public List<Player> getPlayers() {
-		if(players==null) {
-			players = new ArrayList<>();
-		}
 		List<Player> ret = new ArrayList<>();
 		for(Player p : players) {
 			ret.add(p.clone());
 		}
 		return ret;
 	}
+	public void setPlayers(List<Player> players) {
+		this.players = new ArrayList<Player>();
+		for(Player p : players) {
+			this.players.add(p);
+		}
+	}
 	public List<Deck> getDecks() {
 		if(decks==null) {
-			System.out.println("GETDECKS");
 			decks = new ArrayList<>();
 			for(File f : new File("./src/resources/questions").listFiles()) {
-				System.out.println(f);
 				decks.add(Deck.fromJson(f));
 			}
-			System.out.println(decks);
 		}
 		List<Deck> ret = new ArrayList<>();
 		for(Deck d : decks) {
@@ -90,6 +88,13 @@ public class GameController extends StackPane {
 		}
 		return ret;
 	}
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	// GUI elements
 	public PlayerSelection getPlayerSelection() {
 		if(playerSelection==null) {
 			playerSelection = new PlayerSelection();
@@ -281,7 +286,8 @@ public class GameController extends StackPane {
 								return;
 							}
 						}
-						GameController.this.getPlayers().addAll(tmp);
+						GameController.this.setPlayers(new ArrayList<>(tmp));
+						GameController.this.getChildren().add(GameController.this.getThemeSelection());
 						GameController.this.showElement(getThemeSelection());
 					}
 				});
@@ -309,7 +315,8 @@ public class GameController extends StackPane {
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label("********, SELECT A THEME ");
+				lblPlayer = new Label(GameController.this.getPlayers().get(GameController.this.getCurrentPlayer()) + 
+						" , SELECT A THEME ");
 			}
 			return lblPlayer;
 		}
@@ -319,7 +326,7 @@ public class GameController extends StackPane {
 				for(int i=1;i<=getPlayers().size();i++) {
 					Random rand = new Random();
 					Button b = new Button(GameController.this.getDecks().
-							get(rand.nextInt(GameController.this.getDecks().size())).getTheme());
+							get(i).getTheme());
 					b.setOnAction(e -> GameController.this.showElement(getGamePane()));
 					lBtnTheme.add(b);
 				}

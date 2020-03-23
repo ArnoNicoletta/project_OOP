@@ -81,11 +81,9 @@ public class MainController extends BorderPane {
 				public void handle(MouseEvent event) {
 					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you want to go back to menu?");
 					if(sure) {
+						ivHome.setVisible(false);
 						hideVisible();
 						getMainMenu().setVisible(true);
-						ivHome.setVisible(false);
-						settings = new Settings();
-						gameController = new GameController();
 					}
 				}
 			});
