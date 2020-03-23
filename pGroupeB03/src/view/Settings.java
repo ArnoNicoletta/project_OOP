@@ -84,7 +84,6 @@ public class Settings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						hideVisible();
 						getUserSettings().setVisible(true);
 					}
@@ -103,7 +102,6 @@ public class Settings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						hideVisible();
 						Settings.this.showElement(getAdminSettings()); //TODO NE S'AFFICHE PAS
 					}
