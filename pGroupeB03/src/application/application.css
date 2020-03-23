@@ -89,7 +89,7 @@
 		-fx-background-image: url("./../../src/resources/images/background_select_players.png");
 		-fx-background-position: top;
 		-fx-background-repeat: no-repeat;
-		-fx-translate-y: -30;
+		-fx-translate-y: -40;
 	}
 	
 	/* Button Play */	
@@ -131,6 +131,25 @@
 		-fx-background-insets: 10px 0;
 	}
 	
+/* SELECT A THEME */
+
+	/* Background */
+	#themeSelection{
+		-fx-background-image: url("./../../src/resources/images/background_theme.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -30;
+	}
+	
+	#lblPlayerTheme{
+		-fx-font-size: 25px;
+		-fx-translate-y: -30;
+	}
+	
+	#lblPlayerTheme .text{
+		-fx-stroke-width: 2px;
+	}
+	
 
 /* RANKING */
 
@@ -161,6 +180,28 @@
 		-fx-translate-y: -5;
 	}
 
+	
+/* SETTINGS */
+
+	/* MENU SETTINGS CHOICE */
+	/* Background */
+	#menuSettingsChoice{
+		-fx-background-image: url("./../../src/resources/images/background_settings_choice.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -40;
+	}
+	
+	#btnUserSettingChoice{
+		-fx-pref-width: 600px;
+		-fx-translate-y: 25;
+	}
+	
+	#btnAdminSettingChoice{
+		-fx-pref-width: 600px;
+		-fx-translate-y: 140;
+	}
+		
 	
 
 /* Default CSS for the buttons */

@@ -26,6 +26,7 @@ public class Settings extends StackPane {
 	public MenuSettings getMenuSettings() {
 		if(menuSettings == null) {
 			menuSettings = new MenuSettings();
+			menuSettings.setId("menuSettingsChoice");
 		}
 		return menuSettings;
 	}
@@ -77,6 +78,7 @@ public class Settings extends StackPane {
 		public Button getBtnUser() {
 			if(btnUser == null) {
 				btnUser = new Button("USER SETTINGS");
+				btnUser.setId("btnUserSettingChoice");
 				
 				btnUser.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 				
@@ -95,6 +97,7 @@ public class Settings extends StackPane {
 		public Button getBtnAdmin() {
 			if(btnAdmin == null) {
 				btnAdmin = new Button("ADMIN SETTINGS");
+				btnAdmin.setId("btnAdminSettingChoice");
 				
 				btnAdmin.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 				

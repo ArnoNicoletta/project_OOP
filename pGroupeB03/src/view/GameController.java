@@ -113,6 +113,7 @@ public class GameController extends StackPane {
 	public ThemeSelection getThemeSelection() {
 		if(themeSelection==null) {
 			themeSelection = new ThemeSelection();
+			themeSelection.setId("themeSelection");
 		}
 		return themeSelection;
 	}
@@ -151,6 +152,7 @@ public class GameController extends StackPane {
 		private int count = 0;
 		
 		private GridPane gpCenter;
+		
 		
 		private List<Label> lLblPlayer;
 		private List<TextField> lTxtPlayer;
@@ -325,6 +327,7 @@ public class GameController extends StackPane {
 			if(lblPlayer==null) {
 				lblPlayer = new Label(GameController.this.getPlayers().get(GameController.this.getCurrentPlayer()) + 
 						" , SELECT A THEME ");
+				lblPlayer.setId("lblPlayerTheme");
 			}
 			return lblPlayer;
 		}
