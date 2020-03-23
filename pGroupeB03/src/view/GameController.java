@@ -335,6 +335,7 @@ public class GameController extends StackPane {
 					//Random rand = new Random();
 					Button b = new Button(GameController.this.getDecks().
 							get(i).getTheme());
+					b.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 					b.setPrefWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 					b.setPrefWidth(IGraphicConst.HEIGHT_BUTTON);
 					b.setOnAction(new EventHandler<ActionEvent>() {
@@ -387,7 +388,7 @@ public class GameController extends StackPane {
 			
 			//LEFT
 			VBox vbLeft = new VBox(15);
-			vbLeft.setAlignment(Pos.CENTER_LEFT);
+			vbLeft.setAlignment(Pos.CENTER);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			this.setLeft(vbLeft);
 			
@@ -414,7 +415,8 @@ public class GameController extends StackPane {
 		public ImageView getIvScore() {
 			if(ivScore==null) {
 				ivScore = new ImageView("file:./src/resources/speedometer/start.png");
-				//TODO
+				ivScore.setFitHeight(100);
+				ivScore.setFitWidth(100);
 			}
 			return ivScore;
 		}
@@ -459,15 +461,17 @@ public class GameController extends StackPane {
 		public Label getLblClues() {
 			if(lblClues==null) {
 				lblClues = new Label();
-				lblClues.setText("CLUES"); //TODO
+				lblClues.setText("CLUES"); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
+				//TODO
 			}
 			return lblClues;
 		}
 		public TextField getTxtAnswer() {
 			if(txtAnswer==null) {
 				txtAnswer = new TextField();
-				txtAnswer.setPrefWidth(IGraphicConst.WIDTH_LARGE_LBL);
+				txtAnswer.setMinWidth(IGraphicConst.WIDTH_LARGE_LBL);
+				txtAnswer.setMaxWidth(IGraphicConst.WIDTH_LARGE_LBL);
 			}
 			return txtAnswer;
 		}
