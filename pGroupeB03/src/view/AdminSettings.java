@@ -249,14 +249,16 @@ public class AdminSettings extends StackPane {
 
 		public Label getLblTheme() {
 			if(lblTheme == null) {
-				lblTheme = new Label("SELECT A THEME:");
+				lblTheme = new Label("SELECT A THEME : ");
+				lblTheme.getStyleClass().add("lblAdminDelete");
 			}
 			return lblTheme;
 		}
 
 		public Label getLblRiddle() {
 			if(lblRiddle == null) {
-				lblRiddle = new Label("SELECT A RIDDLE:");
+				lblRiddle = new Label("SELECT A RIDDLE : ");
+				lblRiddle.getStyleClass().add("lblAdminDelete");
 			}
 			return lblRiddle;
 		}
@@ -264,6 +266,7 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtTheme() {
 			if(txtTheme == null) {
 				txtTheme = new TextField();
+				txtTheme.getStyleClass().add("txtAdminDelete");
 			}
 			return txtTheme;
 		}
@@ -271,12 +274,14 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtRiddle() {
 			if(txtRiddle == null) {
 				txtRiddle = new TextField();
+				txtRiddle.getStyleClass().add("txtAdminDelete");
 			}
 			return txtRiddle;
 		}
 		public Button getBtnDelete() {
 			if(btnDelete == null) {
 				btnDelete = new Button("DELETE");
+				btnDelete.setId("btnAdminDelete");
 			}
 			return btnDelete;
 		}
@@ -341,6 +346,7 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtTheme() {
 			if(txtTheme == null) {
 				txtTheme = new TextField();
+				txtTheme.getStyleClass().add("txtAddQuestion");
 			}
 			return txtTheme;
 		}
@@ -355,6 +361,7 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue1() {
 			if(txtClue1 == null) {
 				txtClue1 = new TextField("");
+				txtClue1.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue1;
 		}
@@ -370,6 +377,7 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue2() {
 			if(txtClue2 == null) {
 				txtClue2 = new TextField("");
+				txtClue2.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue2;
 		}
@@ -385,6 +393,7 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue3() {
 			if(txtClue3 == null) {
 				txtClue3 = new TextField("");
+				txtClue3.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue3;
 		}

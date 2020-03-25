@@ -232,6 +232,34 @@
 		-fx-background-repeat: no-repeat;
 		-fx-translate-y: -40;
 	}
+	
+	/* ADMIN SETTINGS ADD QUESTION */
+	/* Labels */
+	.lblAddQuestion{
+		
+	}
+	
+	/* Textfields */
+	.txtAddQuestion{
+	
+	}
+	
+	/* ADMIN SETTINGS DELETE QUESTIONS */
+	.txtAdminDelete{
+		-fx-translate-x: 10px;
+		-fx-pref-width: 300px;
+	}
+	
+	.lblAdminDelete{
+		-fx-translate-x: -10px;
+	}
+	
+	#btnAdminDelete{
+		-fx-translate-y: 105px;
+		-fx-translate-x: 55px;
+		-fx-pref-width: 200px;
+	}
+	
 
 /* Default CSS for the buttons, labels and textfields */
 .button{
