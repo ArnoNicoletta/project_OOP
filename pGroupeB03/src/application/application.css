@@ -100,36 +100,6 @@
 		-fx-translate-y: -45;
 	}
 	
-	/* Warning ! Find a better way to select these labels and textfields */
-	/* Labels */
-	Label{
-		-fx-text-fill: white;
-		-fx-font-family: "Roboto Black", sans-serif;
-		-fx-font-size: 20px;
-		-fx-font-weight: bold;
-	}
-	Label .text{
-		-fx-stroke: black;
-		-fx-stroke-width: 1px;
- 		-fx-stroke-type: outside;
-	}
-	
-	/* TextFields */
-	TextField {
-		-fx-pref-width: 200px;
-		-fx-pref-height: 30px;
-		-fx-border-style: solid;
-		-fx-border-width: 1px;
-		-fx-border-color: black;
-		-fx-border-radius: 10px;
-		-fx-background-radius: 11px;
-		-fx-text-fill: black;
-		-fx-font-family: "Roboto Black", sans-serif;
-		-fx-font-size: 15px;
-		-fx-font-weight: bold;
-		-fx-border-insets: 10px 0;
-		-fx-background-insets: 10px 0;
-	}
 	
 /* SELECT A THEME */
 
@@ -201,10 +171,69 @@
 		-fx-pref-width: 600px;
 		-fx-translate-y: 140;
 	}
-		
 	
+	/* USER SETTINGS */
+	/* Background */
+	#userSettings{
+		-fx-background-image: url("./../../src/resources/images/background_user_settings.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -40;
+	}
+	
+	#btnSaveUserSettings{
+		-fx-pref-width: 200px;
+		-fx-translate-x: -10px;
+		-fx-translate-y: 120px;
+	}
+	
+	.positionUserSettings{
+		-fx-translate-x: 120px;
+	}
+	
+	.positionTxtUserSettings{
+		-fx-translate-x: 60px;
+	}
+	
+	/* ADMIN SETTINGS LOGIN */
+	/* Background */
+	#adminLogin{
+		-fx-background-image: url("./../../src/resources/images/background_admin_login.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -40;		
+	}
+	
+	/* Title "Admin Login" */
+	#titleAdminLogin{
+		-fx-font-size: 30px;
+		-fx-translate-y: 20px;
+	}
+	#titleAdminLogin .text{
+		-fx-stroke-width: 2px;
+	}
+	
+	/* Position of labels and textfields */
+	.positionAdminLogin{
+		-fx-translate-y: 50px;
+	}
+	
+	/* Button Login */
+	#btnAdminLogin{
+		-fx-pref-width: 200px;
+		-fx-translate-y: 90px;
+		-fx-translate-x: 110px;
+	}
+	
+	/* ADMIN SETTINGS MENU */
+	#adminMenu, #adminAdd, #adminDelete{
+		-fx-background-image: url("./../../src/resources/images/background_user_settings.png");
+		-fx-background-position: top;
+		-fx-background-repeat: no-repeat;
+		-fx-translate-y: -40;
+	}
 
-/* Default CSS for the buttons */
+/* Default CSS for the buttons, labels and textfields */
 .button{
 	-fx-background-color: #793F54;
 	-fx-border-color: #000000;
@@ -221,6 +250,36 @@
 	-fx-stroke: black;
 	-fx-stroke-width: 2px;
  	-fx-stroke-type: outside;
+}
+
+/* Labels */
+Label{
+	-fx-text-fill: white;
+	-fx-font-family: "Roboto Black", sans-serif;
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+Label .text{
+	-fx-stroke: black;
+	-fx-stroke-width: 1px;
+	 -fx-stroke-type: outside;
+}
+		
+/* TextFields */
+TextField, PasswordField {
+	-fx-pref-width: 200px;
+	-fx-pref-height: 30px;
+	-fx-border-style: solid;
+	-fx-border-width: 1px;
+	-fx-border-color: black;
+	-fx-border-radius: 10px;
+	-fx-background-radius: 11px;
+	-fx-text-fill: black;
+	-fx-font-family: "Roboto Black", sans-serif;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-border-insets: 10px 0;
+	-fx-background-insets: 10px 0;
 }
 
 

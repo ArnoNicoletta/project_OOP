@@ -33,6 +33,7 @@ public class Settings extends StackPane {
 	public UserSettings getUserSettings() {
 		if(userSettings == null) {
 			userSettings = new UserSettings();
+			userSettings.setId("userSettings");
 		}
 		return userSettings;
 	}
@@ -122,7 +123,6 @@ public class Settings extends StackPane {
 		private Button btnSave;
 		
 		public UserSettings() {
-			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
 			this.setVgap(5);
@@ -147,6 +147,7 @@ public class Settings extends StackPane {
 		public Label getLblNbRound() {
 			if( lblNbRound == null) {
 				lblNbRound = new Label("NUMBER OF ROUNDS :");
+				lblNbRound.getStyleClass().addAll("positionUserSettings", "positionTxtUserSettings");
 			}
 			return lblNbRound;
 		}
@@ -154,6 +155,7 @@ public class Settings extends StackPane {
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
 				txtNbRound = new TextField("1");
+				txtNbRound.getStyleClass().add("positionUserSettings");
 			}
 			return txtNbRound;
 		}
@@ -161,20 +163,23 @@ public class Settings extends StackPane {
 		public Label getLblTime() {
 			if(lblTime == null) {
 				lblTime = new Label("ROUND TIME (second) :");
+				lblTime.getStyleClass().addAll("positionUserSettings", "positionTxtUserSettings");
 			}
 			return lblTime;
 		}
 
 		public TextField getTxtTime() {
 			if( txtTime == null) {
-				txtTime = new TextField("time");
+				txtTime = new TextField("45");
+				txtTime.getStyleClass().add("positionUserSettings");
 			}
 			return txtTime;
 		}
 
 		public Button getBtnSave() {
 			if( btnSave== null) {
-				btnSave = new Button("Save");
+				btnSave = new Button("SAVE");
+				btnSave.setId("btnSaveUserSettings");
 			}
 			return btnSave;
 		}
