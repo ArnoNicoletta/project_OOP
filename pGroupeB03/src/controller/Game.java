@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import model.Deck;
 
@@ -68,6 +69,23 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Gives a pseudorandom {@link List} of {@link Deck} from the {@link Game} decks with a given size.
+	 * @param nb {@link Integer}. The size of the returned {@link List}.
+	 * @return {@link List} of {@link Deck}.
+	 */
+	public List<Deck> randomChoice(int nb){
+		if(decks.size()<=nb) return null;
+		List<Deck> ret = new ArrayList<>();
+		List<Deck> tmp = this.getDecks();
+		Random rand = new Random();
+		for(int i=1;i<=nb;i++) {
+			int index = rand.nextInt(tmp.size());
+			ret.add(tmp.get(index));
+			tmp.remove(index);
+		}
+		return ret;
+	}
 	
 	/**
 	 * Allows to save all the decks in the current {@link Game}.
@@ -145,13 +163,13 @@ public class Game {
 	}
 	
 	/**
-	 * Get the list of decks included in the current {@link Game}
-	 * @return {@link ArrayList} of {@link Deck}
+	 * Get a cloned list of decks included in the current {@link Game} decks.
+	 * @return {@link List} of {@link Deck}
 	 */
 	public List<Deck> getDecks() {
 		List<Deck> ret = new ArrayList<>();
 		for(Deck d : decks) {
-			ret.add(d);
+			ret.add(d.clone());
 		}
 		return ret;
 	}
