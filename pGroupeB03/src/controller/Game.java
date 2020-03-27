@@ -27,8 +27,8 @@ public class Game {
 	}
 	
 	/**
-	 * The only way to have an instance of Game.
-	 * @return Game instance. The only one instance of the class Game.
+	 * The only way to have an instance of {@link Game}.
+	 * @return {@link Game} instance. The only one instance of the class {@link Game}.
 	 */
 	public static Game getInstance() {
 		if(instance==null) {
@@ -71,7 +71,7 @@ public class Game {
 	
 	
 	/**
-	 * Allows to save all the decks in the current Game.
+	 * Allows to save all the decks in the current {@link Game}.
 	 * Decks will be saved in json format file.
 	 * @see model.Deck.toJson
 	 */
@@ -92,9 +92,9 @@ public class Game {
 	
 	//CRUD methods
 	/**
-	 * Allows to add a deck in the current Game.
-	 * @param d : Deck. The Deck to add
-	 * @return boolean. True if the Deck is well removed.
+	 * Allows to add a {@link Deck} in the current {@link Game}.
+	 * @param d : {@link Deck}. The {@link Deck} to add
+	 * @return {@link Boolean}. True if the {@link Deck} is well removed.
 	 */
 	public boolean addDeck(Deck d) {
 		if(!decks.contains(d)) {
@@ -105,8 +105,8 @@ public class Game {
 	
 	/**
 	 * Allows to read a json format file which contains a deck.
-	 * @param f : File. The json file to read.
-	 * @return boolean. True if the deck is well created and added to the Game.
+	 * @param f : {@link File}. The json file to read.
+	 * @return {@link Boolean}. True if the {@link Deck} is well created and added to the {@link Game}.
 	 * @see this.addDeck(Deck d)
 	 */
 	public boolean addDeck(File f) {
@@ -115,9 +115,9 @@ public class Game {
 	}
 	
 	/**
-	 * Allows to remove a deck from the Game.
-	 * @param d : Deck. The deck to remove.
-	 * @return boolean. True if the deck is well removed.
+	 * Allows to remove a {@link Deck} from the Game.
+	 * @param d : {@link Deck}. The {@link Deck} to remove.
+	 * @return {@link Boolean}. True if the {@link Deck} is well removed.
 	 */
 	public boolean removeDeck(Deck d) {
 		if(decks.contains(d)) {
@@ -128,9 +128,9 @@ public class Game {
 	}
 	
 	/**
-	 * Allows to remove a deck at a specific index.
-	 * @param index : int. The index of the deck to remove.
-	 * @return boolean. True if the deck is well removed.
+	 * Allows to remove a {@link Deck} at a specific index.
+	 * @param index : {@link Integer}. The index of the deck to remove.
+	 * @return {@link Boolean}. True if the deck is well removed.
 	 */
 	public boolean removeDeck(int index) {
 		if(decks.size()>index && index>=0) {
@@ -140,6 +140,21 @@ public class Game {
 		return false;
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Get the list of decks included in the current {@link Game}
+	 * @return {@link ArrayList} of {@link Deck}
+	 */
+	public List<Deck> getDecks() {
+		List<Deck> ret = new ArrayList<>();
+		for(Deck d : decks) {
+			ret.add(d);
+		}
+		return ret;
+	}
 	
 	//Base methods
 	@Override

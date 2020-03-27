@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 
 
 /**
- * This class manages lists of Question.
+ * This class manages lists of {@link Question}.
  * @author ArRaLo
  * @see model.Question
  */
@@ -43,9 +43,9 @@ public class Deck {
 	// Json methods
 	
 	/**
-	 * Read a .json file and convert it into a Deck
-	 * @param file : File. The file to read. Must be in .json file format.
-	 * @return the created Deck
+	 * Read a .json {@link File} and convert it into a {@link Deck}
+	 * @param file : {@link File}. The file to read. Must be in .json file format.
+	 * @return the created {@link Deck}
 	 */
 	public static Deck fromJson(File file) {
 		Deck ret = null;
@@ -61,9 +61,9 @@ public class Deck {
 	}
 	
 	/** 
-	 * Write a deck in a json file format.
-	 * @param d : Deck. The deck you want to write.
-	 * @param file : File. The json file which you want to write in.
+	 * Write a {@link Deck} in a json file format.
+	 * @param d : {@link Deck}. The {@link Deck} you want to write.
+	 * @param file : {@link File}. The json {@link File} which you want to write in.
 	 */
 	public static void toJson(Deck d, File file) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -79,10 +79,10 @@ public class Deck {
 	
 	// CRUD methods
 	/** 
-	 * Allows to add a question to the deck if not in the list yet.
+	 * Allows to add a {@link Question} to the {@link Deck} if not in the list yet.
 	 * If the list isn't empty, the theme must be the same for all questions added.
-	 * @param q : Question. The question to add.
-	 * @return boolean. True if the question is well added.
+	 * @param q : {@link Question}. The {@link Question} to add.
+	 * @return {@link Boolean}. True if the {@link Question} q is well added.
 	 */
 	public boolean addQuestion(Question q) {
 		if(questions.isEmpty()) {
@@ -95,18 +95,18 @@ public class Deck {
 	}
 	
 	/**
-	 * Allows to remove a question from the deck.
-	 * @param q : Question. The question to remove.
-	 * @return boolean. True if the question is well removed.
+	 * Allows to remove a {@link Question} from the {@link Deck}.
+	 * @param q : {@link Question}. The {@link Question}  to remove.
+	 * @return {@link Boolean}. True if the {@link Question} q is well removed.
 	 */
 	public boolean deleteQuestion(Question q) {
 		return questions.remove(q);
 	}
 	
 	/**
-	 * Allows to remove a question from the deck
-	 * @param index : int. The index of the question you want to remove from the deck.
-	 * @return boolean. True if the question is well removed.
+	 * Allows to remove a {@link Question} from the deck
+	 * @param index : {@link Integer}. The index of the {@link Question} you want to remove from the {@link Deck}.
+	 * @return {@link Boolean}. True if the {@link Question} q is well removed.
 	 */
 	public boolean deleteQuestion(int index) {
 		if(questions.size()>index && index>=0) {
@@ -117,8 +117,8 @@ public class Deck {
 	}
 	
 	/**
-	 * Gives the theme of the deck
-	 * @return String. The theme of the deck.
+	 * Gives the theme of the {@link Deck}
+	 * @return {@link String}. The theme of the {@link Deck}.
 	 */
 	public String getTheme() {
 		if(questions.isEmpty()) {
