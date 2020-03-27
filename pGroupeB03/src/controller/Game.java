@@ -9,7 +9,6 @@ import model.Deck;
 /**
  * This class manages the whole game.
  * @author ArRaLo
- * @version 1.0
  * @see model.Deck
  */
 public class Game {
@@ -94,7 +93,7 @@ public class Game {
 	/**
 	 * Allows to add a {@link Deck} in the current {@link Game}.
 	 * @param d : {@link Deck}. The {@link Deck} to add
-	 * @return {@link Boolean}. True if the {@link Deck} is well removed.
+	 * @return {@link Boolean}. <code>true</code> if the {@link Deck} is well removed.
 	 */
 	public boolean addDeck(Deck d) {
 		if(!decks.contains(d)) {
@@ -106,7 +105,7 @@ public class Game {
 	/**
 	 * Allows to read a json format file which contains a deck.
 	 * @param f : {@link File}. The json file to read.
-	 * @return {@link Boolean}. True if the {@link Deck} is well created and added to the {@link Game}.
+	 * @return {@link Boolean}. <code>true</code> if the {@link Deck} is well created and added to the {@link Game}.
 	 * @see this.addDeck(Deck d)
 	 */
 	public boolean addDeck(File f) {
@@ -114,10 +113,15 @@ public class Game {
 		return this.addDeck(d.clone());
 	}
 	
+	public void addAllDeck() {
+		for(File f : new File("./src/resources/questions").listFiles()) {
+			decks.add(Deck.fromJson(f));
+		}
+	}
 	/**
 	 * Allows to remove a {@link Deck} from the Game.
 	 * @param d : {@link Deck}. The {@link Deck} to remove.
-	 * @return {@link Boolean}. True if the {@link Deck} is well removed.
+	 * @return {@link Boolean}. <code>true</code> if the {@link Deck} is well removed.
 	 */
 	public boolean removeDeck(Deck d) {
 		if(decks.contains(d)) {
@@ -130,7 +134,7 @@ public class Game {
 	/**
 	 * Allows to remove a {@link Deck} at a specific index.
 	 * @param index : {@link Integer}. The index of the deck to remove.
-	 * @return {@link Boolean}. True if the deck is well removed.
+	 * @return {@link Boolean}. <code>true</code> if the deck is well removed.
 	 */
 	public boolean removeDeck(int index) {
 		if(decks.size()>index && index>=0) {
@@ -139,10 +143,6 @@ public class Game {
 		}
 		return false;
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Get the list of decks included in the current {@link Game}
@@ -156,6 +156,26 @@ public class Game {
 		return ret;
 	}
 	
+	/**
+	 * @param d : {@link Deck}. The {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck getDeck(Deck d) {
+		if(!decks.contains(d)) return null;
+		return decks.get(decks.indexOf(d)).clone();
+	}
+	/**
+	 * @param theme {@link String}. The theme of the {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck getDeck(String theme) {
+		for(Deck in : decks) {
+			if(in.getTheme().equalsIgnoreCase(theme)) {
+				return in.clone();
+			}
+		}
+		return null;
+	}
 	//Base methods
 	@Override
 	public String toString() {
