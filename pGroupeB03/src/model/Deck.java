@@ -40,7 +40,7 @@ public class Deck {
 		return questions.size();
 	}
 	
-	// Json methods
+	//JSON methods
 	
 	/**
 	 * Read a .json {@link File} and convert it into a {@link Deck}
@@ -61,7 +61,7 @@ public class Deck {
 	}
 	
 	/** 
-	 * Write a {@link Deck} in a json file format.
+	 * Write a {@link Deck} in a json {@link File} format.
 	 * @param d : {@link Deck}. The {@link Deck} you want to write.
 	 * @param file : {@link File}. The json {@link File} which you want to write in.
 	 */
@@ -127,7 +127,7 @@ public class Deck {
 		return questions.get(0).getTheme();
 	}
 	
-	// Base methods
+	// Basic methods
 	@Override
 	public int hashCode() {
 		final int prime = 31;

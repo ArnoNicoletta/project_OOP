@@ -2,6 +2,11 @@ package model;
 
 import exception.WrongLoginException;
 
+/**
+ * This class manages admin.
+ * @author ArRaLo
+ * @see AcceptedAdmins
+ */
 public class Admin {
 	
 	private String username;
@@ -17,13 +22,14 @@ public class Admin {
 		}
 		if(this.username==null && this.password == null) throw new WrongLoginException();
 	}
-	
+	//Getters and Setters
 	public String getUsername() {
 		return username;
 	}
 	public String getPassword() {
 		return password;
 	}
+	//Basic methods
 	@Override
 	public String toString() {
 		return this.username;

@@ -93,13 +93,12 @@ public class Game {
 	 * @see model.Deck.toJson
 	 */
 	public void saveAllDecks() {
-		int i = 0;
 		for(Deck d : decks) {
 			try {
 				File f = new File("./src/resources/questions/deck_" + d.getTheme() + ".json");
-				if(f.createNewFile()) {
-					Deck.toJson(d, f);
-				}
+				f.createNewFile();
+				Deck.toJson(d, f);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -131,9 +130,13 @@ public class Game {
 		return this.addDeck(d.clone());
 	}
 	
+	/**
+	 * Read all .json {@link File} in defined directory and convert them into {@link Deck}.
+	 * All created decks will be added in the current {@link Game}
+	 */
 	public void addAllDeck() {
 		for(File f : new File("./src/resources/questions").listFiles()) {
-			decks.add(Deck.fromJson(f));
+			this.addDeck(f);
 		}
 	}
 	/**
@@ -194,7 +197,7 @@ public class Game {
 		}
 		return null;
 	}
-	//Base methods
+	//Basic methods
 	@Override
 	public String toString() {
 		String s="";
