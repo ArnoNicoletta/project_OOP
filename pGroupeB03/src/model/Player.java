@@ -80,13 +80,15 @@ public class Player {
 		return score;
 	}
 	public void setScore(int score) {
-		this.score = score;
+		if(score>=0 && score<=4)
+			this.score = score;
 	}
 	public double getTime() {
 		return time;
 	}
 	public void setTime(double time) {
-		this.time = time;
+		if(time>=0 && time<=IRulesConst.ROUND_TIME)
+			this.time = time;
 	}
 	//Basic methods
 	@Override
