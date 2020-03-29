@@ -131,7 +131,7 @@ public class Game {
 	}
 	
 	/**
-	 * Read all .json {@link File} in defined directory and convert them into {@link Deck}.
+	 * Read all .json {@link File} in a predefined directory and convert them into {@link Deck}.
 	 * All created decks will be added in the current {@link Game}
 	 */
 	public void addAllDeck() {
