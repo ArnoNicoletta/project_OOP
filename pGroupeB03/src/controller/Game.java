@@ -202,7 +202,7 @@ public class Game {
 	public String toString() {
 		String s="";
 		for(Deck d : decks) {
-			s += "---------\n" + d.toString(); 
+			s += d.toString() + "---------\n"; 
 		}
 		return s;
 	}
