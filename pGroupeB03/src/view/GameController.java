@@ -75,7 +75,6 @@ public class GameController extends StackPane {
 		}
 		return ret;
 	}
-	public boolean addDeck(Deck)
 	public void setCurrentPlayer(int currentPlayer) {
 		if(currentPlayer>=0 && currentPlayer<getGame().getNumberOfPlayers()) this.currentPlayer = currentPlayer;
 	}
@@ -282,6 +281,8 @@ public class GameController extends StackPane {
 							}
 						}
 						GameController.this.setCurrentPlayer(0);
+						GameController.this.getChildren().add(getThemeSelection());
+						GameController.this.showElement(getThemeSelection());
 					}
 				});
 			}
@@ -292,6 +293,8 @@ public class GameController extends StackPane {
 	
 	
 	class ThemeSelection extends BorderPane{
+		
+		private final String txtMysteryTheme = "? Mystery theme ?";
 		
 		private Label lblPlayer;
 		private List<Button> lBtnTheme;
@@ -321,20 +324,25 @@ public class GameController extends StackPane {
 						GameController.this.getGame().randomChoice(
 								GameController.this.getGame().getNumberOfPlayers()));
 				
-				for(int i=1;i<=GameController.this.getGame().getNumberOfPlayers();i++) {
-					
-					Button b = new Button(GameController.this.getDecks().
-							get(i).getTheme());
+				for(int i=0;i<=GameController.this.getGame().getNumberOfPlayers();i++) {
+					Deck d = GameController.this.getGame().getDeck(i);
+					Button b = new Button(d.getTheme());
+					if(i==GameController.this.getGame().getNumberOfPlayers())
+						b.setText(txtMysteryTheme);
+					if(GameController.this.getGame().hasBeenUsed(d))
+						b.setDisable(true);
 					b.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 					b.setPrefWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 					b.setPrefWidth(IGraphicConst.HEIGHT_BUTTON);
 					b.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent event) {
-							System.out.println(getDecks().indexOf(new Deck()));
+							if(b.getText().equals(txtMysteryTheme)) {
+								GameController.this.getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
+							}
+							GameController.this.getGame().addUsedDeck(b.getText());
 							GameController.this.getChildren().add(getGamePane());
 							GameController.this.showElement(getGamePane());
-							//TODO
 						}
 					});
 					lBtnTheme.add(b);
@@ -369,7 +377,7 @@ public class GameController extends StackPane {
 		private Button btnValidate;
 		
 		public GamePane() {
-			
+			System.out.println(getGame().getUsedDeck(getCurrentPlayer()));
 			//TOP
 			HBox hbTop = new HBox(30);
 			hbTop.setAlignment(Pos.BASELINE_CENTER);
@@ -398,7 +406,7 @@ public class GameController extends StackPane {
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
 				lblPlayer = new Label();
-				lblPlayer.setText(GameController.this.getPlayers().get(GameController.this.getCurrentPlayer()).getPseudo());
+				lblPlayer.setText(GameController.this.getGame().getPlayer(currentPlayer).getPseudo());
 			}
 			return lblPlayer;
 		}
@@ -483,7 +491,7 @@ public class GameController extends StackPane {
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println(GameController.this.getDecks());
+						System.out.println(game.getDecks());
 						System.out.println("\n\n\n" + GameController.this.getSelectedDeck());
 					}
 				});
