@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import controller.Game;
 import exception.IdenticalPseudoException;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -37,9 +38,8 @@ import model.Player;
 public class GameController extends StackPane {
 	
 	//Game vars
-	private List<Player> players;
-	private List<Deck> decks;
-	private Deck selectedDeck;
+	private Game game;
+	private List<Deck> selectedDeck;
 	private int currentPlayer;
 	
 	//Pane vars
@@ -49,7 +49,7 @@ public class GameController extends StackPane {
 	private Ranking ranking;
 	
 	public GameController() {
-		getDecks();
+		this.game = Game.getInstance();
 		this.getChildren().addAll(getPlayerSelection());
 		this.showElement(getPlayerSelection());
 	}
@@ -64,40 +64,20 @@ public class GameController extends StackPane {
 		hideVisible();
 		element.setVisible(true);
 	}
-	public List<Player> getPlayers() {
-		List<Player> ret = new ArrayList<>();
-		for(Player p : players) {
-			ret.add(p.clone());
-		}
-		return ret;
+	// Game elements
+	public Game getGame() {
+		return game;
 	}
-	public void setPlayers(List<Player> players) {
-		this.players = new ArrayList<Player>();
-		for(Player p : players) {
-			this.players.add(p);
-		}
-	}
-	public List<Deck> getDecks() {
-		if(decks==null) {
-			decks = new ArrayList<>();
-			for(File f : new File("./src/resources/questions").listFiles()) {
-				decks.add(Deck.fromJson(f));
-			}
-		}
+	public List<Deck> getSelectedDeck() {
 		List<Deck> ret = new ArrayList<>();
-		for(Deck d : decks) {
-			ret.add(d);
+		for(Deck d : selectedDeck) {
+			ret.add(d.clone());
 		}
 		return ret;
 	}
-	public void setSelectedDeck(Deck selectedDeck) {
-		this.selectedDeck = selectedDeck;
-	}
-	public Deck getSelectedDeck() {
-		return selectedDeck.clone();
-	}
+	public boolean addDeck(Deck)
 	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayer = currentPlayer;
+		if(currentPlayer>=0 && currentPlayer<getGame().getNumberOfPlayers()) this.currentPlayer = currentPlayer;
 	}
 	public int getCurrentPlayer() {
 		return currentPlayer;
@@ -215,6 +195,10 @@ public class GameController extends StackPane {
 			getGpCenter().getChildren().remove(getlTxtPlayer().get(count));
 			getGpCenter().getChildren().remove(getlIvPlayer().get(count));
 			
+			getlLblPlayer().remove(count);
+			getlTxtPlayer().remove(count);
+			getlIvPlayer().remove(count);
+			
 			getGpCenter().getChildren().remove(getlIvPlayer().get(count-1));
 			getlIvPlayer().set(count-1, getIvAdd());
 			getGpCenter().add(getlIvPlayer().get(count-1), 2, count-1);
@@ -288,17 +272,16 @@ public class GameController extends StackPane {
 				btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						HashSet<Player> tmp = new HashSet<>();
-						for(TextField p : getlTxtPlayer()) {
-							if(!tmp.add(new Player(p.getText()))){
-								Exception e = new IdenticalPseudoException(p.getText());
-								MsgBox.dispalyOk("Error", e.getMessage());
+						for(TextField txtP : getlTxtPlayer()) {
+							try {
+								GameController.this.getGame().addPlayer(txtP.getText());
+							} catch (IdenticalPseudoException e) {
+								MsgBox.dispalyOk(e.getClass().toString(), e.getMessage());
+								GameController.this.getGame().removeAllPlayers();
 								return;
 							}
 						}
-						GameController.this.setPlayers(new ArrayList<>(tmp));
-						GameController.this.getChildren().add(GameController.this.getThemeSelection());
-						GameController.this.showElement(getThemeSelection());
+						GameController.this.setCurrentPlayer(0);
 					}
 				});
 			}
@@ -325,7 +308,7 @@ public class GameController extends StackPane {
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label(GameController.this.getPlayers().get(GameController.this.getCurrentPlayer()) + 
+				lblPlayer = new Label(GameController.this.getGame().getPlayer(GameController.this.getCurrentPlayer()) + 
 						" , SELECT A THEME ");
 				lblPlayer.setId("lblPlayerTheme");
 			}
@@ -334,8 +317,12 @@ public class GameController extends StackPane {
 		public List<Button> getlBtnTheme() {
 			if(lBtnTheme==null) {
 				lBtnTheme = new ArrayList<>();
-				for(int i=1;i<=getPlayers().size();i++) {
-					//Random rand = new Random();
+				GameController.this.getGame().updateAllDecks(
+						GameController.this.getGame().randomChoice(
+								GameController.this.getGame().getNumberOfPlayers()));
+				
+				for(int i=1;i<=GameController.this.getGame().getNumberOfPlayers();i++) {
+					
 					Button b = new Button(GameController.this.getDecks().
 							get(i).getTheme());
 					b.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
@@ -344,10 +331,10 @@ public class GameController extends StackPane {
 					b.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent event) {
-							//GameController.this.setSelectedDeck(GameController.this.getDecks()
-									//.get());
+							System.out.println(getDecks().indexOf(new Deck()));
 							GameController.this.getChildren().add(getGamePane());
 							GameController.this.showElement(getGamePane());
+							//TODO
 						}
 					});
 					lBtnTheme.add(b);
@@ -484,7 +471,7 @@ public class GameController extends StackPane {
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println("btnPass");
+						event.consume();
 					}
 				});
 			}
@@ -496,7 +483,8 @@ public class GameController extends StackPane {
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println("btnValidate");
+						System.out.println(GameController.this.getDecks());
+						System.out.println("\n\n\n" + GameController.this.getSelectedDeck());
 					}
 				});
 			}
