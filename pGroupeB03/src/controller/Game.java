@@ -22,7 +22,7 @@ public class Game {
 	
 	private List<Deck> decks;
 	private List<Player> players;
-	
+	private List<Deck> usedDecks;
 	private static Game instance;
 	
 	/**
@@ -32,11 +32,13 @@ public class Game {
 	private Game() {
 		this.decks = new ArrayList<>();
 		this.players = new ArrayList<>();
+		this.usedDecks = new ArrayList<>();
 	}
 	
 	/**
 	 * The only way to get an instance of {@link Game}. 
 	 * This instance will be initialize with available decks in the default directory.
+	 * If you only need an instance of {@link Game}, you can still use removeAllDecks().
 	 * @return {@link Game} instance. The only one instance of the class {@link Game}.
 	 */
 	public static Game getInstance() {
@@ -104,7 +106,8 @@ public class Game {
 	
 	/**
 	 * Gives a pseudorandom {@link List} of {@link Deck} from the {@link Game} decks with a given size.
-	 * @param nb {@link Integer}. The size of the returned {@link List}.
+	 * @param nb : {@link Integer}. The <code>size - 1</code> of the returned {@link List}.
+	 * As it is made to play the game, it will give nb elements instead of nb-1 elements.
 	 * @return {@link List}<{@link Deck}>.
 	 */
 	public List<Deck> randomChoice(int nb){
@@ -112,12 +115,22 @@ public class Game {
 		List<Deck> ret = new ArrayList<>();
 		List<Deck> tmp = this.getDecks();
 		Random rand = new Random();
-		for(int i=1;i<=nb;i++) {
+		for(int i=0;i<=nb;i++) {
 			int index = rand.nextInt(tmp.size());
 			ret.add(tmp.get(index));
 			tmp.remove(index);
 		}
 		return ret;
+	}
+	
+	/**
+	 * Defines if a {@link Deck} has already be used in the game,
+	 * i.e. if any players has already been asked about this {@link Deck} d.
+	 * @param d : {@link Deck}. The deck to check.
+	 * @return {@link Boolean}. <code>true</code> if the deck has been used.
+	 */
+	public boolean hasBeenUsed(Deck d) {
+		return usedDecks.contains(d);
 	}
 	
 	/**
@@ -158,12 +171,18 @@ public class Game {
 		return true;
 	}
 	
+	
+	
 	// ************
 	// CRUD methods
 	// ************
 	
 	
+	
 	// On decks
+	
+	
+	
 	/**
 	 * Allows to add a {@link Deck} in the current {@link Game}.
 	 * @param d : {@link Deck}. The {@link Deck} to add
@@ -205,6 +224,7 @@ public class Game {
 			this.addDeck(d);
 		}
 	}
+	
 	/**
 	 * Allows to remove a {@link Deck} from the Game.
 	 * @param d : {@link Deck}. The {@link Deck} to remove.
@@ -233,13 +253,9 @@ public class Game {
 	
 	/**
 	 * Allows to remove all the {@link Deck} in the current {@link Game}.
-	 * @return {@link Boolean}. <code>true</code> when all decks have been removed.
 	 */
-	public boolean removeAllDecks() {
-		for(Deck d : decks) {
-			removeDeck(d);
-		}
-		return true;
+	public void removeAllDecks() {
+		decks.clear();
 	}
 	
 	/**
@@ -289,7 +305,21 @@ public class Game {
 		return null;
 	}
 	
+	/**
+	 * Get a {@link Deck} at a specific position.
+	 * @param index : {@link Integer}. The position of the {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck getDeck(int index) {
+		if(index<0 || index>=decks.size()) return null;
+		return decks.get(index);
+	}
+	
+	
+	
 	// On players
+	
+	
 	
 	/**
 	 * Allows to add a {@link Player} in the current {@link Game}.
@@ -397,15 +427,78 @@ public class Game {
 		}
 		return null;
 	}
+	
 	/**
 	 * Get a {@link Player} from a specific position.
 	 * @param index {@link Integer}. The position of the {@link Player} to be returned.
 	 * @return {@link Player}. Return the {@link Player} p if found or <code>null</code> if not.
 	 */
 	public Player getPlayer(int index) {
-		if(index<0 && index>=players.size()) return null;
+		if(index<0 || index>=players.size()) return null;
 		return players.get(index).clone();
 	}
+	
+	
+	
+	// On usedDecks -> Decks already used or being used
+	
+	
+	
+	/**
+	 * Takes a deck available in the current ( i.e. in decks ) and add it to usedDecks.
+	 * @param d : {@link Deck}. The {@link Deck} to add.
+	 * @return {@link Boolean}. <code>true</code> if found and added, <code>false</code> otherwise.
+	 */
+	public boolean addUsedDeck(Deck d) {
+		return usedDecks.add(this.getDeck(d));
+	}
+	
+	/**
+	 * Takes a deck available in the current ( i.e. in decks ) and add it to usedDecks.
+	 * @param theme : {@link String}. The theme of the {@link Deck} to add.
+	 * @return {@link Boolean}. <code>true</code> if found and added, <code>false</code> otherwise.
+	 */
+	public boolean addUsedDeck(String theme) {
+		return usedDecks.add(this.getDeck(theme));
+	}
+	
+	/**
+	 * Get a specific {@link Deck} d in usedDecks.
+	 * @param d : {@link Deck}. The {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck geUsedDeck(Deck d) {
+		if(!usedDecks.contains(d)) return null;
+		return usedDecks.get(usedDecks.indexOf(d)).clone();
+	}
+	
+	/**
+	 * Get a {@link Deck} from a specific theme in usedDecks.
+	 * @param theme {@link String}. The theme of the {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck getUsedDeck(String theme) {
+		for(Deck in : usedDecks) {
+			if(in.getTheme().equalsIgnoreCase(theme)) {
+				return in.clone();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Get a {@link Deck} at a specific position in usedDecks.
+	 * @param index : {@link Integer}. The position of the {@link Deck} to be returned.
+	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
+	 */
+	public Deck getUsedDeck(int index) {
+		if(index<0 || index>=usedDecks.size()) return null;
+		return usedDecks.get(index);
+	}
+	
+	
+	
+	
 	//Basic methods
 	@Override
 	public String toString() {
