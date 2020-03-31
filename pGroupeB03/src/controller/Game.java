@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -11,12 +12,14 @@ import java.util.Random;
 import exception.IdenticalPseudoException;
 import model.Deck;
 import model.Player;
+import model.PlayersComparator;
 
 /**
  * This class manages the whole game.
  * @author ArRaLo
  * @see model.Deck
  * @see model.Question
+ * @see model.Player
  */
 public class Game {
 	
@@ -105,9 +108,9 @@ public class Game {
 	}
 	
 	/**
-	 * Gives a pseudorandom {@link List} of {@link Deck} from the {@link Game} decks with a given size.
-	 * @param nb : {@link Integer}. The <code>size - 1</code> of the returned {@link List}.
-	 * As it is made to play the game, it will give nb elements instead of nb-1 elements.
+	 * Gives a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
+	 * @param nb : {@link Integer}. The <code>size-1</code> of the returned {@link List}.
+	 * As it is made to play the game, it will give <code>nb</code> elements instead of <code>nb-1</code> elements.
 	 * @return {@link List}<{@link Deck}>.
 	 */
 	public List<Deck> randomChoice(int nb){
@@ -132,6 +135,17 @@ public class Game {
 	public boolean hasBeenUsed(Deck d) {
 		return usedDecks.contains(d);
 	}
+	
+	/**
+	 * Sort the players according to their score and their time.
+	 * @see PlayersComparator
+	 */
+	public void sortPlayers() {
+		Collections.sort(players, new PlayersComparator());
+	}
+	
+	// JSON methods
+	
 	
 	/**
 	 * Allows to save all the decks in the current {@link Game}.
@@ -473,7 +487,7 @@ public class Game {
 	}
 	
 	/**
-	 * Get a {@link Deck} from a specific theme in usedDecks.
+	 * Get a {@link Deck} d from a specific theme in usedDecks.
 	 * @param theme {@link String}. The theme of the {@link Deck} to be returned.
 	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
 	 */
@@ -487,16 +501,22 @@ public class Game {
 	}
 	
 	/**
-	 * Get a {@link Deck} at a specific position in usedDecks.
+	 * Get a {@link Deck} d at a specific position in usedDecks.
 	 * @param index : {@link Integer}. The position of the {@link Deck} to be returned.
 	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
 	 */
 	public Deck getUsedDeck(int index) {
-		if(index<0 || index>=usedDecks.size()) return null;
-		return usedDecks.get(index);
+		if(usedDecks.isEmpty() || index<0 || index>=usedDecks.size()) return null;
+		return usedDecks.get(index).clone();
 	}
 	
-	
+	/**
+	 * Get the last {@link Deck} d of the usedDecks which is the one played at this moment.
+	 * @return {@link Deck}. Return the {@link Deck} d.
+	 */
+	public Deck getLastUsedDeck() {
+		return getUsedDeck(usedDecks.size()-1);
+	}
 	
 	
 	//Basic methods
