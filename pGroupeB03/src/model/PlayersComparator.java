@@ -2,6 +2,13 @@ package model;
 
 import java.util.Comparator;
 
+/**
+ * This class is used to compare and sort multiple players.
+ * @author ArRaLo
+ * @see model.Player
+ * @see Comparator
+ *
+ */
 public class PlayersComparator implements Comparator<Player> {
 
 	@Override
