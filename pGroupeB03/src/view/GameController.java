@@ -1,8 +1,6 @@
 package view;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import controller.Game;
@@ -39,7 +37,6 @@ public class GameController extends StackPane {
 	
 	//Game vars
 	private Game game;
-	private List<Deck> selectedDeck;
 	private int currentPlayer;
 	
 	//Pane vars
@@ -67,13 +64,6 @@ public class GameController extends StackPane {
 	// Game elements
 	public Game getGame() {
 		return game;
-	}
-	public List<Deck> getSelectedDeck() {
-		List<Deck> ret = new ArrayList<>();
-		for(Deck d : selectedDeck) {
-			ret.add(d.clone());
-		}
-		return ret;
 	}
 	public void setCurrentPlayer(int currentPlayer) {
 		if(currentPlayer>=0 && currentPlayer<getGame().getNumberOfPlayers()) this.currentPlayer = currentPlayer;
@@ -340,7 +330,9 @@ public class GameController extends StackPane {
 							if(b.getText().equals(txtMysteryTheme)) {
 								GameController.this.getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
 							}
-							GameController.this.getGame().addUsedDeck(b.getText());
+							else {
+								GameController.this.getGame().addUsedDeck(b.getText());
+							}
 							GameController.this.getChildren().add(getGamePane());
 							GameController.this.showElement(getGamePane());
 						}
@@ -361,10 +353,13 @@ public class GameController extends StackPane {
 	 */
 	class GamePane extends BorderPane {
 		
+		//Game vars
+		private double timer = IRulesConst.ROUND_TIME;
+		
+		//GUI vars
 		private Label lblPlayer;
 		private ImageView ivScore;
 		private Timeline timeline;
-		private double timer = IRulesConst.ROUND_TIME;
 		private Label lblTimer;
 		
 		private ImageView ivJokerFirstLetter;
@@ -377,7 +372,6 @@ public class GameController extends StackPane {
 		private Button btnValidate;
 		
 		public GamePane() {
-			System.out.println(getGame().getUsedDeck(getCurrentPlayer()));
 			//TOP
 			HBox hbTop = new HBox(30);
 			hbTop.setAlignment(Pos.BASELINE_CENTER);
@@ -422,13 +416,13 @@ public class GameController extends StackPane {
 			if(timeline==null) {
 				timeline = new Timeline();
 				timeline.setCycleCount(Timeline.INDEFINITE);
+				//TODO
 			}
 			return timeline;
 		}
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
-				lblTimer.setText(""+timer);
 			}
 			return lblTimer;
 		}
@@ -491,8 +485,7 @@ public class GameController extends StackPane {
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println(game.getDecks());
-						System.out.println("\n\n\n" + GameController.this.getSelectedDeck());
+						System.out.println(game.getLastUsedDeck());
 					}
 				});
 			}
@@ -529,23 +522,32 @@ public class GameController extends StackPane {
 
 			
 			//Content
-			this.addPlayer(1);
+			this.addPlayers();
 		}
 		
-		private void addPlayer(int rank) {
+		private void addPlayer(int pos) {
+			Player p = getGame().getPlayer(pos);
 			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
-			Label lblPlayerPseudo = new Label("ARNO");
-			Label lblPlayerScore = new Label("4");
-			Label lblPlayerTime = new Label("23:45");
+			//TODO add different logos retive to rank
+			Label lblPlayerPseudo = new Label(p.getPseudo());
+			Label lblPlayerScore = new Label(""+p.getScore());
+			Label lblPlayerTime = new Label(""+p.getTime());
 			ivPlayerRank.getStyleClass().add("positionRank");
 			lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
 			lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
 			lblPlayerTime.getStyleClass().addAll("positionTime", "lblRanking");
 			
-			this.add(ivPlayerRank, 0, rank);
-			this.add(lblPlayerPseudo, 1, rank);
-			this.add(lblPlayerScore, 2, rank);
-			this.add(lblPlayerTime, 3, rank);
+			this.add(ivPlayerRank, 0, pos+1);
+			this.add(lblPlayerPseudo, 1, pos+1);
+			this.add(lblPlayerScore, 2, pos+1);
+			this.add(lblPlayerTime, 3, pos+1);
+		}
+		
+		private void addPlayers() {
+			getGame().sortPlayers();
+			for(int i=0; i<=getGame().getNumberOfPlayers(); i++) {
+				this.addPlayer(i);
+			}
 		}
 		
 		public Label getLblRank() {
