@@ -10,6 +10,8 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import exception.TooMuchCharException;
+
 /**
  * This class manages players.
  * @author ArRaLo
@@ -25,8 +27,8 @@ public class Player {
 		this.pseudo = pseudo;
 	}
 	
-	public Player(String pseudo, int score, double time) {
-		this.pseudo = pseudo;
+	public Player(String pseudo, int score, double time) throws TooMuchCharException {
+		this.setPseudo(pseudo);
 		this.score = score;
 		this.time = time;
 	}
@@ -73,7 +75,10 @@ public class Player {
 	public String getPseudo() {
 		return pseudo;
 	}
-	public void setPseudo(String pseudo) {
+	public void setPseudo(String pseudo) throws TooMuchCharException {
+		if(pseudo.length()>IRulesConst.MAX_CHAR) {
+			throw new TooMuchCharException(pseudo);
+		}
 		this.pseudo = pseudo;
 	}
 	public int getScore() {
@@ -119,6 +124,11 @@ public class Player {
 		return this.pseudo;
 	}
 	public Player clone() {
-		return new Player(this.pseudo, this.score, this.time);
+		try {
+			return new Player(this.pseudo, this.score, this.time);
+		} catch (TooMuchCharException e) {
+			
+		}
+		return null;
 	}
 }
