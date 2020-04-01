@@ -5,7 +5,9 @@ import java.util.List;
 
 import controller.Game;
 import exception.IdenticalPseudoException;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -21,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import model.Deck;
 import model.IRulesConst;
 import model.Player;
@@ -37,7 +40,6 @@ public class GameController extends StackPane {
 	
 	//Game vars
 	private Game game;
-	private int currentPlayer;
 	
 	//Pane vars
 	private PlayerSelection playerSelection;
@@ -65,12 +67,7 @@ public class GameController extends StackPane {
 	public Game getGame() {
 		return game;
 	}
-	public void setCurrentPlayer(int currentPlayer) {
-		if(currentPlayer>=0 && currentPlayer<getGame().getNumberOfPlayers()) this.currentPlayer = currentPlayer;
-	}
-	public int getCurrentPlayer() {
-		return currentPlayer;
-	}
+	
 	// GUI elements
 	public PlayerSelection getPlayerSelection() {
 		if(playerSelection==null) {
@@ -270,7 +267,7 @@ public class GameController extends StackPane {
 								return;
 							}
 						}
-						GameController.this.setCurrentPlayer(0);
+						getGame().setCurrentPlayer(0);
 						GameController.this.getChildren().add(getThemeSelection());
 						GameController.this.showElement(getThemeSelection());
 					}
@@ -301,7 +298,7 @@ public class GameController extends StackPane {
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label(GameController.this.getGame().getPlayer(GameController.this.getCurrentPlayer()) + 
+				lblPlayer = new Label(getGame().getPlayer(getGame().getCurrentPlayer()) + 
 						" , SELECT A THEME ");
 				lblPlayer.setId("lblPlayerTheme");
 			}
@@ -310,9 +307,7 @@ public class GameController extends StackPane {
 		public List<Button> getlBtnTheme() {
 			if(lBtnTheme==null) {
 				lBtnTheme = new ArrayList<>();
-				GameController.this.getGame().updateAllDecks(
-						GameController.this.getGame().randomChoice(
-								GameController.this.getGame().getNumberOfPlayers()));
+				getGame().updateAllDecks(getGame().randomChoice(getGame().getNumberOfPlayers()));
 				
 				for(int i=0;i<=GameController.this.getGame().getNumberOfPlayers();i++) {
 					Deck d = GameController.this.getGame().getDeck(i);
@@ -354,7 +349,7 @@ public class GameController extends StackPane {
 	class GamePane extends BorderPane {
 		
 		//Game vars
-		private double timer = IRulesConst.ROUND_TIME;
+		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME);
 		
 		//GUI vars
 		private Label lblPlayer;
@@ -395,12 +390,14 @@ public class GameController extends StackPane {
 
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
+			
+			getTimeline().playFromStart();
 		}
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
 				lblPlayer = new Label();
-				lblPlayer.setText(GameController.this.getGame().getPlayer(currentPlayer).getPseudo());
+				lblPlayer.setText(getGame().getPlayer().getPseudo());
 			}
 			return lblPlayer;
 		}
@@ -416,13 +413,23 @@ public class GameController extends StackPane {
 			if(timeline==null) {
 				timeline = new Timeline();
 				timeline.setCycleCount(Timeline.INDEFINITE);
-				//TODO
+				getLblTimer().textProperty().bind(timer.asString());
+				timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						timer.setValue(timer.get()-1);
+						if(timer.get() <= 0) {
+							timeline.stop();
+						}
+					}
+				}));
 			}
 			return timeline;
 		}
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
+				lblTimer.textProperty().bind(timer.asString());
 			}
 			return lblTimer;
 		}
@@ -528,7 +535,7 @@ public class GameController extends StackPane {
 		private void addPlayer(int pos) {
 			Player p = getGame().getPlayer(pos);
 			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
-			//TODO add different logos retive to rank
+			//TODO add different logo's relative to rank
 			Label lblPlayerPseudo = new Label(p.getPseudo());
 			Label lblPlayerScore = new Label(""+p.getScore());
 			Label lblPlayerTime = new Label(""+p.getTime());

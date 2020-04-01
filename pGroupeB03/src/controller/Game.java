@@ -25,7 +25,9 @@ public class Game {
 	
 	private List<Deck> decks;
 	private List<Player> players;
+	private int currentPlayer;
 	private List<Deck> usedDecks;
+	private int currentQuestion;
 	private static Game instance;
 	
 	/**
@@ -124,6 +126,14 @@ public class Game {
 			tmp.remove(index);
 		}
 		return ret;
+	}
+	
+	public boolean isFinished(Deck d) {
+		
+	}
+	
+	public boolean isFinished() {
+		
 	}
 	
 	/**
@@ -453,6 +463,14 @@ public class Game {
 	}
 	
 	
+	/**
+	 * Get the current {@link Player}.
+	 * This method gives the player supposed to be playing at the moment.
+	 * @return {@link Player}.
+	 */
+	public Player getPlayer() {
+		return getPlayer(getCurrentPlayer());
+	}
 	
 	// On usedDecks -> Decks already used or being used
 	
@@ -519,6 +537,24 @@ public class Game {
 	}
 	
 	
+	
+	// Basic getters and setters
+	
+	
+	
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	public void setCurrentPlayer(int currentPlayer) {
+		if(currentPlayer>=0 && currentPlayer<=getNumberOfPlayers()) this.currentPlayer = currentPlayer;
+	}
+	
+	public int getCurrentQuestion() {
+		return currentQuestion;
+	}
+	public void setCurrentQuestion(int currentQuestion) {
+		this.currentQuestion = currentQuestion;
+	}
 	//Basic methods
 	@Override
 	public String toString() {
