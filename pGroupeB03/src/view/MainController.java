@@ -113,6 +113,7 @@ public class MainController extends BorderPane {
 		if(gameController==null) {
 			gameController = new GameController();
 		}
+		gameController.reset();
 		return gameController;
 	}
 	public Highscore getHighscore() {

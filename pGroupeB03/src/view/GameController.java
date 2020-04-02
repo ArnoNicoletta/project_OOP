@@ -1,5 +1,6 @@
 package view;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +49,13 @@ public class GameController extends StackPane {
 	private Ranking ranking;
 	
 	public GameController() {
+		
 		this.game = Game.getInstance();
 		this.getChildren().addAll(getPlayerSelection());
 		this.showElement(getPlayerSelection());
+	}
+	public void reset() {
+		//TODO
 	}
 	private void hideVisible() {
 		for(Node n : this.getChildren()) {
@@ -261,7 +266,7 @@ public class GameController extends StackPane {
 						for(TextField txtP : getlTxtPlayer()) {
 							try {
 								GameController.this.getGame().addPlayer(txtP.getText());
-							} catch (IdenticalPseudoException e) {
+							} catch (Exception e) {
 								MsgBox.dispalyOk(e.getClass().toString(), e.getMessage());
 								GameController.this.getGame().removeAllPlayers();
 								return;
@@ -349,12 +354,12 @@ public class GameController extends StackPane {
 	class GamePane extends BorderPane {
 		
 		//Game vars
-		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME);
+		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME_SECONDS);
 		
 		//GUI vars
 		private Label lblPlayer;
 		private ImageView ivScore;
-		private Timeline timeline;
+		private Timeline timelineTimer;
 		private Label lblTimer;
 		
 		private ImageView ivJokerFirstLetter;
@@ -391,7 +396,7 @@ public class GameController extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
-			getTimeline().playFromStart();
+			getTimelineTimer().playFromStart();
 		}
 		
 		public Label getLblPlayer() {
@@ -409,27 +414,26 @@ public class GameController extends StackPane {
 			}
 			return ivScore;
 		}
-		public Timeline getTimeline() {
-			if(timeline==null) {
-				timeline = new Timeline();
-				timeline.setCycleCount(Timeline.INDEFINITE);
-				getLblTimer().textProperty().bind(timer.asString());
-				timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+		public Timeline getTimelineTimer() {
+			if(timelineTimer==null) {
+				timelineTimer = new Timeline();
+				timelineTimer.setCycleCount(Timeline.INDEFINITE);
+				getLblTimer().textProperty().bind(timer.asString("%.1f"));
+				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						timer.setValue(timer.get()-1);
+						timer.setValue(timer.get()-0.5);
 						if(timer.get() <= 0) {
-							timeline.stop();
+							timelineTimer.stop();
 						}
 					}
 				}));
 			}
-			return timeline;
+			return timelineTimer;
 		}
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
-				lblTimer.textProperty().bind(timer.asString());
 			}
 			return lblTimer;
 		}
@@ -437,7 +441,11 @@ public class GameController extends StackPane {
 			if(ivJokerFirstLetter==null) {
 				ivJokerFirstLetter = new ImageView("file:./src/resources/images/logo.png");
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
-				ivJokerFirstLetter.setOnMouseClicked(e -> System.out.println("ivJokerFirstLetter"));
+				ivJokerFirstLetter.setOnMouseClicked(e -> {
+					System.out.println("ivJokerFirstLetter");
+					ivJokerFirstLetter.setDisable(true);
+					//TODO
+				}); 
 			}
 			return ivJokerFirstLetter;
 		}
@@ -445,7 +453,11 @@ public class GameController extends StackPane {
 			if(ivJokerExtraPass==null) {
 				ivJokerExtraPass = new ImageView("file:./src/resources/images/logo.png");
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
-				ivJokerExtraPass.setOnMouseClicked(e -> System.out.println("ivJokerExtraPass"));
+				ivJokerExtraPass.setOnMouseClicked(e -> {
+					System.out.println("ivJokerExtraPass");
+					ivJokerExtraPass.setDisable(true);
+					//TODO
+				}); 
 			}
 			return ivJokerExtraPass;
 		}
@@ -453,7 +465,10 @@ public class GameController extends StackPane {
 			if(ivJokerBonusTime==null) {
 				ivJokerBonusTime = new ImageView("file:./src/resources/images/logo.png");
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
-				ivJokerBonusTime.setOnMouseClicked(e -> System.out.println("ivJokerBonusTime"));
+				ivJokerBonusTime.setOnMouseClicked(e -> {
+					timer.setValue(timer.get() + 10);
+					ivJokerBonusTime.setDisable(true);
+				});
 			}
 			return ivJokerBonusTime;
 		}

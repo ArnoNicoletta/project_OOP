@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import exception.IdenticalPseudoException;
+import exception.TooMuchCharException;
 import model.Deck;
 import model.Player;
 import model.PlayersComparator;
@@ -82,8 +83,8 @@ public class Game {
 	 * Decks and players have to be already in the game. ( And not empty ).
 	 */
 	public void play() {
-		if(decks.isEmpty()) {
-			System.out.println("No decks avalaible in the game ! ");
+		if(decks.isEmpty() || players.isEmpty()) {
+			System.out.println("Game hasn\'t been set up");
 			return;
 		}
 		for(Deck d : decks) {
@@ -128,12 +129,33 @@ public class Game {
 		return ret;
 	}
 	
+	/**
+	 * Checks if the deck d is finished,
+	 * i.e. if the last question displayed is the last in the deck.
+	 * @param d : {@link Deck}. 
+	 * @return {@link Boolean}. <code>true</code> if finished.
+	 */
 	public boolean isFinished(Deck d) {
-		
+		return getCurrentQuestion() == d.getSizeQuestions();
 	}
 	
+	/**
+	 * Checks if the current game is finished,
+	 * i.e. if all players have already played.
+	 * @return {@link Boolean}. <code>true</code> if finished
+	 */
 	public boolean isFinished() {
-		
+		return getCurrentPlayer() == getNumberOfPlayers();
+	}
+	
+	
+	/**
+	 * 
+	 * @param playerAnswer : {@link String}. The player input text.
+	 * @return
+	 */
+	public boolean isRightAnswer(String playerAnswer) {
+		return getLastUsedDeck().getQuestion(getCurrentQuestion()).getAnswer().equalsIgnoreCase(playerAnswer.trim());
 	}
 	
 	/**
@@ -361,8 +383,9 @@ public class Game {
 	 * @param pseudo : {@link String}. The pseudo of the {@link Player} to add
 	 * @return {@link Boolean}. <code>true</code> if the {@link Player} is well added.
 	 * @throws IdenticalPseudoException if pseudo already in the current game.
+	 * @throws TooMuchCharException 
 	 */
-	public boolean addPlayer(String pseudo) throws IdenticalPseudoException {
+	public boolean addPlayer(String pseudo) throws IdenticalPseudoException, TooMuchCharException {
 		Player p = new Player(pseudo);
 		return addPlayer(p);
 	}
