@@ -23,8 +23,8 @@ public class Player {
 	private int score;
 	private double time;
 	
-	public Player(String pseudo){
-		this.pseudo = pseudo;
+	public Player(String pseudo) throws TooMuchCharException {
+		this.setPseudo(pseudo);
 	}
 	
 	public Player(String pseudo, int score, double time) throws TooMuchCharException {
@@ -92,7 +92,7 @@ public class Player {
 		return time;
 	}
 	public void setTime(double time) {
-		if(time>=0 && time<=IRulesConst.ROUND_TIME)
+		if(time>=0 && time<=IRulesConst.ROUND_TIME_SECONDS)
 			this.time = time;
 	}
 	//Basic methods
