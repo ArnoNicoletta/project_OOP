@@ -11,6 +11,8 @@ import java.util.Random;
 
 import exception.IdenticalPseudoException;
 import exception.TooMuchCharException;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
 /**
  * This class manages the whole game.
@@ -75,37 +77,6 @@ public class Game {
 		return players.size();
 	}
 	
-	/**
-	 * Play the game ! 
-	 * Decks and players have to be already in the game. ( And not empty ).
-	 */
-	public void play() {
-		if(decks.isEmpty() || players.isEmpty()) {
-			System.out.println("Game hasn\'t been set up");
-			return;
-		}
-		for(Deck d : decks) {
-			System.out.println(d.getTheme());
-			if(d.getSizeQuestions()!=0) {
-				for(int i=0;i<d.getSizeQuestions();i++) {
-					double startTime = System.currentTimeMillis();
-					System.out.println(d.getQuestion(i).getClues().get(0));
-					while(System.currentTimeMillis()-startTime<4000) {
-						
-					}
-					System.out.println(d.getQuestion(i).getClues().get(1));
-					while(System.currentTimeMillis()-startTime<8000) {
-						
-					}
-					System.out.println(d.getQuestion(i).getClues().get(2));
-					while(System.currentTimeMillis()-startTime<16000) {	
-						
-					}
-					System.out.println("Answer : " + d.getQuestion(i).getAnswer());
-				}
-			}
-		}
-	}
 	
 	/**
 	 * Gives a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
@@ -126,6 +97,11 @@ public class Game {
 		return ret;
 	}
 	
+	
+	public String getClues(int index) {
+		return getUsingDeck().getQuestion(currentQuestion).getClues().get(index);
+	}
+	
 	/**
 	 * Checks if the deck d is finished,
 	 * i.e. if the last question displayed is the last in the deck.
@@ -133,7 +109,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> if finished.
 	 */
 	public boolean isFinished(Deck d) {
-		return getCurrentQuestion() == d.getSizeQuestions() || getPlayer(getCurrentPlayer()).getScore() == 4;
+		return getCurrentQuestion() >= d.getSizeQuestions()-1 || getPlayer(getCurrentPlayer()).getScore() == 4;
 	}
 	
 	/**
@@ -142,7 +118,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> if finished
 	 */
 	public boolean isFinished() {
-		return getCurrentPlayer() == getNumberOfPlayers();
+		return getCurrentPlayer() >= getNumberOfPlayers() - 1;
 	}
 	
 	
@@ -152,7 +128,7 @@ public class Game {
 	 * @return
 	 */
 	public boolean isRightAnswer(String playerAnswer) {
-		return getLastUsedDeck().getQuestion(getCurrentQuestion()).getAnswer().equalsIgnoreCase(playerAnswer.trim());
+		return getUsingDeck().getQuestion(getCurrentQuestion()).getAnswer().equalsIgnoreCase(playerAnswer.trim());
 	}
 	
 	/**
@@ -455,7 +431,7 @@ public class Game {
 	 */
 	public Player getPlayer(Player p) {
 		if(!players.contains(p)) return null;
-		return players.get(players.indexOf(p)).clone();
+		return players.get(players.indexOf(p));
 	}
 	
 	/**
@@ -466,7 +442,7 @@ public class Game {
 	public Player getPlayer(String pseudo) {
 		for(Player in : players) {
 			if(in.getPseudo().equalsIgnoreCase(pseudo)) {
-				return in.clone();
+				return in;
 			}
 		}
 		return null;
@@ -479,7 +455,7 @@ public class Game {
 	 */
 	public Player getPlayer(int index) {
 		if(index<0 || index>=players.size()) return null;
-		return players.get(index).clone();
+		return players.get(index);
 	}
 	
 	
@@ -553,7 +529,7 @@ public class Game {
 	 * Get the last {@link Deck} d of the usedDecks which is the one played at this moment.
 	 * @return {@link Deck}. Return the {@link Deck} d.
 	 */
-	public Deck getLastUsedDeck() {
+	public Deck getUsingDeck() {
 		return getUsedDeck(usedDecks.size()-1);
 	}
 	

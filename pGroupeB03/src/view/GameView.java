@@ -6,8 +6,10 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -115,7 +117,7 @@ public class GameView extends StackPane {
 	
 	
 	/**
-	 * This {@link BorderPane} manages selection of players.
+	 * This {@link BorderPane} displays selection of players.
 	 * @author ArRaLo
 	 * 
 	 */
@@ -285,6 +287,11 @@ public class GameView extends StackPane {
 	
 	
 	
+	/**
+	 * This {@link BorderPane} displays the selection of available themes.
+	 * @author ArRaLo
+	 *
+	 */
 	class ThemeSelection extends BorderPane{
 		
 		private final String txtMysteryTheme = "? Mystery theme ?";
@@ -348,7 +355,7 @@ public class GameView extends StackPane {
 	
 	
 	/**
-	 * The view of the game itself.
+	 * {@link BorderPane} that displays the view of the game.
 	 * @author ArRaLo
 	 *
 	 */
@@ -357,6 +364,8 @@ public class GameView extends StackPane {
 		//Game vars
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME_SECONDS);
 		private int scorePos;
+		private SimpleStringProperty clues = new SimpleStringProperty();
+		private int cluesPos;
 		
 		//GUI vars
 		private Label lblPlayer;
@@ -368,12 +377,17 @@ public class GameView extends StackPane {
 		private ImageView ivJokerExtraPass;
 		private ImageView ivJokerBonusTime;
 		
+		private Timeline timelineClues;
 		private Label lblClues;
 		private TextField txtAnswer;
 		private Button btnPass;
 		private Button btnValidate;
 		
 		public GamePane() {
+			
+			scorePos = 0;
+			cluesPos = 0;
+			
 			//TOP
 			HBox hbTop = new HBox(30);
 			hbTop.setAlignment(Pos.BASELINE_CENTER);
@@ -382,6 +396,7 @@ public class GameView extends StackPane {
 			
 			//LEFT
 			VBox vbLeft = new VBox(15);
+			vbLeft.setPadding(new Insets(0, 5, 10, 25));
 			vbLeft.setAlignment(Pos.CENTER);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			this.setLeft(vbLeft);
@@ -399,16 +414,13 @@ public class GameView extends StackPane {
 			this.setCenter(vbCenter);
 			
 			getTimelineTimer().playFromStart();
-			updateClues();
+			getTimelineClues().playFromStart();
 		}
 		
 		private void updateIvScore(int score, int position) {
 			getIvScore().setImage(new Image("file:./src/resources/speedometer/score" + score + "position" + position + ".png"));
 		}
 		
-		private void updateClues() {
-			getLblClues().setText(getGame().getLastUsedDeck().getQuestion(getGame().getCurrentQuestion()).getClues().toString());
-		}
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
@@ -484,14 +496,26 @@ public class GameView extends StackPane {
 			}
 			return ivJokerBonusTime;
 		}
+		public Timeline getTimelineClues() {
+			if(timelineClues==null) {
+				timelineClues = new Timeline();
+				timelineClues.setCycleCount(3);
+				getLblClues().textProperty().bind(clues);
+				timelineClues.getKeyFrames().add(new KeyFrame(Duration.millis(1200), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						clues.set(clues.get() + getGame().getClues(cluesPos++));
+					}
+				}));
+			}
+			return timelineClues;
+		}
 		public Label getLblClues() {
 			if(lblClues==null) {
-				lblClues = new Label();
-				lblClues.setText("CLUES"); 
+				lblClues = new Label(); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
 				lblClues.setWrapText(true);
 				lblClues.setTextOverrun(OverrunStyle.CENTER_ELLIPSIS);
-				//TODO CLUES
 			}
 			return lblClues;
 		}
@@ -509,7 +533,9 @@ public class GameView extends StackPane {
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						event.consume();
+						getGame().nextCurrentQuestion();
+						scorePos = 0;
+						
 					}
 				});
 			}
@@ -536,28 +562,33 @@ public class GameView extends StackPane {
 							getTxtAnswer().setText("");
 							scorePos = 0;
 						}
-						if(g.isFinished(g.getLastUsedDeck())) {
+						if(g.isFinished(g.getUsingDeck())) {
 							g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
 							g.nextCurrentPlayer();
 							g.setCurrentQuestion(0);
+							
+							if(g.isFinished()) {
+								getGamePane().setVisible(false);
+								GameView.this.getChildren().add(getRanking());
+								getRanking().setVisible(true);
+								return;
+							}
+							
 							getGamePane().setVisible(false);
 							GameView.this.themeSelection = null;;
 							GameView.this.getChildren().add(getThemeSelection());
 							getThemeSelection().setVisible(true);
+							
 							return;
 						}
 						
-						if(g.isFinished()) {
-							getGamePane().setVisible(false);
-							GameView.this.getChildren().add(getRanking());
-							getRanking().setVisible(true);
-							return;
-						}
 						g.nextCurrentQuestion();
 						updateIvScore(g.getPlayer().getScore(), scorePos);
+						cluesPos = 0;
+						clues.setValue("");
+						getTimelineClues().playFromStart();
 						System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
 						
-						updateClues();
 					}
 				});
 			}
@@ -617,7 +648,7 @@ public class GameView extends StackPane {
 		
 		private void addPlayers() {
 			getGame().sortPlayers();
-			for(int i=0; i<=getGame().getNumberOfPlayers(); i++) {
+			for(int i=0; i<getGame().getNumberOfPlayers(); i++) {
 				this.addPlayer(i);
 			}
 		}
