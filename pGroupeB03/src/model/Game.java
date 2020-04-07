@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -11,9 +11,6 @@ import java.util.Random;
 
 import exception.IdenticalPseudoException;
 import exception.TooMuchCharException;
-import model.Deck;
-import model.Player;
-import model.PlayersComparator;
 
 /**
  * This class manages the whole game.
@@ -136,7 +133,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> if finished.
 	 */
 	public boolean isFinished(Deck d) {
-		return getCurrentQuestion() == d.getSizeQuestions();
+		return getCurrentQuestion() == d.getSizeQuestions() || getPlayer(getCurrentPlayer()).getScore() == 4;
 	}
 	
 	/**
@@ -514,6 +511,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> if found and added, <code>false</code> otherwise.
 	 */
 	public boolean addUsedDeck(String theme) {
+		setCurrentQuestion(0);
 		return usedDecks.add(this.getDeck(theme));
 	}
 	
@@ -522,7 +520,7 @@ public class Game {
 	 * @param d : {@link Deck}. The {@link Deck} to be returned.
 	 * @return {@link Deck}. Return the {@link Deck} d if found or <code>null</code> if not.
 	 */
-	public Deck geUsedDeck(Deck d) {
+	public Deck getUsedDeck(Deck d) {
 		if(!usedDecks.contains(d)) return null;
 		return usedDecks.get(usedDecks.indexOf(d)).clone();
 	}
@@ -571,12 +569,17 @@ public class Game {
 	public void setCurrentPlayer(int currentPlayer) {
 		if(currentPlayer>=0 && currentPlayer<=getNumberOfPlayers()) this.currentPlayer = currentPlayer;
 	}
-	
+	public void nextCurrentPlayer() {
+		setCurrentPlayer(getCurrentPlayer()+1);
+	}
 	public int getCurrentQuestion() {
 		return currentQuestion;
 	}
 	public void setCurrentQuestion(int currentQuestion) {
-		this.currentQuestion = currentQuestion;
+		if(currentQuestion>=0) this.currentQuestion = currentQuestion;
+	}
+	public void nextCurrentQuestion() {
+		setCurrentQuestion(getCurrentQuestion()+1);
 	}
 	//Basic methods
 	@Override
