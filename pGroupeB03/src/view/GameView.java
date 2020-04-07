@@ -615,6 +615,7 @@ public class GameView extends StackPane {
 						updateIvScore(g.getPlayer().getScore(), scorePos);
 						cluesPos = 0;
 						clues.setValue("");
+						getTxtAnswer().setText("");
 						getTimelineClues().playFromStart();
 						System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
 						
