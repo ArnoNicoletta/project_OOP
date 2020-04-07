@@ -5,8 +5,10 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -413,6 +415,20 @@ public class GameView extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
+//			Task<Timeline> taskTimer = new Task<Timeline>() {
+//				@Override
+//				protected Timeline call() throws Exception {
+//					return getTimelineTimer();
+//				}
+//			};
+//			new Thread(taskTimer).start();
+//			Task<Timeline> taskClues = new Task<Timeline>() {
+//				@Override
+//				protected Timeline call() throws Exception {
+//					return getTimelineClues();
+//				}
+//			};
+//			new Thread(taskClues).start();
 			getTimelineTimer().playFromStart();
 			getTimelineClues().playFromStart();
 		}
@@ -421,6 +437,9 @@ public class GameView extends StackPane {
 			getIvScore().setImage(new Image("file:./src/resources/speedometer/score" + score + "position" + position + ".png"));
 		}
 		
+		private void nextQuestion() {
+			
+		}
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
@@ -504,9 +523,19 @@ public class GameView extends StackPane {
 				timelineClues.getKeyFrames().add(new KeyFrame(Duration.millis(1200), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						clues.set(clues.get() + getGame().getClues(cluesPos++));
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								if(clues.isEmpty().getValue()) {
+									clues.set(getGame().getClues(cluesPos++));
+								}
+								else{
+									clues.set(clues.get() + " " + getGame().getClues(cluesPos++));
+								}
+							}
+						}).run();
 					}
-				}));
+				})); //TODO OPTI
 			}
 			return timelineClues;
 		}
@@ -548,13 +577,13 @@ public class GameView extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						Game g = Game.getInstance();
-						String s = getTxtAnswer().getText().trim();
+						String s = getTxtAnswer().getText();
 						if(g.isRightAnswer(s)) {
 							if(scorePos<g.getPlayer().getScore()) {
 								scorePos++;
 							}
 							else {
-								g.getPlayer().addPoint();
+								g.addPoint();
 								scorePos++;
 							}
 						}
@@ -572,7 +601,7 @@ public class GameView extends StackPane {
 								GameView.this.getChildren().add(getRanking());
 								getRanking().setVisible(true);
 								return;
-							}
+							} //TODO if more than 1 player goes directly to Ranking !
 							
 							getGamePane().setVisible(false);
 							GameView.this.themeSelection = null;;

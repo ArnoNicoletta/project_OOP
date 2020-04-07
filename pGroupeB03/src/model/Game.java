@@ -132,6 +132,13 @@ public class Game {
 	}
 	
 	/**
+	 * Add 1 point in the score of the current player.
+	 * @return {@link Boolean}. <code>true</code> if well added.
+	 */
+	public boolean addPoint() {
+		return getPlayer().addPoint();
+	}
+	/**
 	 * Defines if a {@link Deck} has already be used in the game,
 	 * i.e. if any players has already been asked about this {@link Deck} d.
 	 * @param d : {@link Deck}. The deck to check.
