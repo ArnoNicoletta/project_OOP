@@ -33,6 +33,10 @@ public class Player {
 		this.time = time;
 	}
 	
+	public boolean addPoint() {
+		return ++score <=4;
+	}
+	
 	//JSON methods
 	
 	/**

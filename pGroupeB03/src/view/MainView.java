@@ -17,13 +17,13 @@ import javafx.scene.layout.VBox;
  * @author ArRaLo
  * @see {@link WaitingScreen}
  * @see {@link MainMenu}
- * @see {@link GameController}
+ * @see {@link GameView}
  * @see {@link Highscore}
  * @see {@link Rules}
  * @see {@link Credit}
  * @see {@link Settings}
  */
-public class MainController extends BorderPane {
+public class MainView extends BorderPane {
 	
 	// Element of this pane
 	private ImageView ivHome;
@@ -32,14 +32,14 @@ public class MainController extends BorderPane {
 	// Other Panes included in stack
 	private WaitingScreen waitingScreen;
 	private MainMenu mainMenu;
-	private GameController gameController;
+	private GameView gameView;
 	private Highscore highscore;
 	private Rules rules;
 	private Credit credit;
 	private Settings settings;
 	
 	
-	public MainController() {
+	public MainView() {
 		
 		this.setId("maincontroller");
 		
@@ -49,7 +49,7 @@ public class MainController extends BorderPane {
 		
 		
 		//CENTER
-		getStack().getChildren().addAll(getWaitingScreen(), getMainMenu(), getGameController(), getHighscore(),
+		getStack().getChildren().addAll(getWaitingScreen(), getMainMenu(), getGameView(), getHighscore(),
 				getRules(), getCredit(), getSettings());
 		hideVisible();
 		getWaitingScreen().setVisible(true);
@@ -109,12 +109,12 @@ public class MainController extends BorderPane {
 		}
 		return mainMenu;
 	}
-	public GameController getGameController() {
-		if(gameController==null) {
-			gameController = new GameController();
+	public GameView getGameView() {
+		if(gameView==null) {
+			gameView = new GameView();
 		}
-		gameController.reset();
-		return gameController;
+		gameView.reset();
+		return gameView;
 	}
 	public Highscore getHighscore() {
 		if(highscore==null) {
@@ -163,8 +163,8 @@ class WaitingScreen extends BorderPane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				MainController.this.getWaitingScreen().setVisible(false);
-				MainController.this.getMainMenu().setVisible(true);
+				MainView.this.getWaitingScreen().setVisible(false);
+				MainView.this.getMainMenu().setVisible(true);
 			}
 			
 		});
@@ -216,7 +216,7 @@ class MainMenu extends BorderPane {
 		if(btnPlay==null) {
 			btnPlay = new Button("PLAY");
 			btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnPlay.setOnAction(e -> MainController.this.showElement(MainController.this.getGameController()));
+			btnPlay.setOnAction(e -> MainView.this.showElement(MainView.this.getGameView()));
 			btnPlay.getStyleClass().add("btnMainMenu");
 		}
 		return btnPlay;
@@ -226,7 +226,7 @@ class MainMenu extends BorderPane {
 		if(btnHighscores==null) {
 			btnHighscores = new Button("HIGHSCORES");
 			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnHighscores.setOnAction(e -> MainController.this.showElement(MainController.this.getHighscore()));
+			btnHighscores.setOnAction(e -> MainView.this.showElement(MainView.this.getHighscore()));
 			btnHighscores.getStyleClass().add("btnMainMenu");
 		}
 		return btnHighscores;
@@ -236,7 +236,7 @@ class MainMenu extends BorderPane {
 		if(btnCredits==null) {
 			btnCredits = new Button("CREDITS");
 			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnCredits.setOnAction(e -> MainController.this.showElement(MainController.this.getCredit()));
+			btnCredits.setOnAction(e -> MainView.this.showElement(MainView.this.getCredit()));
 			btnCredits.getStyleClass().add("btnMainMenu");
 		}
 		return btnCredits;
@@ -245,7 +245,7 @@ class MainMenu extends BorderPane {
 		if(btnRules==null) {
 			btnRules = new Button("RULES");
 			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnRules.setOnAction(e -> MainController.this.showElement(MainController.this.getRules()));
+			btnRules.setOnAction(e -> MainView.this.showElement(MainView.this.getRules()));
 			btnRules.getStyleClass().add("btnMainMenu");
 		}
 		return btnRules;
@@ -253,7 +253,7 @@ class MainMenu extends BorderPane {
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
 			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
-			ivSettings.setOnMouseClicked(e -> MainController.this.showElement(MainController.this.getSettings()));
+			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(MainView.this.getSettings()));
 			ivSettings.setId("ivsettings");
 		}
 		return ivSettings;

@@ -1,11 +1,8 @@
 package view;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Game;
-import exception.IdenticalPseudoException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -15,8 +12,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -26,8 +25,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.Deck;
+import model.Game;
 import model.IRulesConst;
 import model.Player;
+
 
 /**
  * {@link StackPane} of the game which includes all views needed to play the game
@@ -37,7 +38,7 @@ import model.Player;
  * @see {@link GamePane}
  * @see {@link Ranking}
  */
-public class GameController extends StackPane {
+public class GameView extends StackPane {
 	
 	//Game vars
 	private Game game;
@@ -48,7 +49,7 @@ public class GameController extends StackPane {
 	private GamePane gamePane;
 	private Ranking ranking;
 	
-	public GameController() {
+	public GameView() {
 		
 		this.game = Game.getInstance();
 		this.getChildren().addAll(getPlayerSelection());
@@ -265,16 +266,16 @@ public class GameController extends StackPane {
 					public void handle(ActionEvent event) {
 						for(TextField txtP : getlTxtPlayer()) {
 							try {
-								GameController.this.getGame().addPlayer(txtP.getText());
+								GameView.this.getGame().addPlayer(txtP.getText());
 							} catch (Exception e) {
 								MsgBox.dispalyOk(e.getClass().toString(), e.getMessage());
-								GameController.this.getGame().removeAllPlayers();
+								GameView.this.getGame().removeAllPlayers();
 								return;
 							}
 						}
 						getGame().setCurrentPlayer(0);
-						GameController.this.getChildren().add(getThemeSelection());
-						GameController.this.showElement(getThemeSelection());
+						GameView.this.getChildren().add(getThemeSelection());
+						GameView.this.showElement(getThemeSelection());
 					}
 				});
 			}
@@ -314,12 +315,12 @@ public class GameController extends StackPane {
 				lBtnTheme = new ArrayList<>();
 				getGame().updateAllDecks(getGame().randomChoice(getGame().getNumberOfPlayers()));
 				
-				for(int i=0;i<=GameController.this.getGame().getNumberOfPlayers();i++) {
-					Deck d = GameController.this.getGame().getDeck(i);
+				for(int i=0;i<=GameView.this.getGame().getNumberOfPlayers();i++) {
+					Deck d = GameView.this.getGame().getDeck(i);
 					Button b = new Button(d.getTheme());
-					if(i==GameController.this.getGame().getNumberOfPlayers())
+					if(i==GameView.this.getGame().getNumberOfPlayers())
 						b.setText(txtMysteryTheme);
-					if(GameController.this.getGame().hasBeenUsed(d))
+					if(GameView.this.getGame().hasBeenUsed(d))
 						b.setDisable(true);
 					b.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 					b.setPrefWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
@@ -328,13 +329,13 @@ public class GameController extends StackPane {
 						@Override
 						public void handle(ActionEvent event) {
 							if(b.getText().equals(txtMysteryTheme)) {
-								GameController.this.getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
+								GameView.this.getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
 							}
 							else {
-								GameController.this.getGame().addUsedDeck(b.getText());
+								GameView.this.getGame().addUsedDeck(b.getText());
 							}
-							GameController.this.getChildren().add(getGamePane());
-							GameController.this.showElement(getGamePane());
+							GameView.this.getChildren().add(getGamePane());
+							GameView.this.showElement(getGamePane());
 						}
 					});
 					lBtnTheme.add(b);
@@ -355,6 +356,7 @@ public class GameController extends StackPane {
 		
 		//Game vars
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME_SECONDS);
+		private int scorePos;
 		
 		//GUI vars
 		private Label lblPlayer;
@@ -397,6 +399,15 @@ public class GameController extends StackPane {
 			this.setCenter(vbCenter);
 			
 			getTimelineTimer().playFromStart();
+			updateClues();
+		}
+		
+		private void updateIvScore(int score, int position) {
+			getIvScore().setImage(new Image("file:./src/resources/speedometer/score" + score + "position" + position + ".png"));
+		}
+		
+		private void updateClues() {
+			getLblClues().setText(getGame().getLastUsedDeck().getQuestion(getGame().getCurrentQuestion()).getClues().toString());
 		}
 		
 		public Label getLblPlayer() {
@@ -408,7 +419,7 @@ public class GameController extends StackPane {
 		}
 		public ImageView getIvScore() {
 			if(ivScore==null) {
-				ivScore = new ImageView("file:./src/resources/speedometer/start.png");
+				ivScore = new ImageView("file:./src/resources/speedometer/score0position0.png");
 				ivScore.setFitHeight(100);
 				ivScore.setFitWidth(100);
 			}
@@ -418,16 +429,17 @@ public class GameController extends StackPane {
 			if(timelineTimer==null) {
 				timelineTimer = new Timeline();
 				timelineTimer.setCycleCount(Timeline.INDEFINITE);
-				getLblTimer().textProperty().bind(timer.asString("%.1f"));
-				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+				getLblTimer().textProperty().bind(timer.asString("%.0f"));
+				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						timer.setValue(timer.get()-0.5);
+						timer.setValue(timer.get()-1);
 						if(timer.get() <= 0) {
 							timelineTimer.stop();
 						}
 					}
 				}));
+				//TODO include in a new Thread or something
 			}
 			return timelineTimer;
 		}
@@ -444,7 +456,7 @@ public class GameController extends StackPane {
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
 					System.out.println("ivJokerFirstLetter");
 					ivJokerFirstLetter.setDisable(true);
-					//TODO
+					//TODO JOKER
 				}); 
 			}
 			return ivJokerFirstLetter;
@@ -456,7 +468,7 @@ public class GameController extends StackPane {
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					System.out.println("ivJokerExtraPass");
 					ivJokerExtraPass.setDisable(true);
-					//TODO
+					//TODO JOKER
 				}); 
 			}
 			return ivJokerExtraPass;
@@ -477,7 +489,9 @@ public class GameController extends StackPane {
 				lblClues = new Label();
 				lblClues.setText("CLUES"); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
-				//TODO
+				lblClues.setWrapText(true);
+				lblClues.setTextOverrun(OverrunStyle.CENTER_ELLIPSIS);
+				//TODO CLUES
 			}
 			return lblClues;
 		}
@@ -507,7 +521,43 @@ public class GameController extends StackPane {
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println(game.getLastUsedDeck());
+						Game g = Game.getInstance();
+						String s = getTxtAnswer().getText().trim();
+						if(g.isRightAnswer(s)) {
+							if(scorePos<g.getPlayer().getScore()) {
+								scorePos++;
+							}
+							else {
+								g.getPlayer().addPoint();
+								scorePos++;
+							}
+						}
+						else {
+							getTxtAnswer().setText("");
+							scorePos = 0;
+						}
+						if(g.isFinished(g.getLastUsedDeck())) {
+							g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
+							g.nextCurrentPlayer();
+							g.setCurrentQuestion(0);
+							getGamePane().setVisible(false);
+							GameView.this.themeSelection = null;;
+							GameView.this.getChildren().add(getThemeSelection());
+							getThemeSelection().setVisible(true);
+							return;
+						}
+						
+						if(g.isFinished()) {
+							getGamePane().setVisible(false);
+							GameView.this.getChildren().add(getRanking());
+							getRanking().setVisible(true);
+							return;
+						}
+						g.nextCurrentQuestion();
+						updateIvScore(g.getPlayer().getScore(), scorePos);
+						System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
+						
+						updateClues();
 					}
 				});
 			}
