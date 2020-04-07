@@ -1,7 +1,7 @@
 package exception;
 
-import controller.Game;
 import model.Deck;
+import model.Game;
 
 public class NotEnoughDeckException extends Exception {
 	
