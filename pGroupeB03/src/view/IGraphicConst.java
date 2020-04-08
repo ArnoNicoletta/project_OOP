@@ -7,5 +7,5 @@ public interface IGraphicConst {
 	final double WIDTH_LARGE_BUTTON = 500;
 	
 	//LABEL
-	final double WIDTH_LARGE_LBL = 400, HEIGHT_LARGE_LBL = 250;
+	final double WIDTH_LARGE_LBL = 600, HEIGHT_LARGE_LBL = 400;
 }

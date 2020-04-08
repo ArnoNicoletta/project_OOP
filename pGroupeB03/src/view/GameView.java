@@ -5,10 +5,8 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -60,7 +58,7 @@ public class GameView extends StackPane {
 		this.showElement(getPlayerSelection());
 	}
 	public void reset() {
-		//TODO
+		//TODO reset
 	}
 	private void hideVisible() {
 		for(Node n : this.getChildren()) {
@@ -367,6 +365,7 @@ public class GameView extends StackPane {
 	class GamePane extends BorderPane {
 		
 		//Game vars
+		Game g = Game.getInstance();
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME_SECONDS);
 		private int scorePos;
 		private SimpleStringProperty clues = new SimpleStringProperty();
@@ -409,6 +408,7 @@ public class GameView extends StackPane {
 			//CENTER
 			VBox vbCenter = new VBox(10);
 			vbCenter.setAlignment(Pos.CENTER);
+			vbCenter.setPadding(new Insets(5, 50, 15, 10));
 			
 			HBox hbCenterBottom = new HBox(15);
 			hbCenterBottom.setAlignment(Pos.CENTER);
@@ -441,6 +441,38 @@ public class GameView extends StackPane {
 		}
 		
 		private void nextQuestion() {
+			if(g.isFinished(g.getUsingDeck())) {
+				finishThisRound();
+				return;
+			}
+			
+			g.nextCurrentQuestion();
+			updateIvScore(g.getPlayer().getScore(), scorePos);
+			cluesPos = 0;
+			clues.setValue("");
+			getTxtAnswer().setText("");
+			getTimelineClues().playFromStart();
+			System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
+			
+		}
+		
+		private void finishThisRound() {
+			if(g.isFinished()) {
+				getGamePane().setVisible(false);
+				GameView.this.getChildren().add(getRanking());
+				getRanking().setVisible(true);
+				return;
+			}
+			//Setting up next Player
+			g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
+			g.nextCurrentPlayer();
+			g.setCurrentQuestion(0);
+			//Setting up GUI
+			GameView.this.getChildren().remove(getGamePane());
+			GameView.this.gamePane = null;
+			GameView.this.themeSelection = null;;
+			GameView.this.getChildren().add(getThemeSelection());
+			getThemeSelection().setVisible(true);
 			
 		}
 		
@@ -562,6 +594,7 @@ public class GameView extends StackPane {
 		public Button getBtnPass() {
 			if(btnPass==null) {
 				btnPass = new Button("PASS");
+				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL/2, IGraphicConst.HEIGHT_BUTTON);
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -576,10 +609,10 @@ public class GameView extends StackPane {
 		public Button getBtnValidate() {
 			if(btnValidate==null) {
 				btnValidate = new Button("VALIDATE");
+				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL/2, IGraphicConst.HEIGHT_BUTTON);
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						Game g = Game.getInstance();
 						String s = getTxtAnswer().getText();
 						if(g.isRightAnswer(s)) {
 							if(scorePos<g.getPlayer().getScore()) {
@@ -594,35 +627,7 @@ public class GameView extends StackPane {
 							getTxtAnswer().setText("");
 							scorePos = 0;
 						}
-						if(g.isFinished(g.getUsingDeck())) {
-							if(g.isFinished()) {
-								getGamePane().setVisible(false);
-								GameView.this.getChildren().add(getRanking());
-								getRanking().setVisible(true);
-								return;
-							} //TODO if more than 1 player goes directly to Ranking !
-							//Setting up next Player
-							g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
-							g.nextCurrentPlayer();
-							g.setCurrentQuestion(0);
-							//Setting up GUI
-							GameView.this.getChildren().remove(getGamePane());
-							GameView.this.gamePane = null;
-							GameView.this.themeSelection = null;;
-							GameView.this.getChildren().add(getThemeSelection());
-							getThemeSelection().setVisible(true);
-							
-							return;
-						}
-						
-						g.nextCurrentQuestion();
-						updateIvScore(g.getPlayer().getScore(), scorePos);
-						cluesPos = 0;
-						clues.setValue("");
-						getTxtAnswer().setText("");
-						getTimelineClues().playFromStart();
-						System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
-						
+						nextQuestion();
 					}
 				});
 			}
