@@ -322,7 +322,10 @@ public class GameView extends StackPane {
 		public List<Button> getlBtnTheme() {
 			if(lBtnTheme==null) {
 				lBtnTheme = new ArrayList<>();
-				getGame().updateAllDecks(getGame().randomChoice(getGame().getNumberOfPlayers()));
+				
+				if(getGame().getCurrentPlayer()==0) {
+					getGame().updateAllDecks(getGame().randomChoice(getGame().getNumberOfPlayers()));
+				}
 				
 				for(int i=0;i<=GameView.this.getGame().getNumberOfPlayers();i++) {
 					Deck d = GameView.this.getGame().getDeck(i);
@@ -592,18 +595,19 @@ public class GameView extends StackPane {
 							scorePos = 0;
 						}
 						if(g.isFinished(g.getUsingDeck())) {
-							g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
-							g.nextCurrentPlayer();
-							g.setCurrentQuestion(0);
-							
 							if(g.isFinished()) {
 								getGamePane().setVisible(false);
 								GameView.this.getChildren().add(getRanking());
 								getRanking().setVisible(true);
 								return;
 							} //TODO if more than 1 player goes directly to Ranking !
-							
-							getGamePane().setVisible(false);
+							//Setting up next Player
+							g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
+							g.nextCurrentPlayer();
+							g.setCurrentQuestion(0);
+							//Setting up GUI
+							GameView.this.getChildren().remove(getGamePane());
+							GameView.this.gamePane = null;
 							GameView.this.themeSelection = null;;
 							GameView.this.getChildren().add(getThemeSelection());
 							getThemeSelection().setVisible(true);
