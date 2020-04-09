@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -75,6 +76,7 @@ public class MainView extends BorderPane {
 	public ImageView getIvHome() {
 		if(ivHome==null) {
 			ivHome = new ImageView("file:./src/resources/images/icon_home.png");
+			Tooltip.install(ivHome, new Tooltip("Back to the menu"));
 			ivHome.setId("buttonHome");
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
