@@ -1,8 +1,8 @@
 package exception;
 
-import model.Deck;
 import model.Game;
 
+@SuppressWarnings("serial")
 public class NotEnoughDeckException extends Exception {
 	
 	private int wanted;

@@ -1,5 +1,6 @@
 package exception;
 
+@SuppressWarnings("serial")
 public class TooMuchCharException extends Exception {
 	
 	private String s;
@@ -11,7 +12,7 @@ public class TooMuchCharException extends Exception {
 	
 	@Override
 	public String getMessage() {
-		return super.getMessage() + this.s;
+		return super.getMessage() + "\nEntered :" +this.s;
 	}
 	
 }

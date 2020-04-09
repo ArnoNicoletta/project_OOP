@@ -2,7 +2,7 @@ package model;
 
 import java.lang.reflect.Field;
 
-public class IRulesConst {
+public class RulesConst {
 	
 	//Player rules
 	public static int MAX_CHAR = 16;
@@ -13,12 +13,7 @@ public class IRulesConst {
 	public static int NUMBER_ROUND = 1;
 	public static double ROUND_TIME_SECONDS = 45;
 	
-	public static void changeRule(String s, double newValue) {
-		try {
-			Field f = IRulesConst.class.getField(s);
-			f.set(f.getClass(), newValue);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void setMAX_CHAR(int mAX_CHAR) {
+		MAX_CHAR = mAX_CHAR;
 	}
 }

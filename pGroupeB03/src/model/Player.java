@@ -80,7 +80,7 @@ public class Player {
 		return pseudo;
 	}
 	public void setPseudo(String pseudo) throws TooMuchCharException {
-		if(pseudo.length()>IRulesConst.MAX_CHAR) {
+		if(pseudo.length()>RulesConst.MAX_CHAR) {
 			throw new TooMuchCharException(pseudo);
 		}
 		this.pseudo = pseudo;
@@ -96,7 +96,7 @@ public class Player {
 		return time;
 	}
 	public void setTime(double time) {
-		if(time>=0 && time<=IRulesConst.ROUND_TIME_SECONDS)
+		if(time>=0 && time<=RulesConst.ROUND_TIME_SECONDS)
 			this.time = time;
 	}
 	//Basic methods

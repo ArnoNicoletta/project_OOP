@@ -9,8 +9,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import model.RulesConst;
 
 public class Settings extends StackPane {
 	private MenuSettings menuSettings;
@@ -154,7 +156,8 @@ public class Settings extends StackPane {
 
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
-				txtNbRound = new TextField("1");
+				txtNbRound = new TextField(""+RulesConst.NUMBER_ROUND);
+				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
 				txtNbRound.getStyleClass().add("positionUserSettings");
 			}
 			return txtNbRound;
@@ -170,12 +173,13 @@ public class Settings extends StackPane {
 
 		public TextField getTxtTime() {
 			if( txtTime == null) {
-				txtTime = new TextField("45");
+				txtTime = new TextField(""+RulesConst.ROUND_TIME_SECONDS);
+				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
 				txtTime.getStyleClass().add("positionUserSettings");
 			}
 			return txtTime;
 		}
-
+		
 		public Button getBtnSave() {
 			if( btnSave== null) {
 				btnSave = new Button("SAVE");

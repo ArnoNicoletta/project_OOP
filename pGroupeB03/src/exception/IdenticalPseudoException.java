@@ -1,5 +1,6 @@
 package exception;
 
+@SuppressWarnings("serial")
 public class IdenticalPseudoException extends Exception {
 	
 	private String pseudo;

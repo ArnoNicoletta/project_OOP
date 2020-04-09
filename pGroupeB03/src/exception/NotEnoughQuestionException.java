@@ -2,6 +2,7 @@ package exception;
 
 import model.Deck;
 
+@SuppressWarnings("serial")
 public class NotEnoughQuestionException extends Exception {
 	
 	private Deck deck;
@@ -13,6 +14,6 @@ public class NotEnoughQuestionException extends Exception {
 	
 	@Override
 	public String getMessage() {
-		return super.getMessage() + deck.toString();
+		return super.getMessage() + "\nConcerned deck : " +deck.toString();
 	}
 }
