@@ -55,8 +55,9 @@ public class Game {
 	/**
 	 * Reset the {@link Game} instance.
 	 */
-	public void reset() {
+	public static void reset() {
 		instance = new Game();
+		instance.addAllDeck();
 	}
 	
 	/**
