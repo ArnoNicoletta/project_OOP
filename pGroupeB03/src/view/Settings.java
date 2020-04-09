@@ -156,7 +156,7 @@ public class Settings extends StackPane {
 
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
-				txtNbRound = new TextField(""+RulesConst.NUMBER_ROUND);
+				txtNbRound = new TextField(""+RulesConst.getNumber_round());
 				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
 				txtNbRound.getStyleClass().add("positionUserSettings");
 			}
@@ -173,7 +173,7 @@ public class Settings extends StackPane {
 
 		public TextField getTxtTime() {
 			if( txtTime == null) {
-				txtTime = new TextField(""+RulesConst.ROUND_TIME_SECONDS);
+				txtTime = new TextField(""+RulesConst.getRound_time_seconds());
 				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
 				txtTime.getStyleClass().add("positionUserSettings");
 			}

@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.Deck;
 import model.Game;
-import model.IRulesConst;
+import model.RulesConst;
 import model.Player;
 
 
@@ -154,7 +154,7 @@ public class GameView extends StackPane {
 		 * @see getIvAdd()
 		 */
 		private void addPlayer() {
-			if(this.count>=IRulesConst.MAX_PLAYER) {
+			if(this.count>=RulesConst.MAX_PLAYER) {
 				return;
 			}
 			getlLblPlayer().add(new Label("PLAYER " + (this.count+1)));
@@ -270,8 +270,7 @@ public class GameView extends StackPane {
 							try {
 								GameView.this.getGame().addPlayer(txtP.getText());
 							} catch (Exception e) {
-								MsgBox.dispalyOk(e.getClass().getSimpleName().substring(0, e.getClass().getSimpleName().length()-9),
-										e.getMessage());
+								MsgBox.dispalyException(e);
 								GameView.this.getGame().removeAllPlayers();
 								return;
 							}
@@ -367,7 +366,7 @@ public class GameView extends StackPane {
 		
 		//Game vars
 		Game g = Game.getInstance();
-		private SimpleDoubleProperty timer = new SimpleDoubleProperty(IRulesConst.ROUND_TIME_SECONDS);
+		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesConst.getRound_time_seconds());
 		private int scorePos;
 		private SimpleStringProperty clues = new SimpleStringProperty();
 		private int cluesPos;
@@ -465,7 +464,7 @@ public class GameView extends StackPane {
 				return;
 			}
 			//Setting up next Player
-			g.getPlayer().setTime(IRulesConst.ROUND_TIME_SECONDS - Integer.parseInt(getLblTimer().getText()));
+			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
 			g.nextCurrentPlayer();
 			g.setCurrentQuestion(0);
 			//Setting up GUI

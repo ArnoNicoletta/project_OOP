@@ -96,7 +96,7 @@ public class Player {
 		return time;
 	}
 	public void setTime(double time) {
-		if(time>=0 && time<=RulesConst.ROUND_TIME_SECONDS)
+		if(time>=0 && time<=RulesConst.getRound_time_seconds())
 			this.time = time;
 	}
 	//Basic methods

@@ -1,7 +1,5 @@
 package application;
 	
-import exception.IdenticalPseudoException;
-import exception.TooMuchCharException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -13,6 +11,7 @@ import view.MsgBox;
 
 
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
