@@ -8,4 +8,7 @@ public interface IGraphicConst {
 	
 	//LABEL
 	final double WIDTH_LARGE_LBL = 600, HEIGHT_LARGE_LBL = 400;
+	
+	//Images
+	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
 }
