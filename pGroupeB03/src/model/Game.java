@@ -11,8 +11,6 @@ import java.util.Random;
 
 import exception.IdenticalPseudoException;
 import exception.TooMuchCharException;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 
 /**
  * This class manages the whole game.
