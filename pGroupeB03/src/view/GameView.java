@@ -270,7 +270,8 @@ public class GameView extends StackPane {
 							try {
 								GameView.this.getGame().addPlayer(txtP.getText());
 							} catch (Exception e) {
-								MsgBox.dispalyOk(e.getClass().toString(), e.getMessage());
+								MsgBox.dispalyOk(e.getClass().getSimpleName().substring(0, e.getClass().getSimpleName().length()-9),
+										e.getMessage());
 								GameView.this.getGame().removeAllPlayers();
 								return;
 							}
