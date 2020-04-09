@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import model.Game;
 
 /**
  * {@link BorderPane} that manages all the views.
@@ -33,11 +34,11 @@ public class MainView extends BorderPane {
 	// Other Panes included in stack
 	private WaitingScreen waitingScreen;
 	private MainMenu mainMenu;
-	private GameView gameView;
-	private Highscore highscore;
-	private Rules rules;
-	private Credit credit;
-	private Settings settings;
+//	private GameView gameView;
+//	private Highscore highscore;
+//	private Rules rules;
+//	private Credit credit;
+//	private Settings settings;
 	
 	
 	public MainView() {
@@ -46,30 +47,18 @@ public class MainView extends BorderPane {
 		
 		//TOP
 		this.setTop(getIvHome());
-		getIvHome().setVisible(false);
-		
 		
 		//CENTER
-		getStack().getChildren().addAll(getWaitingScreen(), getMainMenu(), getGameView(), getHighscore(),
-				getRules(), getCredit(), getSettings());
-		hideVisible();
-		getWaitingScreen().setVisible(true);
-		
+		showElement(getWaitingScreen());
 		this.setCenter(getStack());
 		
-	}
-	
-	private void hideVisible() {
-		for(Node n : getStack().getChildren()) {
-			if(n.isVisible()) {
-				n.setVisible(false);
-			}
-		}
+		getIvHome().setVisible(false);
 	}
 	
 	private void showElement(Node element) {
-		hideVisible();
+		getStack().getChildren().removeAll(getStack().getChildren());
 		getIvHome().setVisible(true);
+		getStack().getChildren().add(element);
 		element.setVisible(true);
 	}
 	
@@ -83,9 +72,11 @@ public class MainView extends BorderPane {
 				public void handle(MouseEvent event) {
 					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you want to go back to menu?");
 					if(sure) {
+						if(getStack().getChildren().get(0) instanceof GameView) {
+							Game.reset();
+						}
+						showElement(getMainMenu());
 						ivHome.setVisible(false);
-						hideVisible();
-						getMainMenu().setVisible(true);
 					}
 				}
 			});
@@ -111,38 +102,38 @@ public class MainView extends BorderPane {
 		}
 		return mainMenu;
 	}
-	public GameView getGameView() {
-		if(gameView==null) {
-			gameView = new GameView();
-		}
-		gameView.reset();
-		return gameView;
-	}
-	public Highscore getHighscore() {
-		if(highscore==null) {
-			highscore = new Highscore();
-		}
-		return highscore;
-	}
-	public Rules getRules() {
-		if(rules==null) {
-			rules = new Rules();
-		}
-		return rules;
-	}
-	public Credit getCredit() {
-		if(credit==null) {
-			credit = new Credit();
-		}
-		return credit;
-	}
-	public Settings getSettings() {
-		if(settings==null) {
-			settings = new Settings();
-		}
-		return settings;
-	}
-	
+//	public GameView getGameView() {
+//		if(gameView==null) {
+//			gameView = new GameView();
+//		}
+//		gameView.reset();
+//		return gameView;
+//	}
+//	public Highscore getHighscore() {
+//		if(highscore==null) {
+//			highscore = new Highscore();
+//		}
+//		return highscore;
+//	}
+//	public Rules getRules() {
+//		if(rules==null) {
+//			rules = new Rules();
+//		}
+//		return rules;
+//	}
+//	public Credit getCredit() {
+//		if(credit==null) {
+//			credit = new Credit();
+//		}
+//		return credit;
+//	}
+//	public Settings getSettings() {
+//		if(settings==null) {
+//			settings = new Settings();
+//		}
+//		return settings;
+//	}
+//	
 	
 	
 class WaitingScreen extends BorderPane {
@@ -165,8 +156,8 @@ class WaitingScreen extends BorderPane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				MainView.this.getWaitingScreen().setVisible(false);
-				MainView.this.getMainMenu().setVisible(true);
+				showElement(getMainMenu());
+				getIvHome().setVisible(false);
 			}
 			
 		});
@@ -218,7 +209,7 @@ class MainMenu extends BorderPane {
 		if(btnPlay==null) {
 			btnPlay = new Button("PLAY");
 			btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnPlay.setOnAction(e -> MainView.this.showElement(MainView.this.getGameView()));
+			btnPlay.setOnAction(e -> MainView.this.showElement(new GameView()));
 			btnPlay.getStyleClass().add("btnMainMenu");
 		}
 		return btnPlay;
@@ -228,7 +219,7 @@ class MainMenu extends BorderPane {
 		if(btnHighscores==null) {
 			btnHighscores = new Button("HIGHSCORES");
 			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnHighscores.setOnAction(e -> MainView.this.showElement(MainView.this.getHighscore()));
+			btnHighscores.setOnAction(e -> MainView.this.showElement(new Highscore()));
 			btnHighscores.getStyleClass().add("btnMainMenu");
 		}
 		return btnHighscores;
@@ -238,7 +229,7 @@ class MainMenu extends BorderPane {
 		if(btnCredits==null) {
 			btnCredits = new Button("CREDITS");
 			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnCredits.setOnAction(e -> MainView.this.showElement(MainView.this.getCredit()));
+			btnCredits.setOnAction(e -> MainView.this.showElement(new Credit()));
 			btnCredits.getStyleClass().add("btnMainMenu");
 		}
 		return btnCredits;
@@ -247,7 +238,7 @@ class MainMenu extends BorderPane {
 		if(btnRules==null) {
 			btnRules = new Button("RULES");
 			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnRules.setOnAction(e -> MainView.this.showElement(MainView.this.getRules()));
+			btnRules.setOnAction(e -> MainView.this.showElement(new Rules()));
 			btnRules.getStyleClass().add("btnMainMenu");
 		}
 		return btnRules;
@@ -255,7 +246,7 @@ class MainMenu extends BorderPane {
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
 			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
-			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(MainView.this.getSettings()));
+			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new Settings()));
 			ivSettings.setId("ivsettings");
 		}
 		return ivSettings;

@@ -54,21 +54,12 @@ public class GameView extends StackPane {
 	public GameView() {
 		
 		this.game = Game.getInstance();
-		this.getChildren().addAll(getPlayerSelection());
 		this.showElement(getPlayerSelection());
 	}
-	public void reset() {
-		//TODO reset
-	}
-	private void hideVisible() {
-		for(Node n : this.getChildren()) {
-			if(n.isVisible()) {
-				n.setVisible(false);
-			}
-		}
-	}
+	
 	private void showElement(Node element) {
-		hideVisible();
+		this.getChildren().removeAll(this.getChildren());
+		this.getChildren().add(element);
 		element.setVisible(true);
 	}
 	// Game elements
@@ -80,14 +71,12 @@ public class GameView extends StackPane {
 	public PlayerSelection getPlayerSelection() {
 		if(playerSelection==null) {
 			playerSelection = new PlayerSelection();
-			playerSelection.setId("playerSelection");
 		}
 		return playerSelection;
 	}
 	public ThemeSelection getThemeSelection() {
 		if(themeSelection==null) {
 			themeSelection = new ThemeSelection();
-			themeSelection.setId("themeSelection");
 		}
 		return themeSelection;
 	}
@@ -100,7 +89,6 @@ public class GameView extends StackPane {
 	public Ranking getRanking() {
 		if(ranking==null) {
 			ranking = new Ranking();
-			ranking.setId("ranking");
 		}
 		return ranking;
 	}
@@ -135,6 +123,8 @@ public class GameView extends StackPane {
 		private Button btnPlay;
 		
 		public PlayerSelection() {
+			
+			this.setId("playerSelection");
 			
 			addPlayer();
 			//CENTER
@@ -301,6 +291,8 @@ public class GameView extends StackPane {
 		
 		public ThemeSelection() {
 			
+			this.setId("themeSelection");
+			
 			//Center
 			VBox vbCenter = new VBox(10);
 			vbCenter.getChildren().add(getLblPlayer());
@@ -365,7 +357,7 @@ public class GameView extends StackPane {
 	class GamePane extends BorderPane {
 		
 		//Game vars
-		Game g = Game.getInstance();
+		private Game g = Game.getInstance();
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesConst.getRound_time_seconds());
 		private int scorePos;
 		private SimpleStringProperty clues = new SimpleStringProperty();
@@ -381,7 +373,6 @@ public class GameView extends StackPane {
 		private ImageView ivJokerExtraPass;
 		private ImageView ivJokerBonusTime;
 		
-		private Timeline timelineClues;
 		private Label lblClues;
 		private TextField txtAnswer;
 		private Button btnPass;
@@ -418,22 +409,7 @@ public class GameView extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
-//			Task<Timeline> taskTimer = new Task<Timeline>() {
-//				@Override
-//				protected Timeline call() throws Exception {
-//					return getTimelineTimer();
-//				}
-//			};
-//			new Thread(taskTimer).start();
-//			Task<Timeline> taskClues = new Task<Timeline>() {
-//				@Override
-//				protected Timeline call() throws Exception {
-//					return getTimelineClues();
-//				}
-//			};
-//			new Thread(taskClues).start();
 			getTimelineTimer().playFromStart();
-			getTimelineClues().playFromStart();
 		}
 		
 		private void updateIvScore(int score, int position) {
@@ -451,12 +427,12 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			clues.setValue("");
 			getTxtAnswer().setText("");
-			getTimelineClues().playFromStart();
 			System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
 			
 		}
 		
 		private void finishThisRound() {
+			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
 			if(g.isFinished()) {
 				getGamePane().setVisible(false);
 				GameView.this.getChildren().add(getRanking());
@@ -464,7 +440,6 @@ public class GameView extends StackPane {
 				return;
 			}
 			//Setting up next Player
-			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
 			g.nextCurrentPlayer();
 			g.setCurrentQuestion(0);
 			//Setting up GUI
@@ -495,29 +470,37 @@ public class GameView extends StackPane {
 			if(timelineTimer==null) {
 				timelineTimer = new Timeline();
 				timelineTimer.setCycleCount(Timeline.INDEFINITE);
-				getLblTimer().textProperty().bind(timer.asString("%.0f"));
 				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
 						timer.setValue(timer.get()-1);
 						if(timer.get() <= 0) {
-							timelineTimer.stop();
+//							timelineTimer.stop();
+//							finishThisRound();
+						}
+						if(cluesPos<3) {
+							clues.setValue(clues.get() + g.getClues(cluesPos++));
 						}
 					}
 				}));
-				//TODO include in a new Thread or something
+				//TODO include in a new Thread or something OR bind on the same line
 			}
 			return timelineTimer;
 		}
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
+				lblTimer.textProperty().bind(timer.asString("%.0f"));
 			}
 			return lblTimer;
 		}
 		public ImageView getIvJokerFirstLetter() {
 			if(ivJokerFirstLetter==null) {
-				ivJokerFirstLetter = new ImageView("file:./src/resources/images/logo.png");
+				ivJokerFirstLetter = new ImageView();
+				if(RulesConst.getFaced_joker()) ivJokerFirstLetter.setImage(new Image("file:./src/resources/images/arno.png"));
+				else ivJokerFirstLetter.setImage(new Image("file:./src/resources/images/logo.png"));
+				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
+				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
 					System.out.println("ivJokerFirstLetter");
@@ -529,7 +512,11 @@ public class GameView extends StackPane {
 		}
 		public ImageView getIvJokerExtraPass() {
 			if(ivJokerExtraPass==null) {
-				ivJokerExtraPass = new ImageView("file:./src/resources/images/logo.png");
+				ivJokerExtraPass = new ImageView();
+				if(RulesConst.getFaced_joker()) ivJokerExtraPass.setImage(new Image("file:./src/resources/images/rayan.png"));
+				else ivJokerExtraPass.setImage(new Image("file:./src/resources/images/logo.png"));
+				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
+				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					System.out.println("ivJokerExtraPass");
@@ -541,7 +528,11 @@ public class GameView extends StackPane {
 		}
 		public ImageView getIvJokerBonusTime() {
 			if(ivJokerBonusTime==null) {
-				ivJokerBonusTime = new ImageView("file:./src/resources/images/logo.png");
+				ivJokerBonusTime = new ImageView();
+				if(RulesConst.getFaced_joker()) ivJokerBonusTime.setImage(new Image("file:./src/resources/images/loic.png"));
+				else ivJokerBonusTime.setImage(new Image("file:./src/resources/images/logo.png"));
+				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
+				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + 10);
@@ -550,36 +541,13 @@ public class GameView extends StackPane {
 			}
 			return ivJokerBonusTime;
 		}
-		public Timeline getTimelineClues() {
-			if(timelineClues==null) {
-				timelineClues = new Timeline();
-				timelineClues.setCycleCount(3);
-				getLblClues().textProperty().bind(clues);
-				timelineClues.getKeyFrames().add(new KeyFrame(Duration.millis(1200), new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								if(clues.isEmpty().getValue()) {
-									clues.set(getGame().getClues(cluesPos++));
-								}
-								else{
-									clues.set(clues.get() + " " + getGame().getClues(cluesPos++));
-								}
-							}
-						}).run();
-					}
-				})); //TODO OPTI
-			}
-			return timelineClues;
-		}
 		public Label getLblClues() {
 			if(lblClues==null) {
 				lblClues = new Label(); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
 				lblClues.setWrapText(true);
 				lblClues.setTextOverrun(OverrunStyle.CENTER_ELLIPSIS);
+				lblClues.textProperty().bind(clues);
 			}
 			return lblClues;
 		}
@@ -598,9 +566,8 @@ public class GameView extends StackPane {
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						getGame().nextCurrentQuestion();
 						scorePos = 0;
-						
+						nextQuestion();
 					}
 				});
 			}
@@ -650,6 +617,8 @@ public class GameView extends StackPane {
 		private Label lblTime;
 				
 		public Ranking() {
+			
+			this.setId("ranking");
 			
 			//Setup positioning
 			this.setAlignment(Pos.CENTER);
