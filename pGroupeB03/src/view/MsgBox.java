@@ -19,15 +19,12 @@ public class MsgBox{
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
-		window.setMinWidth(275);
-		window.setMinHeight(125);
 		window.setResizable(false);
 		window.setOnCloseRequest(e -> answer = false);
 		
 		Label lbl = new Label(message);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setPadding(new Insets(5));
-		lbl.setPrefWidth(200);
 		lbl.setWrapText(true);
 		Button btnYes = new Button("Yes");
 		btnYes.setOnAction(e -> {
@@ -59,15 +56,12 @@ public class MsgBox{
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
-		window.setMinWidth(300);
-		window.setMinHeight(100);
 		window.setResizable(false);
 		window.setOnCloseRequest(e -> answer = true);
 		
 		Label lbl = new Label(message);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setPadding(new Insets(5));
-		lbl.setPrefWidth(200);
 		lbl.setWrapText(true);
 		Button btnOk = new Button("Ok");
 		btnOk.setOnAction(e -> window.close());
