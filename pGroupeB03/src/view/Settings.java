@@ -1,5 +1,6 @@
 package view;
 
+import exception.WrongRuleValueException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -7,9 +8,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import model.RulesConst;
@@ -118,10 +119,13 @@ public class Settings extends StackPane {
 		
 	}
 	class UserSettings extends GridPane{
+		
 		private Label lblNbRound;
 		private TextField txtNbRound;
 		private Label lblTime;
 		private TextField txtTime;
+		private CheckBox cbJoker;
+		private CheckBox cbSound;
 		private Button btnSave;
 		
 		public UserSettings() {
@@ -141,8 +145,14 @@ public class Settings extends StackPane {
 			GridPane.setHalignment(getTxtTime(),HPos.CENTER);
 			this.add(getTxtTime(), 1, 1);
 			
+			GridPane.setHalignment(getCbJoker(), HPos.CENTER);
+			this.add(getCbJoker(), 0, 2);
+			
+			GridPane.setHalignment(getCbSound(), HPos.CENTER);
+			this.add(getCbSound(), 1, 2);
+			
 			GridPane.setHalignment(getBtnSave(),HPos.RIGHT);
-			this.add(getBtnSave(), 2, 2);
+			this.add(getBtnSave(), 2, 3);
 			
 		}
 
@@ -157,7 +167,7 @@ public class Settings extends StackPane {
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
 				txtNbRound = new TextField(""+RulesConst.getNumber_round());
-				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
+//				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
 				txtNbRound.getStyleClass().add("positionUserSettings");
 			}
 			return txtNbRound;
@@ -174,16 +184,51 @@ public class Settings extends StackPane {
 		public TextField getTxtTime() {
 			if( txtTime == null) {
 				txtTime = new TextField(""+RulesConst.getRound_time_seconds());
-				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
+//				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
 				txtTime.getStyleClass().add("positionUserSettings");
 			}
 			return txtTime;
+		}
+		
+		public CheckBox getCbJoker() {
+			if(cbJoker==null) {
+				cbJoker = new CheckBox("Jokers with special faces");
+				cbJoker.setSelected(RulesConst.getFaced_joker());
+			}
+			return cbJoker;
+		}
+		
+		public CheckBox getCbSound() {
+			if(cbSound==null) {
+				cbSound = new CheckBox("Sound");
+				cbSound.setSelected(RulesConst.getSound_enabled());
+			}
+			return cbSound;
 		}
 		
 		public Button getBtnSave() {
 			if( btnSave== null) {
 				btnSave = new Button("SAVE");
 				btnSave.setId("btnSaveUserSettings");
+				btnSave.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						try {
+							RulesConst.setNumber_round(Integer.parseInt(getTxtNbRound().getText()));
+							RulesConst.setRound_time_seconds(Double.parseDouble(getTxtTime().getText()));
+						} catch (NumberFormatException e) {
+							MsgBox.dispalyOk("Wrong input number", "This is not a number ! "
+									+ "\n" + e.getMessage());
+						} catch (WrongRuleValueException e) {
+							MsgBox.dispalyException(e);
+						}
+						if(getCbJoker().isSelected()) RulesConst.setFaced_joker(true);
+						else RulesConst.setFaced_joker(false);
+						if(getCbSound().isSelected()) RulesConst.setSound_enabled(true);
+						else RulesConst.setSound_enabled(false);
+						MsgBox.dispalyOk("Saved", "Changes have been saved !");
+					}
+				});
 			}
 			return btnSave;
 		}
