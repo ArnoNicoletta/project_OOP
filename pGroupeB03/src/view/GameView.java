@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.Animation.Status;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -261,13 +262,12 @@ public class GameView extends StackPane {
 								GameView.this.getGame().addPlayer(txtP.getText());
 							} catch (Exception e) {
 								MsgBox.dispalyException(e);
-								GameView.this.getGame().removeAllPlayers();
-								return;
+								getGame().removeAllPlayers();
+								return ;
 							}
 						}
 						getGame().setCurrentPlayer(0);
-						GameView.this.getChildren().add(getThemeSelection());
-						GameView.this.showElement(getThemeSelection());
+						showElement(getThemeSelection());
 					}
 				});
 			}
@@ -362,7 +362,6 @@ public class GameView extends StackPane {
 		private int scorePos;
 		private SimpleStringProperty clues = new SimpleStringProperty();
 		private int cluesPos;
-		
 		//GUI vars
 		private Label lblPlayer;
 		private ImageView ivScore;
@@ -376,6 +375,7 @@ public class GameView extends StackPane {
 		private Label lblClues;
 		private TextField txtAnswer;
 		private Button btnPass;
+		private Button btnPause;
 		private Button btnValidate;
 		
 		public GamePane() {
@@ -392,7 +392,7 @@ public class GameView extends StackPane {
 			//LEFT
 			VBox vbLeft = new VBox(15);
 			vbLeft.setPadding(new Insets(0, 5, 10, 25));
-			vbLeft.setAlignment(Pos.CENTER);
+			vbLeft.setAlignment(Pos.CENTER_RIGHT);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			this.setLeft(vbLeft);
 			
@@ -403,13 +403,32 @@ public class GameView extends StackPane {
 			
 			HBox hbCenterBottom = new HBox(15);
 			hbCenterBottom.setAlignment(Pos.CENTER);
-			hbCenterBottom.getChildren().addAll(getBtnPass(), getBtnValidate());
+			hbCenterBottom.getChildren().addAll(getBtnPass(), getBtnPause(), getBtnValidate());
 			
 
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
 			getTimelineTimer().playFromStart();
+			pause();
+			clues.setValue(g.getClues(cluesPos++));
+		}
+		
+		private void play() {
+			if(getTimelineTimer().getStatus() == Status.STOPPED || getTimelineTimer().getStatus() == Status.PAUSED) {
+				getTimelineTimer().play();
+			}
+		}
+		private void pause() {
+			if(getTimelineTimer().getStatus() == Status.RUNNING) {
+				getTimelineTimer().pause();
+				if(MsgBox.displayPause(g.getPlayer().toString(), g.getUsingDeck().getTheme())) {
+					play();
+				}
+				else {
+					
+				}
+			}
 		}
 		
 		private void updateIvScore(int score, int position) {
@@ -425,7 +444,7 @@ public class GameView extends StackPane {
 			g.nextCurrentQuestion();
 			updateIvScore(g.getPlayer().getScore(), scorePos);
 			cluesPos = 0;
-			clues.setValue("");
+			clues.setValue(g.getClues(cluesPos++));
 			getTxtAnswer().setText("");
 			System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
 			
@@ -434,9 +453,7 @@ public class GameView extends StackPane {
 		private void finishThisRound() {
 			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
 			if(g.isFinished()) {
-				getGamePane().setVisible(false);
-				GameView.this.getChildren().add(getRanking());
-				getRanking().setVisible(true);
+				showElement(getRanking());
 				return;
 			}
 			//Setting up next Player
@@ -475,8 +492,8 @@ public class GameView extends StackPane {
 					public void handle(ActionEvent event) {
 						timer.setValue(timer.get()-1);
 						if(timer.get() <= 0) {
-//							timelineTimer.stop();
-//							finishThisRound();
+							timelineTimer.stop();
+							finishThisRound();
 						}
 						if(cluesPos<3) {
 							clues.setValue(clues.get() + g.getClues(cluesPos++));
@@ -562,7 +579,7 @@ public class GameView extends StackPane {
 		public Button getBtnPass() {
 			if(btnPass==null) {
 				btnPass = new Button("PASS");
-				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL/2, IGraphicConst.HEIGHT_BUTTON);
+				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON /2, IGraphicConst.HEIGHT_BUTTON);
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -573,10 +590,24 @@ public class GameView extends StackPane {
 			}
 			return btnPass;
 		}
+		public Button getBtnPause() {
+			if(btnPause==null) {
+				btnPause = new Button("PAUSE");
+				btnPause.setPrefSize(IGraphicConst.WIDTH_BUTTON * 0.2, IGraphicConst.HEIGHT_BUTTON);
+				btnPause.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						pause();
+						System.out.println(event.getTarget());
+					}
+				});
+			}
+			return btnPause;
+		}
 		public Button getBtnValidate() {
 			if(btnValidate==null) {
 				btnValidate = new Button("VALIDATE");
-				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL/2, IGraphicConst.HEIGHT_BUTTON);
+				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON /2, IGraphicConst.HEIGHT_BUTTON);
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
