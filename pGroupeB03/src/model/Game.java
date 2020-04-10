@@ -412,9 +412,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> when all players have been removed.
 	 */
 	public boolean removeAllPlayers() {
-		for(Player p : players) {
-			removePlayer(p);
-		}
+		players = new ArrayList<>();
 		return true;
 	}
 	
