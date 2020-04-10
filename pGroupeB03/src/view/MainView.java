@@ -1,6 +1,8 @@
 package view;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -53,6 +55,7 @@ public class MainView extends BorderPane {
 		this.setCenter(getStack());
 		
 		getIvHome().setVisible(false);
+		
 	}
 	
 	private void showElement(Node element) {
@@ -159,7 +162,6 @@ class WaitingScreen extends BorderPane {
 				showElement(getMainMenu());
 				getIvHome().setVisible(false);
 			}
-			
 		});
 	}
 	
