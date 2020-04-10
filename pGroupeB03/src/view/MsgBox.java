@@ -8,15 +8,22 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Deck;
+import model.Game;
 
 public class MsgBox{
 	
 	static boolean answer;
 	
+	/**
+	 * Displays a new window when the user is asked a question anwered by <code>YES</code> or <code>NO</code>.
+	 * @param title : {@link String}. The title of the window.
+	 * @param message : {@link String}. The question to display.
+	 * @return {@link Boolean}. <code>true</code> if the answer is <code>YES</code>, <code>false</code> if it is <code>NO</code>.
+	 */
 	public static boolean displayYesNO(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -55,6 +62,11 @@ public class MsgBox{
 		return answer;
 	}
 	
+	/**
+	 * Displays a new window when an information has to be shown to the user.
+	 * @param title : {@link String}. The title of the window.
+	 * @param message : {@link String}. The message to display.
+	 */
 	public static void dispalyOk(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -82,33 +94,21 @@ public class MsgBox{
 		window.showAndWait();
 	}
 	
+	/**
+	 * Displays a new window when an exception is thrown with informations about this exception.
+	 * @param e : {@link Exception}. The exception thrown.
+	 */
 	public static void dispalyException(Exception e) {
-		Stage window = new Stage();
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.initStyle(StageStyle.TRANSPARENT);
-		window.setTitle(e.getClass().getSimpleName().substring(0, e.getClass().getSimpleName().length()-9));
-		window.setResizable(false);
-		
-		Label lbl = new Label(e.getMessage());
-		lbl.setAlignment(Pos.CENTER);
-		lbl.setPadding(new Insets(5));
-		lbl.setWrapText(true);
-		Button btnOk = new Button("Ok");
-		btnOk.setOnAction(ev -> window.close());
-		
-		BorderPane bp = new BorderPane(lbl);
-		HBox hbBottom = new HBox(10);
-		hbBottom.setAlignment(Pos.CENTER_RIGHT);
-		hbBottom.setPadding(new Insets(5));
-		hbBottom.getChildren().addAll(btnOk);
-		bp.setBottom(hbBottom);
-		
-		Scene scene = new Scene(bp);
-		window.setScene(scene);
-		
-		window.showAndWait();
+		MsgBox.dispalyOk(e.getClass().getSimpleName().substring(0, e.getClass().getSimpleName().length()-9), e.getMessage());
 	}
 	
+	
+	/**
+	 * Displays a new window ( {@link Stage} ) called when the {@link Game} is paused.
+	 * @param player : {@link String}. The pseudo of the player currently playing.
+	 * @param theme : {@link String}. The theme of the {@link Deck} currently played.
+	 * @return {@link Boolean} : <code>true</code> if the player want to continue, <code>false</code> otherwise.
+	 */
 	public static boolean displayPause(String player, String theme) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
