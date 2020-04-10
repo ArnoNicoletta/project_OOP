@@ -60,6 +60,15 @@ public class Game {
 		instance.addAllDeck();
 	}
 	
+	public void replay() {
+		usedDecks = new ArrayList<>();
+		removeAllDecks();
+		addAllDeck();
+		randomChoice();
+		setCurrentPlayer(0);
+		setCurrentQuestion(0);
+	}
+	
 	/**
 	 * Get the number of the decks available in the current game.
 	 * @return {@link Integer}. The number of decks.
@@ -96,7 +105,19 @@ public class Game {
 		return ret;
 	}
 	
+	/**
+	 * Stores a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
+	 * This list of deck will replace all the decks in the game.
+	 */
+	public void randomChoice() {
+		updateAllDecks(randomChoice(getNumberOfPlayers()));
+	}
 	
+	/**
+	 * Gets the clues at the specific index in argument.
+	 * @param index : {@link Integer}. The index of the clue asked.
+	 * @return {@link String}. The clue asked.
+	 */
 	public String getClues(int index) {
 		return getUsingDeck().getQuestion(currentQuestion).getClues().get(index);
 	}

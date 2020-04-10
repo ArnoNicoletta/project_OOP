@@ -46,16 +46,10 @@ public class GameView extends StackPane {
 	//Game vars
 	private Game game;
 	
-	//Pane vars
-	private PlayerSelection playerSelection;
-	private ThemeSelection themeSelection;
-	private GamePane gamePane;
-	private Ranking ranking;
-	
 	public GameView() {
 		
 		this.game = Game.getInstance();
-		this.showElement(getPlayerSelection());
+		this.showElement(new PlayerSelection());
 	}
 	
 	private void showElement(Node element) {
@@ -67,33 +61,6 @@ public class GameView extends StackPane {
 	public Game getGame() {
 		return game;
 	}
-	
-	// GUI elements
-	public PlayerSelection getPlayerSelection() {
-		if(playerSelection==null) {
-			playerSelection = new PlayerSelection();
-		}
-		return playerSelection;
-	}
-	public ThemeSelection getThemeSelection() {
-		if(themeSelection==null) {
-			themeSelection = new ThemeSelection();
-		}
-		return themeSelection;
-	}
-	public GamePane getGamePane() {
-		if(gamePane==null) {
-			gamePane = new GamePane();
-		}
-		return gamePane;
-	}
-	public Ranking getRanking() {
-		if(ranking==null) {
-			ranking = new Ranking();
-		}
-		return ranking;
-	}
-	
 	
 	
 	/*
@@ -267,7 +234,8 @@ public class GameView extends StackPane {
 							}
 						}
 						getGame().setCurrentPlayer(0);
-						showElement(getThemeSelection());
+						getGame().randomChoice();
+						showElement(new ThemeSelection());
 					}
 				});
 			}
@@ -313,10 +281,6 @@ public class GameView extends StackPane {
 			if(lBtnTheme==null) {
 				lBtnTheme = new ArrayList<>();
 				
-				if(getGame().getCurrentPlayer()==0) {
-					getGame().updateAllDecks(getGame().randomChoice(getGame().getNumberOfPlayers()));
-				}
-				
 				for(int i=0;i<=GameView.this.getGame().getNumberOfPlayers();i++) {
 					Deck d = GameView.this.getGame().getDeck(i);
 					Button b = new Button(d.getTheme());
@@ -331,13 +295,12 @@ public class GameView extends StackPane {
 						@Override
 						public void handle(ActionEvent event) {
 							if(b.getText().equals(txtMysteryTheme)) {
-								GameView.this.getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
+								getGame().addUsedDeck(getGame().getDeck(getGame().getNumberOfPlayers()));
 							}
 							else {
-								GameView.this.getGame().addUsedDeck(b.getText());
+								getGame().addUsedDeck(b.getText());
 							}
-							GameView.this.getChildren().add(getGamePane());
-							GameView.this.showElement(getGamePane());
+							showElement(new GamePane());
 						}
 					});
 					lBtnTheme.add(b);
@@ -451,21 +414,21 @@ public class GameView extends StackPane {
 		}
 		
 		private void finishThisRound() {
+			//Stop the timeline
+			if(getTimelineTimer().getStatus() == Status.RUNNING || getTimelineTimer().getStatus() == Status.PAUSED) {
+				getTimelineTimer().stop();
+			}
+			
 			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
 			if(g.isFinished()) {
-				showElement(getRanking());
+				showElement(new Ranking());
 				return;
 			}
 			//Setting up next Player
 			g.nextCurrentPlayer();
 			g.setCurrentQuestion(0);
 			//Setting up GUI
-			GameView.this.getChildren().remove(getGamePane());
-			GameView.this.gamePane = null;
-			GameView.this.themeSelection = null;;
-			GameView.this.getChildren().add(getThemeSelection());
-			getThemeSelection().setVisible(true);
-			
+			showElement(new ThemeSelection());
 		}
 		
 		public Label getLblPlayer() {
@@ -500,7 +463,6 @@ public class GameView extends StackPane {
 						}
 					}
 				}));
-				//TODO include in a new Thread or something OR bind on the same line
 			}
 			return timelineTimer;
 		}
@@ -646,6 +608,8 @@ public class GameView extends StackPane {
 		private Label lblPseudo;
 		private Label lblScore;
 		private Label lblTime;
+		
+		private Button btnReplay;
 				
 		public Ranking() {
 			
@@ -690,6 +654,7 @@ public class GameView extends StackPane {
 			for(int i=0; i<getGame().getNumberOfPlayers(); i++) {
 				this.addPlayer(i);
 			}
+			this.add(getBtnReplay(), 0, getGame().getNumberOfPlayers() + 1, 4, 1);
 		}
 		
 		public Label getLblRank() {
@@ -723,6 +688,20 @@ public class GameView extends StackPane {
 				lblTime.getStyleClass().add("titleRanking");
 			}
 			return lblTime;
+		}
+		public Button getBtnReplay() {
+			if(btnReplay==null) {
+				btnReplay = new Button("REPLAY");
+				btnReplay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				btnReplay.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						getGame().replay();
+						showElement(new ThemeSelection());
+					}
+				});
+			}
+			return btnReplay;
 		}
 	}
 }
