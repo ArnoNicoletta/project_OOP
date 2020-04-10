@@ -409,7 +409,6 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			clues.setValue(g.getClues(cluesPos++));
 			getTxtAnswer().setText("");
-			System.out.println(g.getPlayer() +"\t"+ g.getPlayer().getScore());
 			
 		}
 		
@@ -482,9 +481,9 @@ public class GameView extends StackPane {
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
-					System.out.println("ivJokerFirstLetter");
+					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getCurrentQuestion()).getAnswer().substring(0, 1));
 					ivJokerFirstLetter.setDisable(true);
-					//TODO JOKER
+					ivJokerFirstLetter.setOpacity(0.5);
 				}); 
 			}
 			return ivJokerFirstLetter;
@@ -498,9 +497,9 @@ public class GameView extends StackPane {
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
-					System.out.println("ivJokerExtraPass");
-					ivJokerExtraPass.setDisable(true);
 					//TODO JOKER
+					ivJokerExtraPass.setDisable(true);
+					ivJokerExtraPass.setOpacity(0.5);
 				}); 
 			}
 			return ivJokerExtraPass;
@@ -516,6 +515,7 @@ public class GameView extends StackPane {
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + 10);
 					ivJokerBonusTime.setDisable(true);
+					ivJokerBonusTime.setOpacity(0.5);
 				});
 			}
 			return ivJokerBonusTime;
@@ -560,7 +560,6 @@ public class GameView extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						pause();
-						System.out.println(event.getTarget());
 					}
 				});
 			}
