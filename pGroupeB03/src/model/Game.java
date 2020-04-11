@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import exception.EmptyPseudoException;
 import exception.IdenticalPseudoException;
 import exception.TooMuchCharException;
 
@@ -385,7 +386,7 @@ public class Game {
 	 * @throws IdenticalPseudoException if pseudo already in the current game.
 	 * @throws TooMuchCharException 
 	 */
-	public boolean addPlayer(String pseudo) throws IdenticalPseudoException, TooMuchCharException {
+	public boolean addPlayer(String pseudo) throws IdenticalPseudoException, TooMuchCharException, EmptyPseudoException {
 		Player p = new Player(pseudo);
 		return addPlayer(p);
 	}

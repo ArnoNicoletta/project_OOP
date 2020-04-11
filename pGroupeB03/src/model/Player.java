@@ -10,6 +10,7 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import exception.EmptyPseudoException;
 import exception.TooMuchCharException;
 
 /**
@@ -23,11 +24,11 @@ public class Player {
 	private int score;
 	private double time;
 	
-	public Player(String pseudo) throws TooMuchCharException {
+	public Player(String pseudo) throws TooMuchCharException, EmptyPseudoException {
 		this.setPseudo(pseudo);
 	}
 	
-	public Player(String pseudo, int score, double time) throws TooMuchCharException {
+	public Player(String pseudo, int score, double time) throws TooMuchCharException, EmptyPseudoException {
 		this.setPseudo(pseudo);
 		this.score = score;
 		this.time = time;
@@ -79,10 +80,9 @@ public class Player {
 	public String getPseudo() {
 		return pseudo;
 	}
-	public void setPseudo(String pseudo) throws TooMuchCharException {
-		if(pseudo.length()>RulesConst.MAX_CHAR) {
-			throw new TooMuchCharException(pseudo);
-		}
+	public void setPseudo(String pseudo) throws TooMuchCharException, EmptyPseudoException {
+		if(pseudo.isEmpty()) throw new EmptyPseudoException();
+		if(pseudo.length()>RulesConst.MAX_CHAR) throw new TooMuchCharException(pseudo);
 		this.pseudo = pseudo;
 	}
 	public int getScore() {
@@ -130,7 +130,7 @@ public class Player {
 	public Player clone() {
 		try {
 			return new Player(this.pseudo, this.score, this.time);
-		} catch (TooMuchCharException e) {
+		} catch (TooMuchCharException | EmptyPseudoException e) {
 			
 		}
 		return null;
