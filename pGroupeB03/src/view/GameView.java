@@ -497,7 +497,7 @@ public class GameView extends StackPane {
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
-					//TODO JOKER
+					nextQuestion();
 					ivJokerExtraPass.setDisable(true);
 					ivJokerExtraPass.setOpacity(0.5);
 				}); 
