@@ -1,19 +1,29 @@
 package view;
 
-import javafx.event.ActionEvent;
+import java.util.Collections;
+
 import javafx.event.EventHandler;
-import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import model.Game;
 
 /**
@@ -46,6 +56,10 @@ public class MainView extends BorderPane {
 	public MainView() {
 		
 		this.setId("maincontroller");
+		this.setBackground(new Background(new BackgroundImage(
+				new Image("file:./src/resources/images/background.png", 1035, 587, false, true), 
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+				BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 		
 		//TOP
 		this.setTop(getIvHome());
@@ -170,6 +184,7 @@ class WaitingScreen extends BorderPane {
 			lblTitle = new Label("FOUR THE WIN");
 			lblTitle.setId("lblTitleWaitingScreen");
 			lblTitle.setPrefSize(800, 100);
+			lblTitle.setAlignment(Pos.BASELINE_CENTER);
 		}
 		return lblTitle;
 	}
@@ -179,6 +194,7 @@ class WaitingScreen extends BorderPane {
 			lblPressToContinue = new Label("CLICK TO CONTINUE");
 			lblPressToContinue.setId("lblClickContinueWaitingScreen");
 			lblPressToContinue.setPrefSize(500, 50);
+			lblPressToContinue.setAlignment(Pos.BASELINE_CENTER);
 		}
 		return lblPressToContinue;
 	}
@@ -250,6 +266,7 @@ class MainMenu extends BorderPane {
 			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
 			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new Settings()));
 			ivSettings.setId("ivsettings");
+			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);
 		}
 		return ivSettings;
 	}
