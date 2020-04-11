@@ -1,9 +1,6 @@
 package view;
 
-import java.util.Collections;
-
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -13,13 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -75,6 +70,7 @@ public class MainView extends BorderPane {
 	private void showElement(Node element) {
 		getStack().getChildren().removeAll(getStack().getChildren());
 		getIvHome().setVisible(true);
+		getIvHome().toFront();
 		getStack().getChildren().add(element);
 		element.setVisible(true);
 	}
@@ -83,7 +79,9 @@ public class MainView extends BorderPane {
 		if(ivHome==null) {
 			ivHome = new ImageView("file:./src/resources/images/icon_home.png");
 			Tooltip.install(ivHome, new Tooltip("Back to the menu"));
-			ivHome.setId("buttonHome");
+			ivHome.setTranslateX(20);
+			ivHome.setTranslateY(20);
+			ivHome.toFront();
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -184,6 +182,10 @@ class WaitingScreen extends BorderPane {
 			lblTitle = new Label("FOUR THE WIN");
 			lblTitle.setId("lblTitleWaitingScreen");
 			lblTitle.setPrefSize(800, 100);
+			lblTitle.setTextFill(Color.web("#FBC680"));
+			lblTitle.setStyle("-fx-font-family: \"K2D Medium\", sans-serif;\r\n" + 
+						"-fx-font-weight: bold;\r\n" + 
+						"-fx-font-size: 100px;");
 			lblTitle.setAlignment(Pos.BASELINE_CENTER);
 		}
 		return lblTitle;
@@ -212,6 +214,11 @@ class MainMenu extends BorderPane {
 		
 		this.setId("mainMenu");
 		
+		this.setBackground(new Background(new BackgroundImage(
+				new Image("file:./src/resources/images/background_mainmenu.png", false), 
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+				BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+		
 		//CENTER
 		VBox vbCenter = new VBox();
 		vbCenter.getChildren().addAll(getBtnPlay(), getBtnHighScores(), getBtnRules(), getBtnCredits(), getIvSettings());
@@ -228,6 +235,7 @@ class MainMenu extends BorderPane {
 			btnPlay = new Button("PLAY");
 			btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnPlay.setOnAction(e -> MainView.this.showElement(new GameView()));
+			IGraphicConst.styleButton(btnPlay);
 			btnPlay.getStyleClass().add("btnMainMenu");
 		}
 		return btnPlay;
@@ -238,6 +246,7 @@ class MainMenu extends BorderPane {
 			btnHighscores = new Button("HIGHSCORES");
 			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnHighscores.setOnAction(e -> MainView.this.showElement(new Highscore()));
+			IGraphicConst.styleButton(btnHighscores);
 			btnHighscores.getStyleClass().add("btnMainMenu");
 		}
 		return btnHighscores;
@@ -248,6 +257,7 @@ class MainMenu extends BorderPane {
 			btnCredits = new Button("CREDITS");
 			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnCredits.setOnAction(e -> MainView.this.showElement(new Credit()));
+			IGraphicConst.styleButton(btnCredits);
 			btnCredits.getStyleClass().add("btnMainMenu");
 		}
 		return btnCredits;
@@ -257,6 +267,7 @@ class MainMenu extends BorderPane {
 			btnRules = new Button("RULES");
 			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 			btnRules.setOnAction(e -> MainView.this.showElement(new Rules()));
+			IGraphicConst.styleButton(btnRules);
 			btnRules.getStyleClass().add("btnMainMenu");
 		}
 		return btnRules;

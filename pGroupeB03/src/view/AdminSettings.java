@@ -10,6 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -89,7 +95,12 @@ public class AdminSettings extends StackPane {
 		private Button btnOk;
 		
 		public AdminLogin() {
-			super();
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_admin_login.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
@@ -169,6 +180,12 @@ public class AdminSettings extends StackPane {
 		private Button btnImport;
 		
 		public AdminMenu() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			VBox vb = new VBox();
 			vb.getChildren().addAll(getBtnAdd(),getBtnDelete(),getBtnImport());
 			vb.setSpacing(30);
@@ -229,6 +246,12 @@ public class AdminSettings extends StackPane {
 		private Button btnDelete;
 		
 		public AdminDelete() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
@@ -302,6 +325,12 @@ public class AdminSettings extends StackPane {
 		private Button btnAdd;
 		
 		public AdminAdd() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);

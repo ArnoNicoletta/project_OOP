@@ -11,6 +11,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import model.RulesConst;
@@ -68,6 +74,12 @@ public class Settings extends StackPane {
 		private Button btnAdmin;
 		
 		public MenuSettings() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_settings_choice.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
@@ -129,6 +141,12 @@ public class Settings extends StackPane {
 		private Button btnSave;
 		
 		public UserSettings() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
 			this.setVgap(5);

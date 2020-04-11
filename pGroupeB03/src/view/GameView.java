@@ -21,6 +21,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -94,6 +99,11 @@ public class GameView extends StackPane {
 			
 			this.setId("playerSelection");
 			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_select_players.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			addPlayer();
 			//CENTER
 			getGpCenter().setTranslateY(50);
@@ -115,7 +125,7 @@ public class GameView extends StackPane {
 			if(this.count>=RulesConst.MAX_PLAYER) {
 				return;
 			}
-			getlLblPlayer().add(new Label("PLAYER " + (this.count+1)));
+			getlLblPlayer().add(IGraphicConst.styleLabel(new Label("PLAYER " + (this.count+1))));
 			getlTxtPlayer().add(new TextField());
 			getlIvPlayer().add(getIvAdd());
 			
@@ -261,6 +271,11 @@ public class GameView extends StackPane {
 			
 			this.setId("themeSelection");
 			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_theme.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+			
 			//Center
 			VBox vbCenter = new VBox(10);
 			vbCenter.getChildren().add(getLblPlayer());
@@ -345,6 +360,11 @@ public class GameView extends StackPane {
 			
 			scorePos = 0;
 			cluesPos = 0;
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_theme.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 			
 			//TOP
 			HBox hbTop = new HBox(30);
@@ -468,6 +488,7 @@ public class GameView extends StackPane {
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
+				lblTimer.setStyle(IGraphicConst.STYLE_LBL);
 				lblTimer.textProperty().bind(timer.asString("%.0f"));
 			}
 			return lblTimer;
@@ -524,6 +545,7 @@ public class GameView extends StackPane {
 			if(lblClues==null) {
 				lblClues = new Label(); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
+				lblClues.setStyle(IGraphicConst.STYLE_LBL);
 				lblClues.setWrapText(true);
 				lblClues.setTextOverrun(OverrunStyle.CENTER_ELLIPSIS);
 				lblClues.textProperty().bind(clues);
@@ -542,6 +564,7 @@ public class GameView extends StackPane {
 			if(btnPass==null) {
 				btnPass = new Button("PASS");
 				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON /2, IGraphicConst.HEIGHT_BUTTON);
+				btnPass.setStyle(IGraphicConst.STYLE_BUTTON);
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -556,6 +579,7 @@ public class GameView extends StackPane {
 			if(btnPause==null) {
 				btnPause = new Button("PAUSE");
 				btnPause.setPrefSize(IGraphicConst.WIDTH_BUTTON * 0.2, IGraphicConst.HEIGHT_BUTTON);
+				btnPause.setStyle(IGraphicConst.STYLE_BUTTON);
 				btnPause.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -569,6 +593,7 @@ public class GameView extends StackPane {
 			if(btnValidate==null) {
 				btnValidate = new Button("VALIDATE");
 				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON /2, IGraphicConst.HEIGHT_BUTTON);
+				btnValidate.setStyle(IGraphicConst.STYLE_BUTTON);
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -613,6 +638,11 @@ public class GameView extends StackPane {
 		public Ranking() {
 			
 			this.setId("ranking");
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image("file:./src/resources/images/background_ranking.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 			
 			//Setup positioning
 			this.setAlignment(Pos.CENTER);

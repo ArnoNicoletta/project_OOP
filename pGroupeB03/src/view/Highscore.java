@@ -2,7 +2,13 @@ package view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 
 
@@ -14,10 +20,15 @@ public class Highscore extends GridPane{
 			
 	public Highscore() {
 		
+		this.setBackground(new Background(new BackgroundImage(
+				new Image("file:./src/resources/images/background_ranking.png", false), 
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+				BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+		
 		//Setup positioning
-		this.setAlignment(Pos.CENTER);
-		this.setHgap(10);
-		this.setVgap(15);
+		this.setAlignment(Pos.BOTTOM_CENTER);
+		this.setHgap(100);
+		this.setVgap(25);
 		
 		//Titles
 		this.add(getLblRank(), 0, 0);
@@ -35,9 +46,9 @@ public class Highscore extends GridPane{
 	
 	private void addPlayer(int rank) {
 		ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
-		Label lblPlayerPseudo = new Label("joueur" + rank);
-		Label lblPlayerScore = new Label("sonScore");
-		Label lblPlayerTime = new Label("sonTemps");
+		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("joueur" + rank));
+		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
+		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));
 		ivPlayerRank.getStyleClass().add("positionRank");
 		lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
 		lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
@@ -53,6 +64,7 @@ public class Highscore extends GridPane{
 	public Label getLblRank() {
 		if(lblRank==null) {
 			lblRank = new Label("RANK");
+			IGraphicConst.styleLabel(lblRank);
 			lblRank.getStyleClass().add("positionRank");
 			lblRank.getStyleClass().add("titleRanking");
 		}
@@ -61,6 +73,7 @@ public class Highscore extends GridPane{
 	public Label getLblPseudo() {
 		if(lblPseudo==null) {
 			lblPseudo = new Label("PSEUDO");
+			IGraphicConst.styleLabel(lblPseudo);
 			lblPseudo.getStyleClass().add("positionPseudo");
 			lblPseudo.getStyleClass().add("titleRanking");
 		}
@@ -69,6 +82,7 @@ public class Highscore extends GridPane{
 	public Label getLblScore() {
 		if(lblScore==null) {
 			lblScore = new Label("SCORE");
+			IGraphicConst.styleLabel(lblScore);
 			lblScore.getStyleClass().add("positionScore");
 			lblScore.getStyleClass().add("titleRanking");
 		}
@@ -77,6 +91,7 @@ public class Highscore extends GridPane{
 	public Label getLblTime() {
 		if(lblTime==null) {
 			lblTime = new Label("TIME");
+			IGraphicConst.styleLabel(lblTime);
 			lblTime.getStyleClass().add("positionTime");
 			lblTime.getStyleClass().add("titleRanking");
 		}
