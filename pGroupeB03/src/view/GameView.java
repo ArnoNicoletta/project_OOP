@@ -252,6 +252,7 @@ public class GameView extends StackPane {
 							} catch (Exception e) {
 								MsgBox.dispalyException(e);
 								getGame().removeAllPlayers();
+								getlTxtPlayer().get(0).requestFocus();
 								return ;
 							}
 						}
@@ -721,7 +722,6 @@ public class GameView extends StackPane {
 			ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_"+ (pos+1) + ".png");
 			ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK);
 			ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
-			//TODO add different logo's relative to rank
 			Label lblPlayerPseudo = new Label(p.getPseudo());
 			Label lblPlayerScore = new Label(""+p.getScore());
 			Label lblPlayerTime = new Label(""+p.getTime());
