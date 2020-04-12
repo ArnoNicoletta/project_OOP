@@ -1,5 +1,6 @@
 package view;
 
+import exception.WrongLoginException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -11,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -20,10 +23,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import model.Admin;
 
 public class AdminSettings extends StackPane {
-	
-	
+
+	private Admin admin;
 	
 	private AdminLogin adminLogin;
 	private AdminMenu adminMenu;
@@ -35,15 +39,9 @@ public class AdminSettings extends StackPane {
 		this.showElement(getAdminLogin());
 	}
 	
-	public void hideVisible() {
-		for(Node n : this.getChildren()) {
-			if(n.isVisible()) {
-				n.setVisible(false);
-			}
-		}
-	}
 	private void showElement(Node element) {
-		hideVisible();
+		this.getChildren().removeAll(this.getChildren());
+		this.getChildren().add(element);
 		element.setVisible(true);
 	}
 	
@@ -121,6 +119,7 @@ public class AdminSettings extends StackPane {
 			GridPane.setHalignment(getBtnOk(), HPos.RIGHT);
 			this.add(getBtnOk(), 0, 3, 2, 1);
 		}
+		
 		public Label getLblTitre() {
 			if(lblTitre==null) {
 				lblTitre = new Label("ADMIN LOGIN");
@@ -139,6 +138,15 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtLog() {
 			if(txtLog==null) {
 				txtLog = new TextField();
+				txtLog.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+					@Override
+					public void handle(KeyEvent event) {
+						if(event.getCode() == KeyCode.ENTER) {
+							getPwfPass().requestFocus();
+						}
+					}
+				});
 				txtLog.getStyleClass().add("positionAdminLogin");
 			}
 			return txtLog;
@@ -154,6 +162,14 @@ public class AdminSettings extends StackPane {
 			if(pwfPass==null) {
 				pwfPass = new PasswordField();
 				pwfPass.getStyleClass().add("positionAdminLogin");
+				pwfPass.setOnKeyPressed(new EventHandler<KeyEvent>() {
+					@Override
+					public void handle(KeyEvent event) {
+						if(event.getCode() == KeyCode.ENTER) {
+							getBtnOk().fire();
+						}
+					}
+				});
 			}
 			return pwfPass;
 		}
@@ -163,11 +179,18 @@ public class AdminSettings extends StackPane {
 				btnOk.setId("btnAdminLogin");
 				
 				btnOk.setOnAction(new EventHandler<ActionEvent>() {
-					
 					@Override
 					public void handle(ActionEvent event) {
-						hideVisible();
-						getAdminMenu().setVisible(true);
+						try {
+							admin = new Admin(getTxtLog().getText(), getPwfPass().getText());
+						} catch (WrongLoginException e) {
+							MsgBox.dispalyException(e);
+							getTxtLog().clear();
+							getPwfPass().clear();
+							getTxtLog().requestFocus();
+							return;
+						}
+						showElement(new AdminMenu());
 					}
 				});
 			}
@@ -205,8 +228,7 @@ public class AdminSettings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						hideVisible();
-						getAdminAdd().setVisible(true);
+						showElement(new AdminAdd());
 					}
 				});
 			}
@@ -221,8 +243,7 @@ public class AdminSettings extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						hideVisible();
-						getAdminDelete().setVisible(true);
+						showElement(new AdminDelete());
 					}
 				});
 			}
