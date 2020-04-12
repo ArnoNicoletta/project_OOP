@@ -46,7 +46,7 @@ public class Highscore extends GridPane{
 	}
 	
 	private void addPlayer(int rank) {
-		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank" + (rank) + ".png");
+		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank) + ".png");
 		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("joueur" + rank));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
 		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));
