@@ -5,11 +5,18 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 
 public class Highscore extends GridPane{
@@ -28,7 +35,7 @@ public class Highscore extends GridPane{
 		
 		//Setup positioning
 		this.setAlignment(Pos.BOTTOM_CENTER);
-		this.setHgap(100);
+		this.setHgap(50);
 		this.setVgap(25);
 		
 		//Titles
@@ -39,25 +46,32 @@ public class Highscore extends GridPane{
 
 		
 		//Content
-		for(int i=1;i<=5;i++) {
+		for(int i=0;i<5;i++) {
 			this.addPlayer(i);
 		}
 		
 	}
 	
 	private void addPlayer(int rank) {
-		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank) + ".png");
+		
+		Label lbl = new Label();
+		lbl.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON - IGraphicConst.WIDTH_RANK, IGraphicConst.HEIGHT_BUTTON);
+		lbl.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(20, false) , null)));
+		lbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
+		
+		this.add(lbl, 1, rank+1, 3, 1);
+		
+		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank+1) + ".png");
 		ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK);
 		ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
-		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("joueur" + rank));
+		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " + "joueur"));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
 		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));
 		
-		this.add(ivPlayerRank, 0, rank);
-		this.add(lblPlayerPseudo, 1, rank);
-		this.add(lblPlayerScore, 2, rank);
-		this.add(lblPlayerTime, 3, rank);
-		//idem pour les 4 suivants
+		this.add(ivPlayerRank, 0, rank+1);
+		this.add(lblPlayerPseudo, 1, rank+1);
+		this.add(lblPlayerScore, 2, rank+1);
+		this.add(lblPlayerTime, 3, rank+1);
 	}
 	
 	public Label getLblRank() {
