@@ -41,11 +41,6 @@ public class MainView extends BorderPane {
 	// Other Panes included in stack
 	private WaitingScreen waitingScreen;
 	private MainMenu mainMenu;
-//	private GameView gameView;
-//	private Highscore highscore;
-//	private Rules rules;
-//	private Credit credit;
-//	private Settings settings;
 	
 	
 	public MainView() {
