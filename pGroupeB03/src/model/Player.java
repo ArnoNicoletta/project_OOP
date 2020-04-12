@@ -30,8 +30,8 @@ public class Player {
 	
 	public Player(String pseudo, int score, double time) throws TooMuchCharException, EmptyPseudoException {
 		this.setPseudo(pseudo);
-		this.score = score;
-		this.time = time;
+		this.setScore(score);
+		this.setTime(time);
 	}
 	
 	public boolean addPoint() {
@@ -96,7 +96,7 @@ public class Player {
 		return time;
 	}
 	public void setTime(double time) {
-		if(time>=0 && time<=RulesConst.getRound_time_seconds())
+		if(time>=0 && time<=RulesConst.getRound_time_seconds()+RulesConst.JOKER_TIME)
 			this.time = time;
 	}
 	//Basic methods

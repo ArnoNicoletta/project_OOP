@@ -10,6 +10,7 @@ public class RulesConst {
 	//Question and Deck rules
 	public final static int MIN_QUESTIONS = 10;
 	//Game rules
+	public final static double JOKER_TIME = 10;
 	private static int number_round = 1;
 	private static double round_time_seconds = 45;
 	//UI rules

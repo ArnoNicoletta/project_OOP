@@ -562,7 +562,7 @@ public class GameView extends StackPane {
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
-					timer.setValue(timer.get() + 10);
+					timer.setValue(timer.get() + RulesConst.JOKER_TIME);
 					ivJokerBonusTime.setDisable(true);
 					ivJokerBonusTime.setOpacity(0.5);
 				});
