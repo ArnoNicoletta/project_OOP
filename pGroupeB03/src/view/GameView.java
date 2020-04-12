@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,6 +34,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -105,8 +107,6 @@ public class GameView extends StackPane {
 		
 		public PlayerSelection() {
 			
-			this.setId("playerSelection");
-			
 			this.setBackground(new Background(new BackgroundImage(
 					new Image(IGraphicConst.URL_PATH_IMG + "background/background_select_players.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
@@ -136,7 +136,17 @@ public class GameView extends StackPane {
 				return;
 			}
 			getlLblPlayer().add(IGraphicConst.styleLabel(new Label("PLAYER " + (this.count+1))));
-			getlTxtPlayer().add(IGraphicConst.styleTextField(new TextField()));
+			TextField txtP = new TextField();
+			txtP.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					if(event.getCode() == KeyCode.ENTER) {
+						getBtnPlay().fire();
+						event.consume();
+					}
+				}
+			});
+			getlTxtPlayer().add(IGraphicConst.styleTextField(txtP));
 			getlIvPlayer().add(getIvAdd());
 			
 			getGpCenter().add(getlLblPlayer().get(count), 0, count);
@@ -183,6 +193,7 @@ public class GameView extends StackPane {
 		 */
 		private ImageView getIvAdd() {
 			ImageView iv = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_add_player.png");
+			iv.setCursor(Cursor.HAND);
 			iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -200,6 +211,7 @@ public class GameView extends StackPane {
 		 */
 		private ImageView getIvDel() {
 			ImageView ivDel = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_remove_player.png");
+			ivDel.setCursor(Cursor.HAND);
 			ivDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -241,7 +253,6 @@ public class GameView extends StackPane {
 			if(btnPlay==null) {
 				btnPlay = new Button("PLAY");
 				btnPlay.setPrefSize(200, 40);
-				btnPlay.setId("btnPlaySelectPlayers");
 				IGraphicConst.styleButton(btnPlay);
 				btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -282,8 +293,6 @@ public class GameView extends StackPane {
 		
 		public ThemeSelection() {
 			
-			this.setId("themeSelection");
-			
 			this.setBackground(new Background(new BackgroundImage(
 					new Image(IGraphicConst.URL_PATH_IMG + "background/background_theme.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
@@ -303,7 +312,6 @@ public class GameView extends StackPane {
 				lblPlayer = new Label(getGame().getPlayer(getGame().getCurrentPlayer()) + 
 						" , SELECT A THEME ");
 				IGraphicConst.styleLabel(lblPlayer);
-				lblPlayer.setId("lblPlayerTheme");
 			}
 			return lblPlayer;
 		}
@@ -353,6 +361,7 @@ public class GameView extends StackPane {
 		//Game vars
 		private Game g = Game.getInstance();
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesConst.getRound_time_seconds());
+		private String fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
 		private int scorePos;
 		private SimpleStringProperty clues = new SimpleStringProperty();
 		private int cluesPos;
@@ -393,8 +402,8 @@ public class GameView extends StackPane {
 			VBox vbLeft = new VBox(15);
 			vbLeft.setPadding(new Insets(0, 5, 10, 25));
 			vbLeft.setAlignment(Pos.CENTER_RIGHT);
-			vbLeft.setTranslateX(200);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
+			vbLeft.toFront();
 			this.setLeft(vbLeft);
 			
 			//CENTER
@@ -410,7 +419,7 @@ public class GameView extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
-			clues.setValue(g.getClues(cluesPos++));
+			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTimelineTimer().playFromStart();
 			pause();
 		}
@@ -462,7 +471,8 @@ public class GameView extends StackPane {
 			g.nextCurrentQuestion();
 			updateIvScore(g.getPlayer().getScore(), scorePos);
 			cluesPos = 0;
-			clues.setValue(g.getClues(cluesPos++));
+			fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
+			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTxtAnswer().setText("");
 			getTxtAnswer().requestFocus();
 		}
@@ -511,16 +521,16 @@ public class GameView extends StackPane {
 			if(timelineTimer==null) {
 				timelineTimer = new Timeline();
 				timelineTimer.setCycleCount(Timeline.INDEFINITE);
-				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						timer.setValue(timer.get()-1);
+						timer.setValue(timer.get() - 0.025);
 						if(timer.get() <= 0) {
 							timelineTimer.stop();
 							finishThisRound();
 						}
-						if(cluesPos<3) {
-							clues.setValue(clues.get() + g.getClues(cluesPos++));
+						if(cluesPos<fullClues.length()) {
+							clues.setValue(clues.get() + fullClues.charAt(cluesPos++));
 						}
 					}
 				}));
@@ -531,10 +541,10 @@ public class GameView extends StackPane {
 			if(lblTimer==null) {
 				lblTimer = new Label();
 				IGraphicConst.styleBiggerLabel(lblTimer);
-				lblTimer.setPrefSize(50, 20);
+				lblTimer.setPrefSize(75, 20);
 				lblTimer.setTranslateX(40);
 				lblTimer.setTranslateY(40);
-				lblTimer.textProperty().bind(timer.asString("%.0f"));
+				lblTimer.textProperty().bind(timer.asString("%.2f"));
 			}
 			return lblTimer;
 		}
@@ -545,6 +555,8 @@ public class GameView extends StackPane {
 				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
+				ivJokerFirstLetter.setCursor(Cursor.HAND);
+//				ivJokerFirstLetter.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
 					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getCurrentQuestion()).getAnswer().substring(0, 1));
@@ -561,12 +573,14 @@ public class GameView extends StackPane {
 				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
+				ivJokerExtraPass.setCursor(Cursor.HAND);
+//				ivJokerExtraPass.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					nextQuestion();
 					ivJokerExtraPass.setDisable(true);
 					ivJokerExtraPass.setOpacity(0.5);
-				}); 
+				});
 			}
 			return ivJokerExtraPass;
 		}
@@ -577,6 +591,9 @@ public class GameView extends StackPane {
 				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
+				ivJokerBonusTime.setCursor(Cursor.HAND);
+				ivJokerBonusTime.toFront();
+//				ivJokerBonusTime.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + RulesConst.JOKER_TIME);
@@ -597,7 +614,7 @@ public class GameView extends StackPane {
 				lblClues.setBackground(new Background(new BackgroundFill(
 						Color.web("#793F54"), new CornerRadii(20, false) , null)));
 				lblClues.setBorder(new Border(new BorderStroke(
-						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), null , null)));
+						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
 				lblClues.setPadding(new Insets(10));
 				lblClues.setWrapText(true);
 				lblClues.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
@@ -614,7 +631,7 @@ public class GameView extends StackPane {
 				txtAnswer.setBackground(new Background(new BackgroundFill(
 						Color.WHITE, new CornerRadii(20, false) , new Insets(10))));
 				txtAnswer.setBorder(new Border(new BorderStroke(
-						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), null ,new Insets(10))));
+						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2), new Insets(10))));
 				txtAnswer.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
 					public void handle(KeyEvent event) {
@@ -692,8 +709,6 @@ public class GameView extends StackPane {
 				
 		public Ranking() {
 			
-			this.setId("ranking");
-			
 			this.setBackground(new Background(new BackgroundImage(
 					new Image(IGraphicConst.URL_PATH_IMG + "background/background_scores.png", false), 
 					BackgroundRepeat.NO_REPEAT, 
@@ -703,37 +718,41 @@ public class GameView extends StackPane {
 			
 			//Setup positioning
 			this.setAlignment(Pos.CENTER);
-			this.setHgap(10);
-			this.setVgap(15);
+			this.setHgap(50);
+			this.setVgap(25);
 			
 			//Titles
 			this.add(getLblRank(), 0, 0);
 			this.add(getLblPseudo(), 1, 0);
 			this.add(getLblScore(), 2, 0);
 			this.add(getLblTime(), 3, 0);
-
 			
 			//Content
 			this.addPlayers();
 		}
 		
 		private void addPlayer(int pos) {
+
+			Label lbl = new Label();
+			lbl.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON - IGraphicConst.WIDTH_RANK, IGraphicConst.HEIGHT_BUTTON);
+			lbl.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(20, false) , null)));
+			lbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
+			
+			this.add(lbl, 1, pos+1, 3, 1);
+			
 			Player p = getGame().getPlayer(pos);
 			ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_"+ (pos+1) + ".png");
 			ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK);
 			ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
-			Label lblPlayerPseudo = new Label(p.getPseudo());
-			Label lblPlayerScore = new Label(""+p.getScore());
-			Label lblPlayerTime = new Label(""+p.getTime());
-			ivPlayerRank.getStyleClass().add("positionRank");
-			lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
-			lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
-			lblPlayerTime.getStyleClass().addAll("positionTime", "lblRanking");
+			Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " +p.getPseudo()));
+			Label lblPlayerScore = IGraphicConst.styleLabel(new Label(""+p.getScore()));
+			Label lblPlayerTime = IGraphicConst.styleLabel(new Label(""+p.getTime()));
 			
 			this.add(ivPlayerRank, 0, pos+1);
 			this.add(lblPlayerPseudo, 1, pos+1);
 			this.add(lblPlayerScore, 2, pos+1);
 			this.add(lblPlayerTime, 3, pos+1);
+			
 		}
 		
 		private void addPlayers() {
@@ -747,39 +766,36 @@ public class GameView extends StackPane {
 		public Label getLblRank() {
 			if(lblRank==null) {
 				lblRank = new Label("RANK");
-				lblRank.getStyleClass().add("positionRank");
-				lblRank.getStyleClass().add("titleRanking");
+				IGraphicConst.styleBiggerLabel(lblRank);
 			}
 			return lblRank;
 		}
 		public Label getLblPseudo() {
 			if(lblPseudo==null) {
-				lblPseudo = new Label("PSEUDO");
-				lblPseudo.getStyleClass().add("positionPseudo");
-				lblPseudo.getStyleClass().add("titleRanking");
+				lblPseudo = new Label(" PSEUDO");
+				IGraphicConst.styleBiggerLabel(lblPseudo);
 			}
 			return lblPseudo;
 		}
 		public Label getLblScore() {
 			if(lblScore==null) {
 				lblScore = new Label("SCORE");
-				lblScore.getStyleClass().add("positionScore");
-				lblScore.getStyleClass().add("titleRanking");
+				IGraphicConst.styleBiggerLabel(lblScore);
 			}
 			return lblScore;
 		}
 		public Label getLblTime() {
 			if(lblTime==null) {
 				lblTime = new Label("TIME");
-				lblTime.getStyleClass().add("positionTime");
-				lblTime.getStyleClass().add("titleRanking");
+				IGraphicConst.styleBiggerLabel(lblTime);
 			}
 			return lblTime;
 		}
 		public Button getBtnReplay() {
 			if(btnReplay==null) {
 				btnReplay = new Button("REPLAY");
-				btnReplay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnReplay);
+				btnReplay.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 				btnReplay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
