@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -27,6 +28,10 @@ public class Deck {
 	}
 	
 	//Game methods
+	
+	public void shuffleQuestions() {
+		Collections.shuffle(questions);
+	}
 	
 	public Question getQuestion(int index) {
 		if( questions == null || questions.isEmpty() 

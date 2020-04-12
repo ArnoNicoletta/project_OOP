@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Locale;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -66,7 +68,7 @@ public class Highscore extends GridPane{
 		ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
 		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " + "joueur"));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
-		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));
+		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f","time")));
 		
 		this.add(ivPlayerRank, 0, rank+1);
 		this.add(lblPlayerPseudo, 1, rank+1);

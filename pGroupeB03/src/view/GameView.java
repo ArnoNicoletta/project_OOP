@@ -747,7 +747,7 @@ public class GameView extends StackPane {
 			ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
 			Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " +p.getPseudo()));
 			Label lblPlayerScore = IGraphicConst.styleLabel(new Label(""+p.getScore()));
-			Label lblPlayerTime = IGraphicConst.styleLabel(new Label(""+p.getTime()));
+			Label lblPlayerTime = IGraphicConst.styleLabel(new Label(""+String.format(Locale.US, "%-2.2f",p.getTime())));
 			
 			this.add(ivPlayerRank, 0, pos+1);
 			this.add(lblPlayerPseudo, 1, pos+1);

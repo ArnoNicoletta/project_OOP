@@ -49,6 +49,7 @@ public class Game {
 		if(instance==null) {
 			instance = new Game();
 			instance.addAllDeck();
+			instance.shuffleDecks();
 		}
 		return instance;
 	}
@@ -59,12 +60,14 @@ public class Game {
 	public static void reset() {
 		instance = new Game();
 		instance.addAllDeck();
+		instance.shuffleDecks();
 	}
 	
 	public void replay() {
 		usedDecks = new ArrayList<>();
 		removeAllDecks();
 		addAllDeck();
+		shuffleDecks();
 		randomChoice();
 		setCurrentPlayer(0);
 		setCurrentQuestion(0);
@@ -86,6 +89,14 @@ public class Game {
 		return players.size();
 	}
 	
+	/**
+	 * Shuffles the questions inside each deck.
+	 */
+	public void shuffleDecks() {
+		for(Deck d : decks) {
+			d.shuffleQuestions();
+		}
+	}
 	
 	/**
 	 * Gives a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
