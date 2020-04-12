@@ -52,10 +52,6 @@ public class Highscore extends GridPane{
 		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("joueur" + rank));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
 		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));
-		ivPlayerRank.getStyleClass().add("positionRank");
-		lblPlayerPseudo.getStyleClass().addAll("positionPseudo", "lblRanking");
-		lblPlayerScore.getStyleClass().addAll("positionScore", "lblRanking");
-		lblPlayerTime.getStyleClass().addAll("positionTime", "lblRanking");
 		
 		this.add(ivPlayerRank, 0, rank);
 		this.add(lblPlayerPseudo, 1, rank);
@@ -68,8 +64,6 @@ public class Highscore extends GridPane{
 		if(lblRank==null) {
 			lblRank = new Label("RANK");
 			IGraphicConst.styleLabel(lblRank);
-			lblRank.getStyleClass().add("positionRank");
-			lblRank.getStyleClass().add("titleRanking");
 		}
 		return lblRank;
 	}
@@ -77,8 +71,6 @@ public class Highscore extends GridPane{
 		if(lblPseudo==null) {
 			lblPseudo = new Label("PSEUDO");
 			IGraphicConst.styleLabel(lblPseudo);
-			lblPseudo.getStyleClass().add("positionPseudo");
-			lblPseudo.getStyleClass().add("titleRanking");
 		}
 		return lblPseudo;
 	}
@@ -86,8 +78,6 @@ public class Highscore extends GridPane{
 		if(lblScore==null) {
 			lblScore = new Label("SCORE");
 			IGraphicConst.styleLabel(lblScore);
-			lblScore.getStyleClass().add("positionScore");
-			lblScore.getStyleClass().add("titleRanking");
 		}
 		return lblScore;
 	}
@@ -95,8 +85,6 @@ public class Highscore extends GridPane{
 		if(lblTime==null) {
 			lblTime = new Label("TIME");
 			IGraphicConst.styleLabel(lblTime);
-			lblTime.getStyleClass().add("positionTime");
-			lblTime.getStyleClass().add("titleRanking");
 		}
 		return lblTime;
 	}

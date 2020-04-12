@@ -48,28 +48,24 @@ public class AdminSettings extends StackPane {
 	public AdminDelete getAdminDelete() {
 		if(adminDelete == null) {
 			adminDelete = new AdminDelete();
-			adminDelete.setId("adminDelete");
 		}
 		return adminDelete;
 	}
 	public AdminLogin getAdminLogin() {
 		if(adminLogin == null) {
 			adminLogin = new AdminLogin();
-			adminLogin.setId("adminLogin");
 		}
 		return adminLogin;
 	}
 	public AdminMenu getAdminMenu() {
 		if(adminMenu == null) {
 			adminMenu = new AdminMenu();
-			adminMenu.setId("adminMenu");
 		}
 		return adminMenu;
 	}
 	public AdminAdd getAdminAdd() {
 		if(adminAdd == null) {
 			adminAdd = new AdminAdd();
-			adminAdd.setId("adminAdd");
 		}
 		return adminAdd;
 	}
@@ -123,7 +119,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblTitre() {
 			if(lblTitre==null) {
 				lblTitre = new Label("ADMIN LOGIN");
-				lblTitre.setId("titleAdminLogin");
 			}
 			return lblTitre;
 		}
@@ -131,7 +126,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblLog() {
 			if(lblLog==null) {
 				lblLog = new Label("USER NAME : ");
-				lblLog.getStyleClass().add("positionAdminLogin");
 			}
 			return lblLog;
 		}
@@ -147,21 +141,18 @@ public class AdminSettings extends StackPane {
 						}
 					}
 				});
-				txtLog.getStyleClass().add("positionAdminLogin");
 			}
 			return txtLog;
 		}
 		public Label getLblPass() {
 			if(lblPass==null) {
 				lblPass = new Label("PASSWORD : ");
-				lblPass.getStyleClass().add("positionAdminLogin");
 			}
 			return lblPass;
 		}
 		public PasswordField getPwfPass() {
 			if(pwfPass==null) {
 				pwfPass = new PasswordField();
-				pwfPass.getStyleClass().add("positionAdminLogin");
 				pwfPass.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
 					public void handle(KeyEvent event) {
@@ -176,8 +167,6 @@ public class AdminSettings extends StackPane {
 		public Button getBtnOk() {
 			if(btnOk==null) {
 				btnOk = new Button("LOGIN");
-				btnOk.setId("btnAdminLogin");
-				
 				btnOk.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -297,7 +286,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblTheme() {
 			if(lblTheme == null) {
 				lblTheme = new Label("SELECT A THEME : ");
-				lblTheme.getStyleClass().add("lblAdminDelete");
 			}
 			return lblTheme;
 		}
@@ -305,7 +293,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblRiddle() {
 			if(lblRiddle == null) {
 				lblRiddle = new Label("SELECT A RIDDLE : ");
-				lblRiddle.getStyleClass().add("lblAdminDelete");
 			}
 			return lblRiddle;
 		}
@@ -313,7 +300,6 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtTheme() {
 			if(txtTheme == null) {
 				txtTheme = new TextField();
-				txtTheme.getStyleClass().add("txtAdminDelete");
 			}
 			return txtTheme;
 		}
@@ -321,14 +307,12 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtRiddle() {
 			if(txtRiddle == null) {
 				txtRiddle = new TextField();
-				txtRiddle.getStyleClass().add("txtAdminDelete");
 			}
 			return txtRiddle;
 		}
 		public Button getBtnDelete() {
 			if(btnDelete == null) {
 				btnDelete = new Button("DELETE");
-				btnDelete.setId("btnAdminDelete");
 			}
 			return btnDelete;
 		}
@@ -392,7 +376,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblTheme() {
 			if(lblTheme == null) {
 				lblTheme = new Label("SELECT A THEME : ");
-				lblTheme.getStyleClass().add("lblAddQuestion");
 			}
 			return lblTheme;
 		}
@@ -400,14 +383,12 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtTheme() {
 			if(txtTheme == null) {
 				txtTheme = new TextField();
-				txtTheme.getStyleClass().add("txtAddQuestion");
 			}
 			return txtTheme;
 		}
 		public Label getLblClue1() {
 			if(lblClue1 == null) {
 				lblClue1 = new Label("CLUE 1 : ");
-				lblClue1.getStyleClass().add("lblAddQuestion");
 			}
 			return lblClue1;
 		}
@@ -415,7 +396,6 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue1() {
 			if(txtClue1 == null) {
 				txtClue1 = new TextField("");
-				txtClue1.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue1;
 		}
@@ -423,7 +403,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblClue2() {
 			if(lblClue2 == null) {
 				lblClue2 = new Label("CLUE 2 : ");
-				lblClue2.getStyleClass().add("lblAddQuestion");
 			}
 			return lblClue2;
 		}
@@ -431,7 +410,6 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue2() {
 			if(txtClue2 == null) {
 				txtClue2 = new TextField("");
-				txtClue2.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue2;
 		}
@@ -439,7 +417,6 @@ public class AdminSettings extends StackPane {
 		public Label getLblClue3() {
 			if(lblClue3 == null) {
 				lblClue3 = new Label("CLUE 3 : ");
-				lblClue3.getStyleClass().add("lblAddQuestion");
 			}
 			return lblClue3;
 		}
@@ -447,7 +424,6 @@ public class AdminSettings extends StackPane {
 		public TextField getTxtClue3() {
 			if(txtClue3 == null) {
 				txtClue3 = new TextField("");
-				txtClue3.getStyleClass().add("txtAddQuestion");
 			}
 			return txtClue3;
 		}

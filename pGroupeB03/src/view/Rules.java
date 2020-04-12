@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 public class Rules extends BorderPane {
 	
-	private Button btnMainMenu;
+	private Button btnNext;
 	
 	public Rules() {
 		
@@ -22,23 +22,24 @@ public class Rules extends BorderPane {
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 				BackgroundPosition.CENTER,  
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
-		
-		//TOP
-		this.setCenter(getBtnMainMenu());
-		
 		//CENTER
+		
+		//BOTTOM
+		this.setBottom(getBtnNext());
+		
 	}
 	
-	public Button getBtnMainMenu() {
-		if(btnMainMenu==null) {
-			btnMainMenu = new Button("Home");
-			btnMainMenu.setOnAction(new EventHandler<ActionEvent>() {
+	public Button getBtnNext() {
+		if(btnNext==null) {
+			btnNext = new Button("NEXT");
+			IGraphicConst.styleButton(btnNext);
+			btnNext.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					
 				}
 			});
 		}
-		return btnMainMenu;
+		return btnNext;
 	}
 }

@@ -5,35 +5,18 @@
     	 url("./../../src/resources/fonts/Roboto-Black.ttf"),
     	 url("./../../src/resources/fonts/Roboto-Medium.ttf"),
 }
-/* WAITING SCREEN */
 
-	/* Border around the text */
-	#lblTitleWaitingScreen .text{
-	    -fx-stroke: black;
-	    -fx-stroke-width: 5px;
-	    -fx-stroke-type: outside;
-	}
+/* Border around the text */
+#lblClickContinueWaitingScreen .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 2px;
+    -fx-stroke-type: outside;
+}
 
-	/* Border around the text */
-	#lblClickContinueWaitingScreen .text{
-	    -fx-stroke: black;
-	    -fx-stroke-width: 2px;
-	    -fx-stroke-type: outside;
-	}
-	
-	
-	
-	
 /* Default CSS for the buttons, labels and textfields */
 
-.button .text{
+Button .text{
 	-fx-stroke: black;
 	-fx-stroke-width: 2px;
  	-fx-stroke-type: outside;
-}
-
-Label .text{
-	-fx-stroke: black;
-	-fx-stroke-width: 1px;
-	 -fx-stroke-type: outside;
 }

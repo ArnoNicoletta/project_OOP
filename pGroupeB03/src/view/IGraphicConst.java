@@ -1,9 +1,12 @@
 package view;
 
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -36,6 +39,8 @@ public interface IGraphicConst {
 		btn.setTextFill(Color.WHITE);
 		btn.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(20, false) , null)));
 		btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
+		btn.setCache(true);
+		btn.setCursor(Cursor.HAND);
 		return btn;
 	}
 	
@@ -49,6 +54,8 @@ public interface IGraphicConst {
 	public static Label styleLabel(Label lbl) {
 		lbl.setStyle(STYLE_LBL);
 		lbl.setTextFill(Color.WHITE);
+		lbl.setCache(true);
+		lbl.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 1, 1, 0, 0));
 		return lbl;
 	}
 	
@@ -58,6 +65,8 @@ public interface IGraphicConst {
 	public static Label styleBiggerLabel(Label lbl) {
 		lbl.setStyle(STYLE_BIGGER_LBL);
 		lbl.setTextFill(Color.WHITE);
+		lbl.setCache(true);
+		lbl.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 1, 1, 0, 0));
 		return lbl;
 	}
 	

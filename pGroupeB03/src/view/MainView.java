@@ -3,10 +3,13 @@ package view;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -52,7 +55,6 @@ public class MainView extends BorderPane {
 	
 	public MainView() {
 		
-		this.setId("maincontroller");
 		this.setBackground(new Background(new BackgroundImage(
 				new Image(IGraphicConst.URL_PATH_IMG + "background/background.png", 1035, 587, false, true), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
@@ -83,6 +85,7 @@ public class MainView extends BorderPane {
 			Tooltip.install(ivHome, new Tooltip("Back to the menu"));
 			ivHome.setTranslateX(20);
 			ivHome.setTranslateY(20);
+			ivHome.setCursor(Cursor.HAND);
 			ivHome.toFront();
 			ivHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -155,6 +158,8 @@ class WaitingScreen extends BorderPane {
 			lblTitle.setStyle("-fx-font-family: \"K2D Medium\", sans-serif;\r\n" + 
 						"-fx-font-weight: bold;\r\n" + 
 						"-fx-font-size: 100px;");
+			lblTitle.setCache(true);
+			lblTitle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 7, 1, 0, 0));
 			lblTitle.setAlignment(Pos.BASELINE_CENTER);
 		}
 		return lblTitle;
@@ -188,8 +193,6 @@ class MainMenu extends BorderPane {
 	private ImageView ivSettings;
 	
 	public MainMenu() {
-		
-		this.setId("mainMenu");
 		
 		this.setBackground(new Background(new BackgroundImage(
 				new Image(IGraphicConst.URL_PATH_IMG + "background/background_mainmenu.png", false), 
@@ -254,8 +257,8 @@ class MainMenu extends BorderPane {
 		if(ivSettings==null) {
 			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/settings_button.png");
 			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new Settings()));
-			ivSettings.setId("ivsettings");
 			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);
+			ivSettings.setCursor(Cursor.HAND);
 		}
 		return ivSettings;
 	}

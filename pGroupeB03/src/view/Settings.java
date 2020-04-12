@@ -35,14 +35,12 @@ public class Settings extends StackPane {
 	public MenuSettings getMenuSettings() {
 		if(menuSettings == null) {
 			menuSettings = new MenuSettings();
-			menuSettings.setId("menuSettingsChoice");
 		}
 		return menuSettings;
 	}
 	public UserSettings getUserSettings() {
 		if(userSettings == null) {
 			userSettings = new UserSettings();
-			userSettings.setId("userSettings");
 		}
 		return userSettings;
 	}
@@ -95,7 +93,6 @@ public class Settings extends StackPane {
 		public Button getBtnUser() {
 			if(btnUser == null) {
 				btnUser = new Button("USER SETTINGS");
-				btnUser.setId("btnUserSettingChoice");
 				
 				btnUser.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 				
@@ -114,7 +111,6 @@ public class Settings extends StackPane {
 		public Button getBtnAdmin() {
 			if(btnAdmin == null) {
 				btnAdmin = new Button("ADMIN SETTINGS");
-				btnAdmin.setId("btnAdminSettingChoice");
 				
 				btnAdmin.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
 				
@@ -179,7 +175,6 @@ public class Settings extends StackPane {
 		public Label getLblNbRound() {
 			if( lblNbRound == null) {
 				lblNbRound = new Label("NUMBER OF ROUNDS :");
-				lblNbRound.getStyleClass().addAll("positionUserSettings", "positionTxtUserSettings");
 			}
 			return lblNbRound;
 		}
@@ -188,7 +183,6 @@ public class Settings extends StackPane {
 			if(txtNbRound == null) {
 				txtNbRound = new TextField(""+RulesConst.getNumber_round());
 //				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
-				txtNbRound.getStyleClass().add("positionUserSettings");
 			}
 			return txtNbRound;
 		}
@@ -196,7 +190,6 @@ public class Settings extends StackPane {
 		public Label getLblTime() {
 			if(lblTime == null) {
 				lblTime = new Label("ROUND TIME (second) :");
-				lblTime.getStyleClass().addAll("positionUserSettings", "positionTxtUserSettings");
 			}
 			return lblTime;
 		}
@@ -205,7 +198,6 @@ public class Settings extends StackPane {
 			if( txtTime == null) {
 				txtTime = new TextField(""+RulesConst.getRound_time_seconds());
 //				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
-				txtTime.getStyleClass().add("positionUserSettings");
 			}
 			return txtTime;
 		}
@@ -229,7 +221,6 @@ public class Settings extends StackPane {
 		public Button getBtnSave() {
 			if( btnSave== null) {
 				btnSave = new Button("SAVE");
-				btnSave.setId("btnSaveUserSettings");
 				btnSave.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
