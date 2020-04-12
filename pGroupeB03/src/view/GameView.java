@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -483,7 +484,7 @@ public class GameView extends StackPane {
 				getTimelineTimer().stop();
 			}
 			
-			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Integer.parseInt(getLblTimer().getText()));
+			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Double.parseDouble(getLblTimer().getText()));
 			if(g.isFinished()) {
 				showElement(new Ranking());
 				return;
@@ -525,7 +526,7 @@ public class GameView extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						timer.setValue(timer.get() - 0.025);
-						if(timer.get() <= 0) {
+						if(timer.get() <= 0.025) {
 							timelineTimer.stop();
 							finishThisRound();
 						}
@@ -541,10 +542,10 @@ public class GameView extends StackPane {
 			if(lblTimer==null) {
 				lblTimer = new Label();
 				IGraphicConst.styleBiggerLabel(lblTimer);
-				lblTimer.setPrefSize(75, 20);
+				lblTimer.setPrefSize(80, 20);
 				lblTimer.setTranslateX(40);
 				lblTimer.setTranslateY(40);
-				lblTimer.textProperty().bind(timer.asString("%.2f"));
+				lblTimer.textProperty().bind(timer.asString(Locale.US, "%-2.2f"));
 			}
 			return lblTimer;
 		}
