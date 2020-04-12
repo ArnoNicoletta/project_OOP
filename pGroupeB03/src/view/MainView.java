@@ -1,6 +1,7 @@
 package view;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -10,11 +11,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -158,7 +165,15 @@ class WaitingScreen extends BorderPane {
 			lblPressToContinue = new Label("CLICK TO CONTINUE");
 			lblPressToContinue.setId("lblClickContinueWaitingScreen");
 			lblPressToContinue.setPrefSize(500, 50);
-			lblPressToContinue.setAlignment(Pos.BASELINE_CENTER);
+			lblPressToContinue.setTranslateY(-40);
+			lblPressToContinue.setStyle("-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+										"-fx-font-size: 30px;\r\n" + 
+										"-fx-font-weight: bold;");
+			lblPressToContinue.setTextFill(Color.WHITE);
+			lblPressToContinue.setPadding(new Insets(15));
+			lblPressToContinue.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(45, false) , null)));
+			lblPressToContinue.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(40,  false), new BorderWidths(5))));
+			lblPressToContinue.setAlignment(Pos.CENTER);
 		}
 		return lblPressToContinue;
 	}

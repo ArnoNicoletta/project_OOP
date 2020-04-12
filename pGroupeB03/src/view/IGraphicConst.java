@@ -46,14 +46,15 @@ public interface IGraphicConst {
 	final String STYLE_LBL ="-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
 							"-fx-font-size: 20px;\r\n" + 
 							"-fx-font-weight: bold;";
-	final String STYLE_BIGGER_LBL =  "-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
-									"-fx-font-size: 24px;\r\n" + 
-									"-fx-font-weight: bold;";
 	public static Label styleLabel(Label lbl) {
 		lbl.setStyle(STYLE_LBL);
 		lbl.setTextFill(Color.WHITE);
 		return lbl;
 	}
+	
+	final String STYLE_BIGGER_LBL = "-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+									"-fx-font-size: 24px;\r\n" + 
+									"-fx-font-weight: bold;";
 	public static Label styleBiggerLabel(Label lbl) {
 		lbl.setStyle(STYLE_BIGGER_LBL);
 		lbl.setTextFill(Color.WHITE);
