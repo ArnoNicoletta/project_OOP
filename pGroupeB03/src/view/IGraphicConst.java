@@ -39,7 +39,7 @@ public interface IGraphicConst {
 	
 	//LABEL
 	
-	final double WIDTH_LARGE_LBL = 600, HEIGHT_LARGE_LBL = 400;
+	final double WIDTH_LARGE_LBL = 500, HEIGHT_LARGE_LBL = 250;
 	final String STYLE_LBL ="-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
 							"-fx-font-size: 20px;\r\n" + 
 							"-fx-font-weight: bold;";
@@ -53,16 +53,12 @@ public interface IGraphicConst {
 	//TextField (and PasswordField)
 	
 	final double WIDTH_TXT = 200, HEIGHT_TXT = 60;
-	final String STYLE_TXT= "-fx-background-radius: 11px;\r\n" + 
-							"-fx-text-fill: black;\r\n" + 
-							"-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+	final String STYLE_TXT= "-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
 							"-fx-font-size: 15px;\r\n" + 
-							"-fx-font-weight: bold;\r\n" + 
-							"-fx-border-insets: 10px 0;\r\n" + 
-							"-fx-background-insets: 10px 0;";
+							"-fx-font-weight: bold;\r\n";
 	public static TextField styleTextField(TextField txt) {
 		txt.setStyle(STYLE_TXT);
-		txt.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(11, false) , new Insets(10))));
+		txt.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10, false) , new Insets(10))));
 		txt.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10,  false), null ,new Insets(10))));
 		return txt;
 	}
