@@ -33,7 +33,6 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -109,7 +108,7 @@ public class GameView extends StackPane {
 			this.setId("playerSelection");
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_select_players.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_select_players.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -183,7 +182,7 @@ public class GameView extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvAdd() {
-			ImageView iv = new ImageView("file:./src/resources/images/icon_add_player.png");
+			ImageView iv = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_add_player.png");
 			iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -200,7 +199,7 @@ public class GameView extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvDel() {
-			ImageView ivDel = new ImageView("file:./src/resources/images/icon_remove_player.png");
+			ImageView ivDel = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_remove_player.png");
 			ivDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -285,7 +284,7 @@ public class GameView extends StackPane {
 			this.setId("themeSelection");
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_theme.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_theme.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -378,7 +377,7 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_blank.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_blank.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -433,7 +432,24 @@ public class GameView extends StackPane {
 		}
 		
 		private void updateIvScore(int score, int position) {
-			getIvScore().setImage(new Image("file:./src/resources/speedometer/score" + score + "position" + position + ".png"));
+			getIvScore().setImage(new Image(IGraphicConst.URL_PATH_IMG + "speedometer/score" + score + "position" + position + ".png"));
+		}
+		
+		private void checkAnswer() {
+			String s = getTxtAnswer().getText();
+			if(g.isRightAnswer(s)) {
+				if(scorePos<g.getPlayer().getScore()) {
+					scorePos++;
+				}
+				else {
+					g.addPoint();
+					scorePos++;
+				}
+			}
+			else {
+				getTxtAnswer().setText("");
+				scorePos = 0;
+			}
 		}
 		
 		private void nextQuestion() {
@@ -482,7 +498,7 @@ public class GameView extends StackPane {
 		}
 		public ImageView getIvScore() {
 			if(ivScore==null) {
-				ivScore = new ImageView("file:./src/resources/speedometer/score0position0.png");
+				ivScore = new ImageView(IGraphicConst.URL_PATH_IMG + "speedometer/score0position0.png");
 				ivScore.setFitHeight(125);
 				ivScore.setFitWidth(125);
 				ivScore.setTranslateX(-100);
@@ -524,8 +540,8 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerFirstLetter() {
 			if(ivJokerFirstLetter==null) {
 				ivJokerFirstLetter = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerFirstLetter.setImage(new Image("file:./src/resources/images/arno.png"));
-				else ivJokerFirstLetter.setImage(new Image("file:./src/resources/images/joker.png"));
+				if(RulesConst.getFaced_joker()) ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
+				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
@@ -540,8 +556,8 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerExtraPass() {
 			if(ivJokerExtraPass==null) {
 				ivJokerExtraPass = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerExtraPass.setImage(new Image("file:./src/resources/images/rayan.png"));
-				else ivJokerExtraPass.setImage(new Image("file:./src/resources/images/joker.png"));
+				if(RulesConst.getFaced_joker()) ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/rayan.png"));
+				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
@@ -556,8 +572,8 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerBonusTime() {
 			if(ivJokerBonusTime==null) {
 				ivJokerBonusTime = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerBonusTime.setImage(new Image("file:./src/resources/images/loic.png"));
-				else ivJokerBonusTime.setImage(new Image("file:./src/resources/images/joker.png"));
+				if(RulesConst.getFaced_joker()) ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/loic.png"));
+				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
@@ -598,11 +614,12 @@ public class GameView extends StackPane {
 						Color.WHITE, new CornerRadii(20, false) , new Insets(10))));
 				txtAnswer.setBorder(new Border(new BorderStroke(
 						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), null ,new Insets(10))));
-				txtAnswer.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+				txtAnswer.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
 					public void handle(KeyEvent event) {
 						if(event.getCode() == KeyCode.ENTER) {
-							getBtnValidate().fire();
+							checkAnswer();
+							nextQuestion();
 							event.consume();
 						}
 					}
@@ -647,20 +664,7 @@ public class GameView extends StackPane {
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						String s = getTxtAnswer().getText();
-						if(g.isRightAnswer(s)) {
-							if(scorePos<g.getPlayer().getScore()) {
-								scorePos++;
-							}
-							else {
-								g.addPoint();
-								scorePos++;
-							}
-						}
-						else {
-							getTxtAnswer().setText("");
-							scorePos = 0;
-						}
+						checkAnswer();
 						nextQuestion();
 					}
 				});
@@ -690,7 +694,7 @@ public class GameView extends StackPane {
 			this.setId("ranking");
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_scores.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_scores.png", false), 
 					BackgroundRepeat.NO_REPEAT, 
 					BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER, 
@@ -714,7 +718,9 @@ public class GameView extends StackPane {
 		
 		private void addPlayer(int pos) {
 			Player p = getGame().getPlayer(pos);
-			ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
+			ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_"+ (pos+1) + ".png");
+			ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK);
+			ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
 			//TODO add different logo's relative to rank
 			Label lblPlayerPseudo = new Label(p.getPseudo());
 			Label lblPlayerScore = new Label(""+p.getScore());

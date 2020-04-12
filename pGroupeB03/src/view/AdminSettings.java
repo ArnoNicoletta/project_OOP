@@ -97,7 +97,7 @@ public class AdminSettings extends StackPane {
 		public AdminLogin() {
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_admin_login.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_admin_login.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -183,7 +183,7 @@ public class AdminSettings extends StackPane {
 		public AdminMenu() {
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_user_settings.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -250,7 +250,7 @@ public class AdminSettings extends StackPane {
 		public AdminDelete() {
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_user_settings.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -330,7 +330,7 @@ public class AdminSettings extends StackPane {
 		public AdminAdd() {
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_user_settings.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_user_settings.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));

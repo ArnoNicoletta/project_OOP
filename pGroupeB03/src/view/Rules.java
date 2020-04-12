@@ -18,7 +18,7 @@ public class Rules extends BorderPane {
 	public Rules() {
 		
 		this.setBackground(new Background(new BackgroundImage(
-				new Image("file:./src/resources/images/background_mainmenu.png", false), 
+				new Image(IGraphicConst.URL_PATH_IMG + "background/background_mainmenu.png", false), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 				BackgroundPosition.CENTER,  
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));

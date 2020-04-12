@@ -52,7 +52,7 @@ public class MainView extends BorderPane {
 		
 		this.setId("maincontroller");
 		this.setBackground(new Background(new BackgroundImage(
-				new Image("file:./src/resources/images/background.png", 1035, 587, false, true), 
+				new Image(IGraphicConst.URL_PATH_IMG + "background/background.png", 1035, 587, false, true), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 				BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 		
@@ -77,7 +77,7 @@ public class MainView extends BorderPane {
 	
 	public ImageView getIvHome() {
 		if(ivHome==null) {
-			ivHome = new ImageView("file:./src/resources/images/icon_home.png");
+			ivHome = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_home.png");
 			Tooltip.install(ivHome, new Tooltip("Back to the menu"));
 			ivHome.setTranslateX(20);
 			ivHome.setTranslateY(20);
@@ -117,39 +117,6 @@ public class MainView extends BorderPane {
 		}
 		return mainMenu;
 	}
-//	public GameView getGameView() {
-//		if(gameView==null) {
-//			gameView = new GameView();
-//		}
-//		gameView.reset();
-//		return gameView;
-//	}
-//	public Highscore getHighscore() {
-//		if(highscore==null) {
-//			highscore = new Highscore();
-//		}
-//		return highscore;
-//	}
-//	public Rules getRules() {
-//		if(rules==null) {
-//			rules = new Rules();
-//		}
-//		return rules;
-//	}
-//	public Credit getCredit() {
-//		if(credit==null) {
-//			credit = new Credit();
-//		}
-//		return credit;
-//	}
-//	public Settings getSettings() {
-//		if(settings==null) {
-//			settings = new Settings();
-//		}
-//		return settings;
-//	}
-//	
-	
 	
 class WaitingScreen extends BorderPane {
 	
@@ -215,7 +182,7 @@ class MainMenu extends BorderPane {
 		this.setId("mainMenu");
 		
 		this.setBackground(new Background(new BackgroundImage(
-				new Image("file:./src/resources/images/background_mainmenu.png", false), 
+				new Image(IGraphicConst.URL_PATH_IMG + "background/background_mainmenu.png", false), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 				BackgroundPosition.CENTER, 
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -275,7 +242,7 @@ class MainMenu extends BorderPane {
 	}
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
-			ivSettings = new ImageView("file:./src/resources/images/settings_button.png");
+			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/settings_button.png");
 			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new Settings()));
 			ivSettings.setId("ivsettings");
 			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);

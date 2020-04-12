@@ -21,7 +21,7 @@ public class Highscore extends GridPane{
 	public Highscore() {
 		
 		this.setBackground(new Background(new BackgroundImage(
-				new Image("file:./src/resources/images/background_ranking.png", false), 
+				new Image(IGraphicConst.URL_PATH_IMG + "background/background_scores.png", false), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 				BackgroundPosition.CENTER, 
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
@@ -46,7 +46,7 @@ public class Highscore extends GridPane{
 	}
 	
 	private void addPlayer(int rank) {
-		ImageView ivPlayerRank = new ImageView("file:./src/resources/images/logo_first.png");
+		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank" + (rank) + ".png");
 		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("joueur" + rank));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
 		Label lblPlayerTime = IGraphicConst.styleLabel(new Label("sonTemps"));

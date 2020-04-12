@@ -60,6 +60,7 @@ public interface IGraphicConst {
 		return lbl;
 	}
 	
+	
 	//TextField (and PasswordField)
 	
 	final double WIDTH_TXT = 200, HEIGHT_TXT = 60;
@@ -72,8 +73,12 @@ public interface IGraphicConst {
 		txt.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10,  false), null ,new Insets(10))));
 		return txt;
 	}
-	//Images
-	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
 	
+	
+	//Images
+	
+	final String URL_PATH_IMG = "file:./src/resources/images/";
+	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
+	final double WIDTH_RANK = 50, HEIGHT_RANK = 50;
 	
 }
