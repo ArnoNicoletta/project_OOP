@@ -14,11 +14,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 /**
- * This interface includes all graphic constants.
+ * This interface includes all graphic constants and methods to apply style on components.
  * These constants can be the width and the height of the components as well as the style.
  * @author ArRaLo
  */
 public interface IGraphicConst {
+	
+	//Background
+	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
 	
 	//Button
 	
@@ -39,16 +42,23 @@ public interface IGraphicConst {
 	
 	//LABEL
 	
-	final double WIDTH_LARGE_LBL = 500, HEIGHT_LARGE_LBL = 250;
+	final double WIDTH_LARGE_LBL = 450, HEIGHT_LARGE_LBL = 200;
 	final String STYLE_LBL ="-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
 							"-fx-font-size: 20px;\r\n" + 
 							"-fx-font-weight: bold;";
+	final String STYLE_BIGGER_LBL =  "-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+									"-fx-font-size: 24px;\r\n" + 
+									"-fx-font-weight: bold;";
 	public static Label styleLabel(Label lbl) {
 		lbl.setStyle(STYLE_LBL);
 		lbl.setTextFill(Color.WHITE);
 		return lbl;
 	}
-	
+	public static Label styleBiggerLabel(Label lbl) {
+		lbl.setStyle(STYLE_BIGGER_LBL);
+		lbl.setTextFill(Color.WHITE);
+		return lbl;
+	}
 	
 	//TextField (and PasswordField)
 	

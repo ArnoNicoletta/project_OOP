@@ -78,7 +78,8 @@ public class Settings extends StackPane {
 			this.setBackground(new Background(new BackgroundImage(
 					new Image("file:./src/resources/images/background_settings_choice.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					BackgroundPosition.CENTER,  
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			this.setPadding(new Insets(10));
 			this.setAlignment(Pos.CENTER);
@@ -145,7 +146,8 @@ public class Settings extends StackPane {
 			this.setBackground(new Background(new BackgroundImage(
 					new Image("file:./src/resources/images/background_user_settings.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					BackgroundPosition.CENTER,  
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);

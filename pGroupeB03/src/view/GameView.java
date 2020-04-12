@@ -20,6 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -109,7 +111,8 @@ public class GameView extends StackPane {
 			this.setBackground(new Background(new BackgroundImage(
 					new Image("file:./src/resources/images/background_select_players.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			addPlayer();
 			//CENTER
@@ -284,7 +287,8 @@ public class GameView extends StackPane {
 			this.setBackground(new Background(new BackgroundImage(
 					new Image("file:./src/resources/images/background_theme.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			//Center
 			VBox vbCenter = new VBox(10);
@@ -374,9 +378,10 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_mainmenu.png", false), 
+					new Image("file:./src/resources/images/background_blank.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					BackgroundPosition.CENTER,  
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			//TOP
 			HBox hbTop = new HBox(30);
@@ -388,6 +393,7 @@ public class GameView extends StackPane {
 			VBox vbLeft = new VBox(15);
 			vbLeft.setPadding(new Insets(0, 5, 10, 25));
 			vbLeft.setAlignment(Pos.CENTER_RIGHT);
+			vbLeft.setTranslateX(200);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			this.setLeft(vbLeft);
 			
@@ -395,7 +401,7 @@ public class GameView extends StackPane {
 			VBox vbCenter = new VBox(10);
 			vbCenter.setAlignment(Pos.CENTER);
 			vbCenter.setPadding(new Insets(5, 50, 15, 10));
-			
+			vbCenter.setTranslateX(35);
 			HBox hbCenterBottom = new HBox(10);
 			hbCenterBottom.setAlignment(Pos.CENTER);
 			hbCenterBottom.getChildren().addAll(getBtnPass(), getBtnPause(), getBtnValidate());
@@ -404,9 +410,9 @@ public class GameView extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
+			clues.setValue(g.getClues(cluesPos++));
 			getTimelineTimer().playFromStart();
 			pause();
-			clues.setValue(g.getClues(cluesPos++));
 		}
 		
 		private void play() {
@@ -466,15 +472,21 @@ public class GameView extends StackPane {
 			if(lblPlayer==null) {
 				lblPlayer = new Label();
 				lblPlayer.setText(getGame().getPlayer().getPseudo());
-				IGraphicConst.styleLabel(lblPlayer);
+				lblPlayer.setPrefSize(250, 20);
+				lblPlayer.setTranslateX(-40);
+				lblPlayer.setTranslateY(40);
+				lblPlayer.setAlignment(Pos.BASELINE_LEFT);
+				IGraphicConst.styleBiggerLabel(lblPlayer);
 			}
 			return lblPlayer;
 		}
 		public ImageView getIvScore() {
 			if(ivScore==null) {
 				ivScore = new ImageView("file:./src/resources/speedometer/score0position0.png");
-				ivScore.setFitHeight(100);
-				ivScore.setFitWidth(100);
+				ivScore.setFitHeight(125);
+				ivScore.setFitWidth(125);
+				ivScore.setTranslateX(-100);
+				ivScore.setTranslateY(40);
 			}
 			return ivScore;
 		}
@@ -501,7 +513,10 @@ public class GameView extends StackPane {
 		public Label getLblTimer() {
 			if(lblTimer==null) {
 				lblTimer = new Label();
-				IGraphicConst.styleLabel(lblTimer);
+				IGraphicConst.styleBiggerLabel(lblTimer);
+				lblTimer.setPrefSize(50, 20);
+				lblTimer.setTranslateX(40);
+				lblTimer.setTranslateY(40);
 				lblTimer.textProperty().bind(timer.asString("%.0f"));
 			}
 			return lblTimer;
@@ -558,7 +573,10 @@ public class GameView extends StackPane {
 			if(lblClues==null) {
 				lblClues = new Label(); 
 				lblClues.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL, IGraphicConst.HEIGHT_LARGE_LBL);
-				IGraphicConst.styleLabel(lblClues);
+				lblClues.setStyle("-fx-font-size: 16;\r\n" + 
+								"-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+								"-fx-font-weight: bold;");
+				lblClues.setTextFill(Color.WHITE);
 				lblClues.setBackground(new Background(new BackgroundFill(
 						Color.web("#793F54"), new CornerRadii(20, false) , null)));
 				lblClues.setBorder(new Border(new BorderStroke(
@@ -573,20 +591,29 @@ public class GameView extends StackPane {
 		public TextField getTxtAnswer() {
 			if(txtAnswer==null) {
 				txtAnswer = new TextField();
-				txtAnswer.setMinWidth(IGraphicConst.WIDTH_LARGE_LBL);
-				txtAnswer.setMaxWidth(IGraphicConst.WIDTH_LARGE_LBL);
+				txtAnswer.setMinWidth(IGraphicConst.WIDTH_LARGE_LBL+10);
+				txtAnswer.setMaxWidth(IGraphicConst.WIDTH_LARGE_LBL+10);
 				txtAnswer.setStyle(IGraphicConst.STYLE_TXT);
 				txtAnswer.setBackground(new Background(new BackgroundFill(
 						Color.WHITE, new CornerRadii(20, false) , new Insets(10))));
 				txtAnswer.setBorder(new Border(new BorderStroke(
 						Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), null ,new Insets(10))));
+				txtAnswer.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+					@Override
+					public void handle(KeyEvent event) {
+						if(event.getCode() == KeyCode.ENTER) {
+							getBtnValidate().fire();
+							event.consume();
+						}
+					}
+				});
 			}
 			return txtAnswer;
 		}
 		public Button getBtnPass() {
 			if(btnPass==null) {
 				btnPass = new Button("PASS");
-				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.4, IGraphicConst.HEIGHT_BUTTON*0.8);
+				btnPass.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.4, IGraphicConst.HEIGHT_BUTTON*0.2);
 				IGraphicConst.styleButton(btnPass);
 				btnPass.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -600,8 +627,8 @@ public class GameView extends StackPane {
 		}
 		public Button getBtnPause() {
 			if(btnPause==null) {
-				btnPause = new Button(" || ");
-				btnPause.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.15, IGraphicConst.HEIGHT_BUTTON*0.8);
+				btnPause = new Button(" ll ");
+				btnPause.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.15, IGraphicConst.HEIGHT_BUTTON*0.2);
 				IGraphicConst.styleButton(btnPause);
 				btnPause.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -615,7 +642,7 @@ public class GameView extends StackPane {
 		public Button getBtnValidate() {
 			if(btnValidate==null) {
 				btnValidate = new Button("VALIDATE");
-				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.4, IGraphicConst.HEIGHT_BUTTON*0.8);
+				btnValidate.setPrefSize(IGraphicConst.WIDTH_LARGE_LBL *0.4, IGraphicConst.HEIGHT_BUTTON*0.2);
 				IGraphicConst.styleButton(btnValidate);
 				btnValidate.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -663,9 +690,11 @@ public class GameView extends StackPane {
 			this.setId("ranking");
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image("file:./src/resources/images/background_ranking.png", false), 
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-					BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+					new Image("file:./src/resources/images/background_scores.png", false), 
+					BackgroundRepeat.NO_REPEAT, 
+					BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			//Setup positioning
 			this.setAlignment(Pos.CENTER);

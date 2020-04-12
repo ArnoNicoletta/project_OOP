@@ -23,7 +23,8 @@ public class Highscore extends GridPane{
 		this.setBackground(new Background(new BackgroundImage(
 				new Image("file:./src/resources/images/background_ranking.png", false), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-				BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+				BackgroundPosition.CENTER, 
+				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 		
 		//Setup positioning
 		this.setAlignment(Pos.BOTTOM_CENTER);
