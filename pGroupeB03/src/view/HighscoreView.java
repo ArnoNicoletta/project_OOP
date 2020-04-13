@@ -2,7 +2,6 @@ package view;
 
 import java.util.Locale;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,6 +19,8 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.Game;
+import model.Player;
 
 
 public class HighscoreView extends GridPane{
@@ -49,13 +50,10 @@ public class HighscoreView extends GridPane{
 
 		
 		//Content
-		for(int i=0;i<5;i++) {
-			this.addPlayer(i);
-		}
-		
+		this.addPlayers();
 	}
 	
-	private void addPlayer(int rank) {
+	private void addPlayer(int rank, Player p) {
 		
 		Label lbl = new Label();
 		lbl.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON - IGraphicConst.WIDTH_RANK, IGraphicConst.HEIGHT_BUTTON);
@@ -67,14 +65,21 @@ public class HighscoreView extends GridPane{
 		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank+1) + ".png");
 		ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK*0.9);
 		ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK*0.9);
-		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " + "joueur"));
-		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
-		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f", 12.3456)));
+		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " + p.getPseudo()));
+		Label lblPlayerScore = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%1d", p.getScore())));
+		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f", p.getTime())));
 		
 		this.add(ivPlayerRank, 0, rank+1);
 		this.add(lblPlayerPseudo, 1, rank+1);
 		this.add(lblPlayerScore, 2, rank+1);
 		this.add(lblPlayerTime, 3, rank+1);
+	}
+	
+	private void addPlayers() {
+		int i = 0;
+		for(Player p : Game.getInstance().getHighscores()) {
+			this.addPlayer(i++, p);
+		}
 	}
 	
 	public Label getLblRank() {

@@ -1,6 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +13,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import exception.EmptyPseudoException;
 import exception.IdenticalPseudoException;
@@ -27,6 +36,8 @@ public class Game {
 	private int currentPlayer;
 	private List<Deck> usedDecks;
 	private int currentQuestion;
+	private List<Player> highscores;
+	
 	private static Game instance;
 	
 	/**
@@ -37,6 +48,7 @@ public class Game {
 		this.decks = new ArrayList<>();
 		this.players = new ArrayList<>();
 		this.usedDecks = new ArrayList<>();
+		this.highscores = new ArrayList<>();
 	}
 	
 	/**
@@ -50,6 +62,7 @@ public class Game {
 			instance = new Game();
 			instance.addAllDeck();
 			instance.shuffleDecks();
+			instance.initHighscores();
 		}
 		return instance;
 	}
@@ -58,19 +71,25 @@ public class Game {
 	 * Reset the {@link Game} instance.
 	 */
 	public static void reset() {
+		instance.saveHighscores();
 		instance = new Game();
 		instance.addAllDeck();
 		instance.shuffleDecks();
+		instance.initHighscores();
 	}
 	
 	public void replay() {
+		sortHighscores();
+		saveHighscores();
 		usedDecks = new ArrayList<>();
 		removeAllDecks();
 		addAllDeck();
 		shuffleDecks();
 		randomChoice();
+		players.forEach(p -> p.setScore(0));
 		setCurrentPlayer(0);
 		setCurrentQuestion(0);
+		initHighscores();
 	}
 	
 	/**
@@ -505,6 +524,7 @@ public class Game {
 		return getPlayer(getCurrentPlayer());
 	}
 	
+	
 	// On usedDecks -> Decks already used or being used
 	
 	
@@ -572,6 +592,60 @@ public class Game {
 	
 	
 	
+	// Highscores
+	
+	
+	/**
+	 * Getter for highscores, list of the best players.
+	 * @return {@link List}<{@link Player}> : the top 5 player.
+	 */
+	public List<Player> getHighscores() {
+		ArrayList<Player> ret = new ArrayList<>();
+		for(Player p : highscores) {
+			ret.add(p.clone());
+		}
+		return ret;
+	}
+	/**
+	 * Initialize the highscores list from the json file where are stored the top 5 players.
+	 */
+	public void initHighscores() {
+		ArrayList<Player> ret = new ArrayList<>();
+		Gson gson = new Gson();
+		try(BufferedReader br = new BufferedReader(new FileReader("./src/resources/user_scores/highscores.json"))){
+			ret = gson.fromJson(br, new TypeToken<ArrayList<Player>>() {}.getType());
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(ret != null) highscores = ret;
+	}
+	/**
+	 * Add the currents players in the top 5 if they beat the highscores.
+	 */
+	public void sortHighscores() {
+		highscores.addAll(players);
+		Collections.sort(highscores, new PlayersComparator());
+		if(highscores.size()>5) {
+			highscores = highscores.subList(0, 5);
+		}
+	}
+	
+	/**
+	 * Saves the highscores list in the json file where are stored the top 5 players.
+	 */
+	public void saveHighscores() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(highscores);
+		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("./src/resources/user_scores/highscores.json"))){
+			bw.write(json);
+			bw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// Basic getters and setters
 	
 	
@@ -594,6 +668,7 @@ public class Game {
 	public void nextCurrentQuestion() {
 		setCurrentQuestion(getCurrentQuestion()+1);
 	}
+	
 	//Basic methods
 	@Override
 	public String toString() {

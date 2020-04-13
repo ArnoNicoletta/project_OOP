@@ -46,7 +46,7 @@ import javafx.util.Duration;
 import model.Deck;
 import model.Game;
 import model.Player;
-import model.RulesConst;
+import model.RulesSettings;
 
 
 /**
@@ -133,7 +133,7 @@ public class GameView extends StackPane {
 		 * @see getIvAdd()
 		 */
 		private void addPlayer() {
-			if(this.count>=RulesConst.MAX_PLAYER) {
+			if(this.count>=RulesSettings.MAX_PLAYER) {
 				return;
 			}
 			getlLblPlayer().add(IGraphicConst.styleLabel(new Label("PLAYER " + (this.count+1))));
@@ -361,11 +361,11 @@ public class GameView extends StackPane {
 		
 		//Game vars
 		private Game g = Game.getInstance();
-		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesConst.getRound_time_seconds());
+		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesSettings.getRound_time_seconds());
 		private String fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
-		private int scorePos;
+		private int scorePos = 0;
 		private SimpleStringProperty clues = new SimpleStringProperty();
-		private int cluesPos;
+		private int cluesPos = 0;
 		//GUI vars
 		private Label lblPlayer;
 		private ImageView ivScore;
@@ -484,7 +484,7 @@ public class GameView extends StackPane {
 				getTimelineTimer().stop();
 			}
 			
-			g.getPlayer().setTime(RulesConst.getRound_time_seconds() - Double.parseDouble(getLblTimer().getText()));
+			g.getPlayer().setTime(RulesSettings.getRound_time_seconds() - Double.parseDouble(getLblTimer().getText()));
 			if(g.isFinished()) {
 				showElement(new Ranking());
 				return;
@@ -552,7 +552,7 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerFirstLetter() {
 			if(ivJokerFirstLetter==null) {
 				ivJokerFirstLetter = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
+				if(RulesSettings.getFaced_joker()) ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
 				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
@@ -570,7 +570,7 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerExtraPass() {
 			if(ivJokerExtraPass==null) {
 				ivJokerExtraPass = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/rayan.png"));
+				if(RulesSettings.getFaced_joker()) ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/rayan.png"));
 				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
@@ -588,7 +588,7 @@ public class GameView extends StackPane {
 		public ImageView getIvJokerBonusTime() {
 			if(ivJokerBonusTime==null) {
 				ivJokerBonusTime = new ImageView();
-				if(RulesConst.getFaced_joker()) ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/loic.png"));
+				if(RulesSettings.getFaced_joker()) ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/loic.png"));
 				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
 				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
@@ -597,7 +597,7 @@ public class GameView extends StackPane {
 //				ivJokerBonusTime.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
-					timer.setValue(timer.get() + RulesConst.JOKER_TIME);
+					timer.setValue(timer.get() + RulesSettings.JOKER_TIME);
 					ivJokerBonusTime.setDisable(true);
 					ivJokerBonusTime.setOpacity(0.5);
 				});

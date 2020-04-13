@@ -82,7 +82,7 @@ public class Player {
 	}
 	public void setPseudo(String pseudo) throws TooMuchCharException, EmptyPseudoException {
 		if(pseudo.isEmpty()) throw new EmptyPseudoException();
-		if(pseudo.length()>RulesConst.MAX_CHAR) throw new TooMuchCharException(pseudo);
+		if(pseudo.length()>RulesSettings.MAX_CHAR) throw new TooMuchCharException(pseudo);
 		this.pseudo = pseudo;
 	}
 	public int getScore() {
@@ -96,7 +96,7 @@ public class Player {
 		return time;
 	}
 	public void setTime(double time) {
-		if(time>=0 && time<=RulesConst.getRound_time_seconds()+RulesConst.JOKER_TIME)
+		if(time>=0 && time<=RulesSettings.getRound_time_seconds()+RulesSettings.JOKER_TIME)
 			this.time = time;
 	}
 	//Basic methods
