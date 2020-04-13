@@ -11,11 +11,11 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 
-public class Rules extends BorderPane {
+public class RulesView extends BorderPane {
 	
 	private Button btnNext;
 	
-	public Rules() {
+	public RulesView() {
 		
 		this.setBackground(new Background(new BackgroundImage(
 				new Image(IGraphicConst.URL_PATH_IMG + "background/background_mainmenu.png", false), 

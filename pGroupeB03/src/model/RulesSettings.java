@@ -2,7 +2,7 @@ package model;
 
 import exception.WrongRuleValueException;
 
-public class RulesConst {
+public class RulesSettings {
 	
 	//Player rules
 	public final static int MAX_CHAR = 16;
@@ -20,18 +20,18 @@ public class RulesConst {
 	//Setters
 	public static void setNumber_round(int number_round) throws WrongRuleValueException {
 		if(number_round<1 || number_round>5) throw new WrongRuleValueException(""+number_round);
-		RulesConst.number_round = number_round;
+		RulesSettings.number_round = number_round;
 	}
 	public static void setRound_time_seconds(double round_time_seconds) throws WrongRuleValueException {
 		if(round_time_seconds<15 || round_time_seconds>90) throw new WrongRuleValueException(""+ round_time_seconds);
-		RulesConst.round_time_seconds = round_time_seconds;
+		RulesSettings.round_time_seconds = round_time_seconds;
 	}
 	
 	public static void setFaced_joker(boolean faced_joker) {
-		RulesConst.faced_joker = faced_joker;
+		RulesSettings.faced_joker = faced_joker;
 	}
 	public static void setSound_enabled(boolean sound_enabled) {
-		RulesConst.sound_enabled = sound_enabled;
+		RulesSettings.sound_enabled = sound_enabled;
 	}
 	//Getters
 	public static int getNumber_round() {

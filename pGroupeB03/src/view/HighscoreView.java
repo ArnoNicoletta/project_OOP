@@ -2,6 +2,7 @@ package view;
 
 import java.util.Locale;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,13 +22,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 
-public class Highscore extends GridPane{
+public class HighscoreView extends GridPane{
 	private Label lblRank;
 	private Label lblPseudo;
 	private Label lblScore;
 	private Label lblTime;
 			
-	public Highscore() {
+	public HighscoreView() {
 		
 		this.setBackground(new Background(new BackgroundImage(
 				new Image(IGraphicConst.URL_PATH_IMG + "background/background_scores.png", false), 
@@ -36,9 +37,9 @@ public class Highscore extends GridPane{
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 		
 		//Setup positioning
-		this.setAlignment(Pos.BOTTOM_CENTER);
-		this.setHgap(50);
-		this.setVgap(25);
+		this.setAlignment(Pos.CENTER);
+		this.setHgap(100);
+		this.setVgap(20);
 		
 		//Titles
 		this.add(getLblRank(), 0, 0);
@@ -64,11 +65,11 @@ public class Highscore extends GridPane{
 		this.add(lbl, 1, rank+1, 3, 1);
 		
 		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank+1) + ".png");
-		ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK);
-		ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK);
+		ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK*0.9);
+		ivPlayerRank.setFitHeight(IGraphicConst.HEIGHT_RANK*0.9);
 		Label lblPlayerPseudo = IGraphicConst.styleLabel(new Label("  " + "joueur"));
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label("sonScore"));
-		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f","time")));
+		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f", 12.3456)));
 		
 		this.add(ivPlayerRank, 0, rank+1);
 		this.add(lblPlayerPseudo, 1, rank+1);

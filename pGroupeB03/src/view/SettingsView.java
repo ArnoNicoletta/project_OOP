@@ -19,15 +19,15 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import model.RulesConst;
+import model.RulesSettings;
 
-public class Settings extends StackPane {
+public class SettingsView extends StackPane {
 	private MenuSettings menuSettings;
 	private UserSettings userSettings;
-	private AdminSettings adminSettings;
+	private AdminSettingsView adminSettings;
 	
 	
-	public Settings() {
+	public SettingsView() {
 		this.getChildren().addAll(getMenuSettings(),getUserSettings(), getAdminSettings());
 		this.showElement(getMenuSettings());
 	}
@@ -44,9 +44,9 @@ public class Settings extends StackPane {
 		}
 		return userSettings;
 	}
-	public AdminSettings getAdminSettings() {
+	public AdminSettingsView getAdminSettings() {
 		if(adminSettings == null) {
-			adminSettings = new AdminSettings();
+			adminSettings = new AdminSettingsView();
 		}
 		return adminSettings;
 	}
@@ -119,7 +119,7 @@ public class Settings extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						hideVisible();
-						Settings.this.showElement(Settings.this.getAdminSettings());
+						SettingsView.this.showElement(SettingsView.this.getAdminSettings());
 					}
 				});
 			}
@@ -181,7 +181,7 @@ public class Settings extends StackPane {
 
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
-				txtNbRound = new TextField(""+RulesConst.getNumber_round());
+				txtNbRound = new TextField(""+RulesSettings.getNumber_round());
 //				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
 			}
 			return txtNbRound;
@@ -196,7 +196,7 @@ public class Settings extends StackPane {
 
 		public TextField getTxtTime() {
 			if( txtTime == null) {
-				txtTime = new TextField(""+RulesConst.getRound_time_seconds());
+				txtTime = new TextField(""+RulesSettings.getRound_time_seconds());
 //				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
 			}
 			return txtTime;
@@ -205,7 +205,7 @@ public class Settings extends StackPane {
 		public CheckBox getCbJoker() {
 			if(cbJoker==null) {
 				cbJoker = new CheckBox("Jokers with special faces");
-				cbJoker.setSelected(RulesConst.getFaced_joker());
+				cbJoker.setSelected(RulesSettings.getFaced_joker());
 			}
 			return cbJoker;
 		}
@@ -213,7 +213,7 @@ public class Settings extends StackPane {
 		public CheckBox getCbSound() {
 			if(cbSound==null) {
 				cbSound = new CheckBox("Sound");
-				cbSound.setSelected(RulesConst.getSound_enabled());
+				cbSound.setSelected(RulesSettings.getSound_enabled());
 			}
 			return cbSound;
 		}
@@ -225,18 +225,18 @@ public class Settings extends StackPane {
 					@Override
 					public void handle(ActionEvent event) {
 						try {
-							RulesConst.setNumber_round(Integer.parseInt(getTxtNbRound().getText()));
-							RulesConst.setRound_time_seconds(Double.parseDouble(getTxtTime().getText()));
+							RulesSettings.setNumber_round(Integer.parseInt(getTxtNbRound().getText()));
+							RulesSettings.setRound_time_seconds(Double.parseDouble(getTxtTime().getText()));
 						} catch (NumberFormatException e) {
 							MsgBox.dispalyOk("Wrong input number", "This is not a number ! "
 									+ "\n" + e.getMessage());
 						} catch (WrongRuleValueException e) {
 							MsgBox.dispalyException(e);
 						}
-						if(getCbJoker().isSelected()) RulesConst.setFaced_joker(true);
-						else RulesConst.setFaced_joker(false);
-						if(getCbSound().isSelected()) RulesConst.setSound_enabled(true);
-						else RulesConst.setSound_enabled(false);
+						if(getCbJoker().isSelected()) RulesSettings.setFaced_joker(true);
+						else RulesSettings.setFaced_joker(false);
+						if(getCbSound().isSelected()) RulesSettings.setSound_enabled(true);
+						else RulesSettings.setSound_enabled(false);
 						MsgBox.dispalyOk("Saved", "Changes have been saved !");
 					}
 				});

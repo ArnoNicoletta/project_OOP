@@ -37,10 +37,10 @@ import model.Game;
  * @see {@link WaitingScreen}
  * @see {@link MainMenu}
  * @see {@link GameView}
- * @see {@link Highscore}
- * @see {@link Rules}
- * @see {@link Credit}
- * @see {@link Settings}
+ * @see {@link HighscoreView}
+ * @see {@link RulesView}
+ * @see {@link CreditView}
+ * @see {@link SettingsView}
  */
 public class MainView extends BorderPane {
 	
@@ -226,7 +226,7 @@ class MainMenu extends BorderPane {
 		if(btnHighscores==null) {
 			btnHighscores = new Button("HIGHSCORES");
 			btnHighscores.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnHighscores.setOnAction(e -> MainView.this.showElement(new Highscore()));
+			btnHighscores.setOnAction(e -> MainView.this.showElement(new HighscoreView()));
 			IGraphicConst.styleButton(btnHighscores);
 			btnHighscores.getStyleClass().add("btnMainMenu");
 		}
@@ -237,7 +237,7 @@ class MainMenu extends BorderPane {
 		if(btnCredits==null) {
 			btnCredits = new Button("CREDITS");
 			btnCredits.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnCredits.setOnAction(e -> MainView.this.showElement(new Credit()));
+			btnCredits.setOnAction(e -> MainView.this.showElement(new CreditView()));
 			IGraphicConst.styleButton(btnCredits);
 			btnCredits.getStyleClass().add("btnMainMenu");
 		}
@@ -247,7 +247,7 @@ class MainMenu extends BorderPane {
 		if(btnRules==null) {
 			btnRules = new Button("RULES");
 			btnRules.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-			btnRules.setOnAction(e -> MainView.this.showElement(new Rules()));
+			btnRules.setOnAction(e -> MainView.this.showElement(new RulesView()));
 			IGraphicConst.styleButton(btnRules);
 			btnRules.getStyleClass().add("btnMainMenu");
 		}
@@ -256,7 +256,7 @@ class MainMenu extends BorderPane {
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
 			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/settings_button.png");
-			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new Settings()));
+			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new SettingsView()));
 			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);
 			ivSettings.setCursor(Cursor.HAND);
 		}

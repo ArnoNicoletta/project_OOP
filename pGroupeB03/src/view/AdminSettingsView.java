@@ -25,7 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.Admin;
 
-public class AdminSettings extends StackPane {
+public class AdminSettingsView extends StackPane {
 
 	private Admin admin;
 	
@@ -34,7 +34,7 @@ public class AdminSettings extends StackPane {
 	private AdminDelete adminDelete;
 	private AdminAdd adminAdd;
 	
-	public AdminSettings() {
+	public AdminSettingsView() {
 		this.getChildren().addAll(getAdminLogin(),getAdminMenu(),getAdminDelete(),getAdminAdd());
 		this.showElement(getAdminLogin());
 	}

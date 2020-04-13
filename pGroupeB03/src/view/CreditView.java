@@ -10,12 +10,12 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 
-public class Credit extends BorderPane {
+public class CreditView extends BorderPane {
 
 	private Label lblCredit;
 	private Button btnOK;
 	
-	public Credit() {
+	public CreditView() {
 		this.setBackground(new Background(new BackgroundImage(
 				new Image(IGraphicConst.URL_PATH_IMG + "background/background_mainmenu.png", false), 
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
