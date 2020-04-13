@@ -74,6 +74,7 @@ public interface IGraphicConst {
 	//TextField (and PasswordField)
 	
 	final double WIDTH_TXT = 200, HEIGHT_TXT = 60;
+	final double WIDTH_TXT_ADMIN = 300;
 	final String STYLE_TXT= "-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
 							"-fx-font-size: 15px;\r\n" + 
 							"-fx-font-weight: bold;\r\n";
