@@ -22,45 +22,18 @@ import javafx.scene.layout.StackPane;
 import model.RulesSettings;
 
 public class SettingsView extends StackPane {
-	private MenuSettings menuSettings;
-	private UserSettings userSettings;
-	private AdminSettingsView adminSettings;
 	
 	
 	public SettingsView() {
-		this.getChildren().addAll(getMenuSettings(),getUserSettings(), getAdminSettings());
-		this.showElement(getMenuSettings());
+		this.showElement(new MenuSettings());
 	}
 	
-	public MenuSettings getMenuSettings() {
-		if(menuSettings == null) {
-			menuSettings = new MenuSettings();
-		}
-		return menuSettings;
-	}
-	public UserSettings getUserSettings() {
-		if(userSettings == null) {
-			userSettings = new UserSettings();
-		}
-		return userSettings;
-	}
-	public AdminSettingsView getAdminSettings() {
-		if(adminSettings == null) {
-			adminSettings = new AdminSettingsView();
-		}
-		return adminSettings;
-	}
-	public void hideVisible() {
-		for(Node n : this.getChildren()) {
-			if(n.isVisible()) {
-				n.setVisible(false);
-			}
-		}
-	}
 	private void showElement(Node element) {
-		hideVisible();
+		this.getChildren().removeAll(this.getChildren());
+		this.getChildren().add(element);
 		element.setVisible(true);
 	}
+	
 	
 	/*
 	 * *****************************
@@ -100,8 +73,7 @@ public class SettingsView extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						hideVisible();
-						getUserSettings().setVisible(true);
+						showElement(new UserSettings());
 					}
 				});
 			}
@@ -118,8 +90,7 @@ public class SettingsView extends StackPane {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						hideVisible();
-						SettingsView.this.showElement(SettingsView.this.getAdminSettings());
+						showElement(new AdminSettingsView());
 					}
 				});
 			}
