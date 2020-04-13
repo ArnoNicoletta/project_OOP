@@ -20,6 +20,8 @@ import com.google.gson.reflect.TypeToken;
 
 import exception.EmptyPseudoException;
 import exception.IdenticalPseudoException;
+import exception.QuestionAlreadyExistException;
+import exception.QuestionNotFoundException;
 import exception.TooMuchCharException;
 
 /**
@@ -393,6 +395,40 @@ public class Game {
 	}
 	
 	
+	
+	
+	// On questions (used by admins)
+	
+	
+	/**
+	 * Allows to a question in the decks.
+	 * If this question has the same theme as an already existing deck, the question will be added in this deck.
+	 * If no deck has the same theme, a new Deck will be created and added.
+	 * @param q : {@link Question}. The question to add.
+	 */
+	public void addQuestion(Question q) throws QuestionAlreadyExistException {
+		if(getDeck(q.getTheme()) != null) {
+			for(Deck in : decks) {
+				if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
+					in.addQuestion(q);
+				}
+			}
+		}
+		else {
+			Deck d = new Deck();
+			d.addQuestion(q);
+			this.addDeck(d);
+		}
+	}
+	
+	public void deleteQuestion(Question q) throws QuestionNotFoundException {
+		if(getDeck(q.getTheme()) == null) throw new QuestionNotFoundException(q);
+		for(Deck in : decks) {
+			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
+				in.deleteQuestion(q);
+			}
+		}
+	}
 	
 	// On players
 	

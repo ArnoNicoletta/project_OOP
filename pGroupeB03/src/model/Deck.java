@@ -13,6 +13,9 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import exception.QuestionAlreadyExistException;
+import exception.QuestionNotFoundException;
+
 
 /**
  * This class manages lists of {@link Question}.
@@ -29,20 +32,22 @@ public class Deck {
 	
 	//Game methods
 	
+	/**
+	 * Shuffles the questions in this game so they never are in the same order.
+	 */
 	public void shuffleQuestions() {
 		Collections.shuffle(questions);
 	}
 	
-	public Question getQuestion(int index) {
-		if( questions == null || questions.isEmpty() 
-				|| index > questions.size() || index < 0) {
-			return null;
+	/**
+	 * Gives the theme of the {@link Deck}
+	 * @return {@link String}. The theme of the {@link Deck}.
+	 */
+	public String getTheme() {
+		if(questions.isEmpty()) {
+			return "";
 		}
-		return questions.get(index).clone();
-	}
-	
-	public int getSizeQuestions() {
-		return questions.size();
+		return questions.get(0).getTheme();
 	}
 	
 	//JSON methods
@@ -88,12 +93,14 @@ public class Deck {
 	 * If the list isn't empty, the theme must be the same for all questions added.
 	 * @param q : {@link Question}. The {@link Question} to add.
 	 * @return {@link Boolean}. True if the {@link Question} q is well added.
+	 * @throws QuestionAlreadyExistException
 	 */
-	public boolean addQuestion(Question q) {
+	public boolean addQuestion(Question q) throws QuestionAlreadyExistException {
 		if(questions.isEmpty()) {
 			return questions.add(q.clone());
 		}
-		if(!questions.contains(q) && this.getTheme().equalsIgnoreCase(q.getTheme())) {
+		if(this.getTheme().equalsIgnoreCase(q.getTheme())) {
+			if(questions.contains(q)) throw new QuestionAlreadyExistException(q);
 			return questions.add(q);
 		}
 		return false;
@@ -103,8 +110,10 @@ public class Deck {
 	 * Allows to remove a {@link Question} from the {@link Deck}.
 	 * @param q : {@link Question}. The {@link Question}  to remove.
 	 * @return {@link Boolean}. True if the {@link Question} q is well removed.
+	 * @throws QuestionNotFoundException 
 	 */
-	public boolean deleteQuestion(Question q) {
+	public boolean deleteQuestion(Question q) throws QuestionNotFoundException {
+		if(!questions.contains(q)) throw new QuestionNotFoundException(q);
 		return questions.remove(q);
 	}
 	
@@ -120,17 +129,28 @@ public class Deck {
 		}
 		return false;
 	}
+
+	/**
+	 * Gets a {@link Question} at a specified index.
+	 * @param index : {@link Integer}. Index of the question.
+	 * @return {@link Question}. The question to return.
+	 */
+	public Question getQuestion(int index) {
+		if( questions == null || questions.isEmpty() 
+				|| index > questions.size() || index < 0) {
+			return null;
+		}
+		return questions.get(index).clone();
+	}
 	
 	/**
-	 * Gives the theme of the {@link Deck}
-	 * @return {@link String}. The theme of the {@link Deck}.
+	 * Get the number of questions in this deck.
+	 * @return {@link Integer}. The number of questions.
 	 */
-	public String getTheme() {
-		if(questions.isEmpty()) {
-			return "";
-		}
-		return questions.get(0).getTheme();
+	public int getSizeQuestions() {
+		return questions.size();
 	}
+	
 	
 	// Basic methods
 	@Override
@@ -167,7 +187,9 @@ public class Deck {
 	public Deck clone() {
 		Deck ret = new Deck();
 		for(Question q : questions) {
-			ret.addQuestion(q.clone());
+			try {
+				ret.addQuestion(q.clone());
+			} catch (QuestionAlreadyExistException e) {}
 		}
 		return ret;
 	}
