@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,7 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.BlendMode;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -37,12 +38,14 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import model.Admin;
 import model.Deck;
 import model.Game;
+import model.Question;
 
 public class AdminSettingsView extends StackPane {
 
@@ -242,13 +245,11 @@ public class AdminSettingsView extends StackPane {
 		
 		
 	}
-	class AdminDelete extends GridPane{
-		private Label lblTheme;
-		private Label lblRiddle;
+	class AdminDelete extends BorderPane {
 		
-		private TextField txtTheme;
-		private TextField txtRiddle;
+		private TreeItem<String> root;
 		
+		private ImageView ivBack;
 		private Button btnDelete;
 		
 		public AdminDelete() {
@@ -259,58 +260,70 @@ public class AdminSettingsView extends StackPane {
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
-			this.setPadding(new Insets(10));
-			this.setAlignment(Pos.CENTER);
-			this.setHgap(5);
-			this.setVgap(5);
-			//this.setGridLinesVisible(true);
 			
-			GridPane.setHalignment(getLblTheme(), HPos.LEFT);
-			this.add(getLblTheme(), 0, 0);
-			GridPane.setHalignment(getTxtTheme(), HPos.CENTER);
-			this.add(getTxtTheme(), 1, 0);
-			GridPane.setHalignment(getLblRiddle(), HPos.LEFT);
-			this.add(getLblRiddle(), 0, 1);
-			GridPane.setHalignment(getTxtRiddle(), HPos.CENTER);
-			this.add(getTxtRiddle(), 1, 1);
-			GridPane.setHalignment(getBtnDelete(), HPos.RIGHT);
-			this.add(getBtnDelete(), 0, 2, 2, 1);
+			//Center
+			updateTree();
+			TreeView<String> tree = new TreeView<String>(getRoot());
+			tree.setShowRoot(false);
+			tree.setMaxSize(500, 250);
+			tree.setPrefSize(500, 250);
+			tree.setTranslateY(60);
+			this.setCenter(tree);
+			
+			//Bottom
+			HBox hbBottom = new HBox();
+			hbBottom.setAlignment(Pos.TOP_CENTER);
+			hbBottom.setSpacing(300);
+			hbBottom.setTranslateY(-60);
+			hbBottom.getChildren().addAll(getIvBack(), getBtnDelete());
+			this.setBottom(hbBottom);
 		}
-
-		public Label getLblTheme() {
-			if(lblTheme == null) {
-				lblTheme = new Label("SELECT A THEME : ");
+		
+		private void updateTree() {
+			for(Deck d : g.getDecks()) {
+				TreeItem<String> di = new TreeItem<String>(d.getTheme());
+				for(Question q : d.getQuestions()) {
+					TreeItem<String> qi = new TreeItem<String>(q.getAnswer());
+					qi.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event) {
+							MsgBox.dispalyOk("Infos for : " + q.getAnswer(), "Author : " + q.getAuthor() 
+													+"\nTheme : " + q.getTheme()
+													+ "\nClue 1 : " + q.getClues().get(0)
+													+"\nClue 1 : " + q.getClues().get(1)
+													+"\nClue 1 : " + q.getClues().get(2));
+						}
+					});
+					di.getChildren().add(qi);
+				}
+				getRoot().getChildren().add(di);
 			}
-			return lblTheme;
 		}
-
-		public Label getLblRiddle() {
-			if(lblRiddle == null) {
-				lblRiddle = new Label("SELECT A RIDDLE : ");
+		
+		public TreeItem<String> getRoot() {
+			if(root==null) {
+				root = new TreeItem<>();
+				root.setExpanded(true);
 			}
-			return lblRiddle;
+			return root;
 		}
-
-		public TextField getTxtTheme() {
-			if(txtTheme == null) {
-				txtTheme = new TextField();
-			}
-			return txtTheme;
-		}
-
-		public TextField getTxtRiddle() {
-			if(txtRiddle == null) {
-				txtRiddle = new TextField();
-			}
-			return txtRiddle;
-		}
+		
 		public Button getBtnDelete() {
 			if(btnDelete == null) {
 				btnDelete = new Button("DELETE");
+				IGraphicConst.styleButton(btnDelete);
 			}
 			return btnDelete;
 		}
 		
+		public ImageView getIvBack() {
+			if(ivBack == null) {
+				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
+				IGraphicConst.styleImageView(ivBack);
+				ivBack.setOnMouseClicked(e -> showElement(new AdminMenu()));
+			}
+			return ivBack;
+		}
 		
 	}
 	class AdminAdd extends BorderPane {
