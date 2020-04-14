@@ -193,7 +193,7 @@ public class GameView extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvAdd() {
-			ImageView iv = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_add_player.png");
+			ImageView iv = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_add.png");
 			iv.setCursor(Cursor.HAND);
 			iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -211,7 +211,7 @@ public class GameView extends StackPane {
 		 * @return {@link ImageView}.
 		 */
 		private ImageView getIvDel() {
-			ImageView ivDel = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_remove_player.png");
+			ImageView ivDel = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_remove.png");
 			ivDel.setCursor(Cursor.HAND);
 			ivDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -553,7 +553,7 @@ public class GameView extends StackPane {
 			if(ivJokerFirstLetter==null) {
 				ivJokerFirstLetter = new ImageView();
 				if(RulesSettings.getFaced_joker()) ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
-				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
+				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerFirstLetter.setCursor(Cursor.HAND);
@@ -571,7 +571,7 @@ public class GameView extends StackPane {
 			if(ivJokerExtraPass==null) {
 				ivJokerExtraPass = new ImageView();
 				if(RulesSettings.getFaced_joker()) ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/rayan.png"));
-				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
+				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerExtraPass.setCursor(Cursor.HAND);
@@ -589,7 +589,7 @@ public class GameView extends StackPane {
 			if(ivJokerBonusTime==null) {
 				ivJokerBonusTime = new ImageView();
 				if(RulesSettings.getFaced_joker()) ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/loic.png"));
-				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/joker.png"));
+				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerBonusTime.setCursor(Cursor.HAND);

@@ -81,7 +81,6 @@ public class AdminSettingsView extends StackPane {
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(5);
 			this.setVgap(5);
-			//this.setGridLinesVisible(true);
 			
 			GridPane.setHalignment(getLblTitre(),HPos.CENTER);
 			this.add(getLblTitre(), 0, 0, 2, 1);
@@ -328,7 +327,7 @@ public class AdminSettingsView extends StackPane {
 			gp.setAlignment(Pos.CENTER);
 			gp.setHgap(10);
 			gp.setVgap(0);
-			gp.setTranslateY(50);
+			gp.setTranslateY(70);
 			
 			GridPane.setHalignment(getLblTheme(), HPos.LEFT);
 			gp.add(getLblTheme(), 0, 0);

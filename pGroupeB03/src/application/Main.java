@@ -21,7 +21,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
-			primaryStage.getIcons().addAll(new Image(IGraphicConst.URL_PATH_IMG + "icons/logo.png"));
+			primaryStage.getIcons().addAll(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_logo_50.png"));
 			primaryStage.setTitle("FOUR THE WIN");
 			primaryStage.show();
 			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -81,7 +81,7 @@ public class MainView extends BorderPane {
 	
 	public ImageView getIvHome() {
 		if(ivHome==null) {
-			ivHome = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_home.png");
+			ivHome = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_home.png");
 			Tooltip.install(ivHome, new Tooltip("Back to the menu"));
 			ivHome.setTranslateX(20);
 			ivHome.setTranslateY(20);
@@ -255,7 +255,7 @@ class MainMenu extends BorderPane {
 	}
 	public ImageView getIvSettings() {
 		if(ivSettings==null) {
-			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/settings_button.png");
+			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_settings.png");
 			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new SettingsView()));
 			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);
 			ivSettings.setCursor(Cursor.HAND);
