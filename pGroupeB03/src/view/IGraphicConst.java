@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
@@ -85,7 +86,7 @@ public interface IGraphicConst {
 	}
 	
 	
-	//Images
+	//ImageView
 	
 	final String URL_PATH_IMG = "file:./src/resources/images/";
 	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
@@ -99,6 +100,19 @@ public interface IGraphicConst {
 		iv.setCursor(Cursor.HAND);
 		iv.setOpacity(0.75);
 		return iv;
+	}
+	
+	//CheckBox
+	final String STYLE_CB ="-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+			"-fx-font-size: 20px;\r\n" + 
+			"-fx-font-weight: bold;";
+	public static CheckBox styleCheckBox(CheckBox cb) {
+		cb.setStyle(STYLE_CB);
+		cb.setTextFill(Color.WHITE);
+		cb.setCache(true);
+		cb.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 1, 1, 0, 0));
+		cb.setCursor(Cursor.HAND);
+		return cb;
 	}
 	
 	
