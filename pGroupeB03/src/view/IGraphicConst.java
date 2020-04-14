@@ -23,8 +23,6 @@ import javafx.scene.paint.Color;
  */
 public interface IGraphicConst {
 	
-	//Background
-	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
 	
 	//Button
 	
@@ -89,6 +87,7 @@ public interface IGraphicConst {
 	//Images
 	
 	final String URL_PATH_IMG = "file:./src/resources/images/";
+	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
 	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
 	final double WIDTH_RANK = 50, HEIGHT_RANK = 50;
 	

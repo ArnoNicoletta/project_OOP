@@ -109,7 +109,7 @@ public class GameView extends StackPane {
 		public PlayerSelection() {
 			
 			this.setBackground(new Background(new BackgroundImage(
-					new Image(IGraphicConst.URL_PATH_IMG + "background/background_select_players.png", false), 
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_selectplayers.png", false), 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
