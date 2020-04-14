@@ -50,6 +50,11 @@ public class Deck {
 		return questions.get(0).getTheme();
 	}
 	
+	public List<Question> getQuestions() {
+		List<Question> ret = new ArrayList<>();
+		questions.forEach(q -> ret.add(q.clone()));
+		return ret;
+	}
 	//JSON methods
 	
 	/**
