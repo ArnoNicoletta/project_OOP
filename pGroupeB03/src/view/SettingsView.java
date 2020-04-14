@@ -12,11 +12,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import model.RulesSettings;
@@ -40,8 +42,11 @@ public class SettingsView extends StackPane {
 	 * 		  INNER CLASSES
 	 * *****************************
 	 */
-	class MenuSettings extends GridPane{
+	class MenuSettings extends BorderPane {
+		
+		private ImageView ivUser;
 		private Button btnUser;
+		private ImageView ivAdmin;
 		private Button btnAdmin;
 		
 		public MenuSettings() {
@@ -52,23 +57,42 @@ public class SettingsView extends StackPane {
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
-			this.setPadding(new Insets(10));
-			this.setAlignment(Pos.CENTER);
-			this.setHgap(5);
-			this.setVgap(5);
+			GridPane gp = new GridPane();
 			
+			gp.setPadding(new Insets(10));
+			gp.setAlignment(Pos.CENTER);
+			gp.setHgap(5);
+			gp.setVgap(0);
+			gp.setTranslateY(25);
+			
+			GridPane.setHalignment(getIvUser(), HPos.LEFT);
+			gp.add(getIvUser(), 0, 0);
 			GridPane.setHalignment(getBtnUser(), HPos.CENTER);
-			this.add(getBtnUser(), 0, 0);
+			gp.add(getBtnUser(), 0, 1);
+			
+			gp.add(new Label(), 0, 2);
+			
+			GridPane.setHalignment(getIvAdmin(), HPos.RIGHT);
+			gp.add(getIvAdmin(), 0, 3);
 			GridPane.setHalignment(getBtnAdmin(), HPos.CENTER);
-			this.add(getBtnAdmin(), 0, 1);
+			gp.add(getBtnAdmin(), 0, 4);
+			
+			this.setCenter(gp);
 		}
-
+		
+		public ImageView getIvUser() {
+			if(ivUser == null) {
+				ivUser = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_user.png");
+				ivUser.setFitWidth(100);
+				ivUser.setFitHeight(100);
+			}
+			return ivUser;
+		}
 		public Button getBtnUser() {
 			if(btnUser == null) {
 				btnUser = new Button("USER SETTINGS");
-				
-				btnUser.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
-				
+				btnUser.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnUser);
 				btnUser.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
@@ -79,13 +103,19 @@ public class SettingsView extends StackPane {
 			}
 			return btnUser;
 		}
-
+		public ImageView getIvAdmin() {
+			if(ivAdmin == null) {
+				ivAdmin = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/icon_admin.png");
+				ivAdmin.setFitWidth(100);
+				ivAdmin.setFitHeight(100);
+			}
+			return ivAdmin;
+		}
 		public Button getBtnAdmin() {
 			if(btnAdmin == null) {
 				btnAdmin = new Button("ADMIN SETTINGS");
-				
-				btnAdmin.minWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
-				
+				btnAdmin.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnAdmin);
 				btnAdmin.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
