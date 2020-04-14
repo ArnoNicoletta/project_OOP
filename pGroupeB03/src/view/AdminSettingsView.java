@@ -1,5 +1,9 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
+
+import exception.QuestionAlreadyExistException;
 import exception.WrongLoginException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -375,16 +380,19 @@ public class AdminSettingsView extends StackPane {
 		public ComboBox<String> getCbbTheme() {
 			if(cbbTheme == null) {
 				cbbTheme = new ComboBox<>();
+				cbbTheme.setTooltip(new Tooltip("Select a theme or create a new one."));
+				cbbTheme.setPromptText("Select a theme or create a new one.");
 				for(Deck d : g.getDecks()) {
 					cbbTheme.getItems().add(d.getTheme());
 				}
-				//TODO style cbbTheme
 				cbbTheme.setEditable(true);
+				cbbTheme.setVisibleRowCount(5);
 				cbbTheme.setMinWidth(IGraphicConst.WIDTH_TXT_ADMIN);
 				cbbTheme.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				cbbTheme.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
 				cbbTheme.setStyle(IGraphicConst.STYLE_TXT);
-				cbbTheme.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10, false) , new Insets(10))));
-				cbbTheme.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10,  false), null ,new Insets(10))));
+				cbbTheme.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5, false) , new Insets(10))));
+				cbbTheme.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5,  false), null ,new Insets(10))));
 			}
 			return cbbTheme;
 		}
@@ -475,6 +483,44 @@ public class AdminSettingsView extends StackPane {
 			if(btnAdd == null) {
 				btnAdd = new Button("ADD");
 				IGraphicConst.styleButton(btnAdd);
+				btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(getCbbTheme().getValue().isEmpty() || getTxtClue1().getText().isEmpty() 
+								|| getTxtClue2().getText().isEmpty() || getTxtClue3().getText().isEmpty() 
+								|| getTxtAnswer().getText().isEmpty()) {
+							MsgBox.dispalyOk("Missing input", "One required field hasn't been filled");
+						}
+						String theme = getCbbTheme().getValue(), answer = getTxtAnswer().getText();
+						List<String> clues = Arrays.asList(getTxtClue1().getText(), getTxtClue2().getText(), getTxtClue3().getText());
+						if(!MsgBox.displayYesNO("Add this question?", "This question will be added : "
+								+"\nAuthor :\t" + admin.getUsername()
+								+ "\nTheme :\t" + theme 
+								+ "\nClues :\t" + clues.get(0)
+								+ "\n\t\t\t\t" + clues.get(1)
+								+ "\n\t\t\t\t" + clues.get(2)
+								+ "\nAnswer :\t" + answer)) {
+							return;
+						}
+						try {
+							admin.addDeck(theme, clues, answer);
+							MsgBox.dispalyOk("Question added !", "This question has been added : "
+									+"\nAuthor :\t" + admin.getUsername()
+									+ "\nTheme :\t" + theme 
+									+ "\nClues :\t" + clues.get(0)
+									+ "\n\t\t\t\t" + clues.get(1)
+									+ "\n\t\t\t\t" + clues.get(2)
+									+ "\nAnswer :\t" + answer );
+						} catch (QuestionAlreadyExistException e) {
+							MsgBox.dispalyException(e);
+						} finally {
+							getTxtClue1().setText("");
+							getTxtClue2().setText("");
+							getTxtClue3().setText("");
+							getTxtAnswer().setText("");
+						}
+					}
+				});
 			}
 			return btnAdd;
 		}

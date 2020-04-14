@@ -419,6 +419,7 @@ public class Game {
 			d.addQuestion(q);
 			this.addDeck(d);
 		}
+		saveAllDecks();
 	}
 	
 	public void deleteQuestion(Question q) throws QuestionNotFoundException {
@@ -428,6 +429,7 @@ public class Game {
 				in.deleteQuestion(q);
 			}
 		}
+		saveAllDecks();
 	}
 	
 	// On players
