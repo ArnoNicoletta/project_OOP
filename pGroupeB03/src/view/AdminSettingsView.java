@@ -51,7 +51,7 @@ public class AdminSettingsView extends StackPane {
 	}
 	
 	private void showElement(Node element) {
-		this.getChildren().removeAll(this.getChildren());
+		this.getChildren().clear();
 		this.getChildren().add(element);
 		element.setVisible(true);
 	}
@@ -104,6 +104,7 @@ public class AdminSettingsView extends StackPane {
 		public Label getLblTitre() {
 			if(lblTitre==null) {
 				lblTitre = new Label("ADMIN LOGIN");
+				IGraphicConst.styleBiggerLabel(lblTitre);
 			}
 			return lblTitre;
 		}
@@ -118,11 +119,11 @@ public class AdminSettingsView extends StackPane {
 			if(txtLog==null) {
 				txtLog = new TextField();
 				txtLog.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
 					@Override
 					public void handle(KeyEvent event) {
 						if(event.getCode() == KeyCode.ENTER) {
 							getPwfPass().requestFocus();
+							event.consume();
 						}
 					}
 				});
@@ -143,6 +144,7 @@ public class AdminSettingsView extends StackPane {
 					public void handle(KeyEvent event) {
 						if(event.getCode() == KeyCode.ENTER) {
 							getBtnOk().fire();
+							event.consume();
 						}
 					}
 				});

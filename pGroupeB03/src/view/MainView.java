@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -72,7 +73,7 @@ public class MainView extends BorderPane {
 	}
 	
 	private void showElement(Node element) {
-		getStack().getChildren().removeAll(getStack().getChildren());
+		getStack().getChildren().clear();
 		getIvHome().setVisible(true);
 		getIvHome().toFront();
 		getStack().getChildren().add(element);

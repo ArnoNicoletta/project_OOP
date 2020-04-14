@@ -69,7 +69,7 @@ public class GameView extends StackPane {
 	}
 	
 	private void showElement(Node element) {
-		this.getChildren().removeAll(this.getChildren());
+		this.getChildren().clear();
 		this.getChildren().add(element);
 		element.setVisible(true);
 	}
