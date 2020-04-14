@@ -1,6 +1,5 @@
 package view;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -259,7 +258,7 @@ class MainMenu extends BorderPane {
 			ivSettings = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_settings.png");
 			ivSettings.setOnMouseClicked(e -> MainView.this.showElement(new SettingsView()));
 			ivSettings.setTranslateX(IGraphicConst.WIDTH_BUTTON*0.8);
-			ivSettings.setCursor(Cursor.HAND);
+			IGraphicConst.styleImageView(ivSettings);
 		}
 		return ivSettings;
 	}

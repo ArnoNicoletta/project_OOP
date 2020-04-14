@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,9 +18,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
@@ -319,7 +322,7 @@ public class AdminSettingsView extends StackPane {
 		private TextField txtAnswer;
 		private Label lblInfo;
 		private Button btnAdd;
-		
+		private ImageView ivBack;
 		
 		public AdminAdd() {
 			
@@ -363,6 +366,9 @@ public class AdminSettingsView extends StackPane {
 			
 			GridPane.setHalignment(getLblInfo(), HPos.CENTER);
 			gp.add(getLblInfo(), 0, 5, 2, 1);
+			
+			GridPane.setHalignment(getIvBack(), HPos.LEFT);
+			gp.add(getIvBack(), 0, 6);
 			
 			GridPane.setHalignment(getBtnAdd(), HPos.RIGHT);
 			gp.add(getBtnAdd(), 1, 6);
@@ -480,7 +486,6 @@ public class AdminSettingsView extends StackPane {
 			}
 			return lblInfo;
 		}
-
 		public Button getBtnAdd() {
 			if(btnAdd == null) {
 				btnAdd = new Button("ADD");
@@ -514,6 +519,10 @@ public class AdminSettingsView extends StackPane {
 									+ "\n\t\t\t" + clues.get(1)
 									+ "\n\t\t\t" + clues.get(2)
 									+ "\nAnswer :\t" + answer );
+							getCbbTheme().getItems().clear();
+							for(Deck d : g.getDecks()) {
+								getCbbTheme().getItems().add(d.getTheme());
+							}
 						} catch (QuestionAlreadyExistException e) {
 							MsgBox.dispalyException(e);
 						} finally {
@@ -521,16 +530,19 @@ public class AdminSettingsView extends StackPane {
 							getTxtClue2().setText("");
 							getTxtClue3().setText("");
 							getTxtAnswer().setText("");
-							getCbbTheme().getItems().clear();
-							for(Deck d : g.getDecks()) {
-								getCbbTheme().getItems().add(d.getTheme());
-							}
 						}
 					}
 				});
 			}
 			return btnAdd;
 		}
-		
+		public ImageView getIvBack() {
+			if(ivBack == null) {
+				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
+				IGraphicConst.styleImageView(ivBack);
+				ivBack.setOnMouseClicked(e -> showElement(new AdminMenu()));
+			}
+			return ivBack;
+		}
 	}
 }

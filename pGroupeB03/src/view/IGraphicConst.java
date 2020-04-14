@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -90,5 +91,15 @@ public interface IGraphicConst {
 	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
 	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
 	final double WIDTH_RANK = 50, HEIGHT_RANK = 50;
+	final double WIDTH_BACK = 50, HEIGHT_BACK = 50;
+	
+	public static ImageView styleImageView(ImageView iv) {
+		iv.setFitWidth(WIDTH_BACK);
+		iv.setFitHeight(HEIGHT_BACK);
+		iv.setCursor(Cursor.HAND);
+		iv.setOpacity(0.75);
+		return iv;
+	}
+	
 	
 }
