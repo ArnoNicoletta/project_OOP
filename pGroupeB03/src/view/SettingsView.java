@@ -6,11 +6,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -22,6 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import model.RulesSettings;
+import view.AdminSettingsView.AdminMenu;
 
 public class SettingsView extends StackPane {
 	
@@ -128,7 +131,7 @@ public class SettingsView extends StackPane {
 		}
 		
 	}
-	class UserSettings extends GridPane{
+	class UserSettings extends BorderPane {
 		
 		private Label lblNbRound;
 		private TextField txtNbRound;
@@ -137,6 +140,7 @@ public class SettingsView extends StackPane {
 		private CheckBox cbJoker;
 		private CheckBox cbSound;
 		private Button btnSave;
+		private ImageView ivBack;
 		
 		public UserSettings() {
 			
@@ -146,36 +150,46 @@ public class SettingsView extends StackPane {
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
-			this.setAlignment(Pos.CENTER);
-			this.setHgap(5);
-			this.setVgap(5);
+			GridPane gp = new GridPane();
+			
+			gp.setAlignment(Pos.CENTER);
+			gp.setHgap(5);
+			gp.setVgap(15);
+			gp.setTranslateY(50);
 			
 			GridPane.setHalignment(getLblNbRound(),HPos.LEFT);
-			this.add(getLblNbRound(), 0, 0);
+			gp.add(getLblNbRound(), 0, 0);
 			
 			GridPane.setHalignment(getTxtNbRound(),HPos.CENTER);
-			this.add(getTxtNbRound(), 1, 0);
+			gp.add(getTxtNbRound(), 1, 0);
 			
 			GridPane.setHalignment(getLblTime(),HPos.LEFT);
-			this.add(getLblTime(), 0, 1);
+			gp.add(getLblTime(), 0, 1);
 			
 			GridPane.setHalignment(getTxtTime(),HPos.CENTER);
-			this.add(getTxtTime(), 1, 1);
+			gp.add(getTxtTime(), 1, 1);
 			
 			GridPane.setHalignment(getCbJoker(), HPos.CENTER);
-			this.add(getCbJoker(), 0, 2);
+			gp.add(getCbJoker(), 0, 2);
 			
 			GridPane.setHalignment(getCbSound(), HPos.CENTER);
-			this.add(getCbSound(), 1, 2);
+			gp.add(getCbSound(), 1, 2);
+			
+			gp.add(new Label(), 0, 3);
+			
+			GridPane.setHalignment(getIvBack(), HPos.LEFT);
+			gp.add(getIvBack(), 0, 4);
 			
 			GridPane.setHalignment(getBtnSave(),HPos.RIGHT);
-			this.add(getBtnSave(), 2, 3);
+			gp.add(getBtnSave(), 1, 4);
 			
+			this.setCenter(gp);
 		}
 
 		public Label getLblNbRound() {
 			if( lblNbRound == null) {
 				lblNbRound = new Label("NUMBER OF ROUNDS :");
+				IGraphicConst.styleLabel(lblNbRound);
 			}
 			return lblNbRound;
 		}
@@ -183,7 +197,9 @@ public class SettingsView extends StackPane {
 		public TextField getTxtNbRound() {
 			if(txtNbRound == null) {
 				txtNbRound = new TextField(""+RulesSettings.getNumber_round());
-//				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
+				txtNbRound.setTooltip(new Tooltip("Insert a value between 1 and 5"));
+				IGraphicConst.styleTextField(txtNbRound);
+				txtNbRound.setAlignment(Pos.BASELINE_RIGHT);
 			}
 			return txtNbRound;
 		}
@@ -191,6 +207,7 @@ public class SettingsView extends StackPane {
 		public Label getLblTime() {
 			if(lblTime == null) {
 				lblTime = new Label("ROUND TIME (second) :");
+				IGraphicConst.styleLabel(lblTime);
 			}
 			return lblTime;
 		}
@@ -198,7 +215,9 @@ public class SettingsView extends StackPane {
 		public TextField getTxtTime() {
 			if( txtTime == null) {
 				txtTime = new TextField(""+RulesSettings.getRound_time_seconds());
-//				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
+				txtTime.setTooltip(new Tooltip("Insert a value between 15 and 90"));
+				IGraphicConst.styleTextField(txtTime);
+				txtTime.setAlignment(Pos.BASELINE_RIGHT);
 			}
 			return txtTime;
 		}
@@ -207,6 +226,7 @@ public class SettingsView extends StackPane {
 			if(cbJoker==null) {
 				cbJoker = new CheckBox("Jokers with special faces");
 				cbJoker.setSelected(RulesSettings.getFaced_joker());
+				IGraphicConst.styleCheckBox(cbJoker);
 			}
 			return cbJoker;
 		}
@@ -215,6 +235,7 @@ public class SettingsView extends StackPane {
 			if(cbSound==null) {
 				cbSound = new CheckBox("Sound");
 				cbSound.setSelected(RulesSettings.getSound_enabled());
+				IGraphicConst.styleCheckBox(cbSound);
 			}
 			return cbSound;
 		}
@@ -222,6 +243,7 @@ public class SettingsView extends StackPane {
 		public Button getBtnSave() {
 			if( btnSave== null) {
 				btnSave = new Button("SAVE");
+				IGraphicConst.styleButton(btnSave);
 				btnSave.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -245,7 +267,14 @@ public class SettingsView extends StackPane {
 			return btnSave;
 		}
 		
-		
+		public ImageView getIvBack() {
+			if(ivBack == null) {
+				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
+				IGraphicConst.styleImageView(ivBack);
+				ivBack.setOnMouseClicked(e -> showElement(new MenuSettings()));
+			}
+			return ivBack;
+		}
 		
 	}
 	
