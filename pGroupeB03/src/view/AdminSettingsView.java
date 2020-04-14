@@ -490,6 +490,7 @@ public class AdminSettingsView extends StackPane {
 								|| getTxtClue2().getText().isEmpty() || getTxtClue3().getText().isEmpty() 
 								|| getTxtAnswer().getText().isEmpty()) {
 							MsgBox.dispalyOk("Missing input", "One required field hasn't been filled");
+							return;
 						}
 						String theme = getCbbTheme().getValue(), answer = getTxtAnswer().getText();
 						List<String> clues = Arrays.asList(getTxtClue1().getText(), getTxtClue2().getText(), getTxtClue3().getText());
@@ -497,8 +498,8 @@ public class AdminSettingsView extends StackPane {
 								+"\nAuthor :\t" + admin.getUsername()
 								+ "\nTheme :\t" + theme 
 								+ "\nClues :\t" + clues.get(0)
-								+ "\n\t\t\t\t" + clues.get(1)
-								+ "\n\t\t\t\t" + clues.get(2)
+								+ "\n\t\t\t" + clues.get(1)
+								+ "\n\t\t\t" + clues.get(2)
 								+ "\nAnswer :\t" + answer)) {
 							return;
 						}
@@ -508,8 +509,8 @@ public class AdminSettingsView extends StackPane {
 									+"\nAuthor :\t" + admin.getUsername()
 									+ "\nTheme :\t" + theme 
 									+ "\nClues :\t" + clues.get(0)
-									+ "\n\t\t\t\t" + clues.get(1)
-									+ "\n\t\t\t\t" + clues.get(2)
+									+ "\n\t\t\t" + clues.get(1)
+									+ "\n\t\t\t" + clues.get(2)
 									+ "\nAnswer :\t" + answer );
 						} catch (QuestionAlreadyExistException e) {
 							MsgBox.dispalyException(e);
@@ -518,6 +519,10 @@ public class AdminSettingsView extends StackPane {
 							getTxtClue2().setText("");
 							getTxtClue3().setText("");
 							getTxtAnswer().setText("");
+							getCbbTheme().getItems().clear();
+							for(Deck d : g.getDecks()) {
+								getCbbTheme().getItems().add(d.getTheme());
+							}
 						}
 					}
 				});

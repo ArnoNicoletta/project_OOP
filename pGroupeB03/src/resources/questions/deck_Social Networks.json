@@ -4,6 +4,16 @@
       "author": "Loïc Lécolier",
       "theme": "Social Networks",
       "clues": [
+        "I am available on all smartphones working with Android or IOS for free.",
+        "I am used to share photos and videos since 2011.",
+        "I am an application represented by a white ghost on a yellow background."
+      ],
+      "answer": "Snapchat"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
         "Originating on Japan, I became popular worldwide in the 2010s after being added to several mobile operating systems.",
         "I\u0027m now used a lot when someone sends a message.",
         "I am used to show facial expressions, objects, symbols, etc... by message."
@@ -19,16 +29,6 @@
         "I am known to have co-founded one of the biggest social networks at the university."
       ],
       "answer": "Mark Zuckerberg"
-    },
-    {
-      "author": "Loïc Lécolier",
-      "theme": "Social Networks",
-      "clues": [
-        "I am available on all smartphones working with Android or IOS for free.",
-        "I am used to share photos and videos since 2011.",
-        "I am an application represented by a white ghost on a yellow background."
-      ],
-      "answer": "Snapchat"
     }
   ]
 }

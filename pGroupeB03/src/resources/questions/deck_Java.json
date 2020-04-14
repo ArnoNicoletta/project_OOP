@@ -1,0 +1,14 @@
+{
+  "questions": [
+    {
+      "author": "Arno Nicoletta",
+      "theme": "Java",
+      "clues": [
+        "I was an American company that sold computers and software.",
+        "I was acquired by Oracle for about $7 billion.",
+        "I was the first author of the java language."
+      ],
+      "answer": "Sun Microsystems"
+    }
+  ]
+}
