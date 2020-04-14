@@ -115,12 +115,14 @@ public class AdminSettingsView extends StackPane {
 		public Label getLblLog() {
 			if(lblLog==null) {
 				lblLog = new Label("USER NAME : ");
+				IGraphicConst.styleBiggerLabel(lblLog);
 			}
 			return lblLog;
 		}
 		public TextField getTxtLog() {
 			if(txtLog==null) {
 				txtLog = new TextField();
+				IGraphicConst.styleTextField(txtLog);
 				txtLog.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
 					public void handle(KeyEvent event) {
@@ -136,12 +138,14 @@ public class AdminSettingsView extends StackPane {
 		public Label getLblPass() {
 			if(lblPass==null) {
 				lblPass = new Label("PASSWORD : ");
+				IGraphicConst.styleBiggerLabel(lblPass);
 			}
 			return lblPass;
 		}
 		public PasswordField getPwfPass() {
 			if(pwfPass==null) {
 				pwfPass = new PasswordField();
+				IGraphicConst.styleTextField(pwfPass);
 				pwfPass.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
 					public void handle(KeyEvent event) {
@@ -157,6 +161,7 @@ public class AdminSettingsView extends StackPane {
 		public Button getBtnOk() {
 			if(btnOk==null) {
 				btnOk = new Button("LOGIN");
+				IGraphicConst.styleButton(btnOk);
 				btnOk.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -201,8 +206,8 @@ public class AdminSettingsView extends StackPane {
 		public Button getBtnAdd() {
 			if(btnAdd == null) {
 				btnAdd = new Button("ADD QUESTIONS");
-				btnAdd.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
-				
+				btnAdd.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnAdd);
 				btnAdd.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -215,10 +220,9 @@ public class AdminSettingsView extends StackPane {
 		public Button getBtnDelete() {
 			if(btnDelete == null) {
 				btnDelete = new Button("DELETE QUESTIONS");
-				btnDelete.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
-				
+				btnDelete.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnDelete);
 				btnDelete.setOnAction(new EventHandler<ActionEvent>() {
-					
 					@Override
 					public void handle(ActionEvent event) {
 						showElement(new AdminDelete());
@@ -230,7 +234,8 @@ public class AdminSettingsView extends StackPane {
 		public Button getBtnImport() {
 			if(btnImport == null) {
 				btnImport = new Button("IMPORT QUESTIONS (json format)");
-				btnImport.setMinWidth(IGraphicConst.WIDTH_LARGE_BUTTON);
+				btnImport.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnImport);
 			}
 			return btnImport;
 		}
