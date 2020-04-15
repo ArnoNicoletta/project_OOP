@@ -1,10 +1,14 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import exception.DeckNotFoundException;
 import exception.QuestionAlreadyExistException;
+import exception.QuestionNotFoundException;
 import exception.WrongLoginException;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -13,13 +17,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -69,7 +76,7 @@ public class AdminSettingsView extends StackPane {
 	 * *****************************
 	 */
 	
-	class AdminLogin extends GridPane {
+	class AdminLogin extends BorderPane {
 		private Label lblTitre;
 		
 		private Label lblLog;
@@ -88,23 +95,28 @@ public class AdminSettingsView extends StackPane {
 					BackgroundPosition.CENTER,  
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
-			this.setPadding(new Insets(10));
-			this.setAlignment(Pos.CENTER);
-			this.setHgap(5);
-			this.setVgap(5);
+			GridPane gp = new GridPane();
+			gp.setPadding(new Insets(10));
+			gp.setAlignment(Pos.CENTER);
+			gp.setHgap(5);
+			gp.setVgap(5);
+			gp.setTranslateY(50);
 			
 			GridPane.setHalignment(getLblTitre(),HPos.CENTER);
-			this.add(getLblTitre(), 0, 0, 2, 1);
+			gp.add(getLblTitre(), 0, 0, 2, 1);
+			gp.add(new Label(), 0, 1);
 			GridPane.setHalignment(getLblLog(), HPos.LEFT);
-			this.add(getLblLog(), 0, 1);
+			gp.add(getLblLog(), 0, 2);
 			GridPane.setHalignment(getTxtLog(), HPos.CENTER);
-			this.add(getTxtLog(), 1, 1);
+			gp.add(getTxtLog(), 1, 2);
 			GridPane.setHalignment(getLblPass(), HPos.LEFT);
-			this.add(getLblPass(), 0, 2);
+			gp.add(getLblPass(), 0, 3);
 			GridPane.setHalignment(getPwfPass(), HPos.CENTER);
-			this.add(getPwfPass(), 1, 2);
+			gp.add(getPwfPass(), 1, 3);
 			GridPane.setHalignment(getBtnOk(), HPos.RIGHT);
-			this.add(getBtnOk(), 0, 3, 2, 1);
+			gp.add(getBtnOk(), 0, 4, 2, 1);
+			
+			this.setCenter(gp);
 		}
 		
 		public Label getLblTitre() {
@@ -172,7 +184,6 @@ public class AdminSettingsView extends StackPane {
 							admin = new Admin(getTxtLog().getText(), getPwfPass().getText());
 						} catch (WrongLoginException e) {
 							MsgBox.dispalyException(e);
-							getTxtLog().clear();
 							getPwfPass().clear();
 							getTxtLog().requestFocus();
 							return;
@@ -186,8 +197,8 @@ public class AdminSettingsView extends StackPane {
 	}
 
 	class AdminMenu extends BorderPane{
-		private Button btnAdd;
-		private Button btnDelete;
+		
+		private Button btnModify;
 		private Button btnImport;
 		
 		public AdminMenu() {
@@ -199,40 +210,26 @@ public class AdminSettingsView extends StackPane {
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			VBox vb = new VBox();
-			vb.getChildren().addAll(getBtnAdd(),getBtnDelete(),getBtnImport());
+			vb.getChildren().addAll(getBtnModify(),getBtnImport());
 			vb.setSpacing(30);
 			vb.setAlignment(Pos.CENTER);
 			vb.setTranslateY(40);
 			this.setCenter(vb);
 		}
 		
-		public Button getBtnAdd() {
-			if(btnAdd == null) {
-				btnAdd = new Button("ADD QUESTIONS");
-				btnAdd.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-				IGraphicConst.styleButton(btnAdd);
-				btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+		public Button getBtnModify() {
+			if(btnModify == null) {
+				btnModify = new Button("ADD/REMOVE/MODIFY QUESTIONS");
+				btnModify.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnModify);
+				btnModify.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						showElement(new AdminAdd());
+						showElement(new AdminModify());
 					}
 				});
 			}
-			return btnAdd;
-		}
-		public Button getBtnDelete() {
-			if(btnDelete == null) {
-				btnDelete = new Button("DELETE QUESTIONS");
-				btnDelete.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
-				IGraphicConst.styleButton(btnDelete);
-				btnDelete.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						showElement(new AdminDelete());
-					}
-				});
-			}
-			return btnDelete;
+			return btnModify;
 		}
 		public Button getBtnImport() {
 			if(btnImport == null) {
@@ -245,14 +242,15 @@ public class AdminSettingsView extends StackPane {
 		
 		
 	}
-	class AdminDelete extends BorderPane {
+	class AdminModify extends BorderPane {
 		
-		private TreeItem<String> root;
+		private TreeTableView<Question> table;
+		private TreeItem<Question> root;
+		private ContextMenu contextMenu;
 		
 		private ImageView ivBack;
-		private Button btnDelete;
 		
-		public AdminDelete() {
+		public AdminModify() {
 			
 			this.setBackground(new Background(new BackgroundImage(
 					new Image(IGraphicConst.URL_PATH_IMG + "background/background_settings.png", false), 
@@ -262,58 +260,149 @@ public class AdminSettingsView extends StackPane {
 			
 			
 			//Center
-			updateTree();
-			TreeView<String> tree = new TreeView<String>(getRoot());
-			tree.setShowRoot(false);
-			tree.setMaxSize(500, 250);
-			tree.setPrefSize(500, 250);
-			tree.setTranslateY(60);
-			this.setCenter(tree);
+			updateTable();
+			this.setCenter(getTable());
 			
 			//Bottom
 			HBox hbBottom = new HBox();
 			hbBottom.setAlignment(Pos.TOP_CENTER);
-			hbBottom.setSpacing(300);
-			hbBottom.setTranslateY(-60);
-			hbBottom.getChildren().addAll(getIvBack(), getBtnDelete());
-			this.setBottom(hbBottom);
+			hbBottom.getChildren().addAll(getIvBack());
+			this.setBottom(getIvBack());
 		}
 		
-		private void updateTree() {
+		private void updateTable() {
+			getRoot().getChildren().clear();
 			for(Deck d : g.getDecks()) {
-				TreeItem<String> di = new TreeItem<String>(d.getTheme());
+				TreeItem<Question> di = new TreeItem<Question>(new Question("", d.getTheme(), Arrays.asList("","",""), ""));
 				for(Question q : d.getQuestions()) {
-					TreeItem<String> qi = new TreeItem<String>(q.getAnswer());
-					qi.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent event) {
-							MsgBox.dispalyOk("Infos for : " + q.getAnswer(), "Author : " + q.getAuthor() 
-													+"\nTheme : " + q.getTheme()
-													+ "\nClue 1 : " + q.getClues().get(0)
-													+"\nClue 1 : " + q.getClues().get(1)
-													+"\nClue 1 : " + q.getClues().get(2));
-						}
-					});
+					TreeItem<Question> qi = new TreeItem<Question>(q);
 					di.getChildren().add(qi);
 				}
 				getRoot().getChildren().add(di);
 			}
 		}
 		
-		public TreeItem<String> getRoot() {
-			if(root==null) {
+		public TreeTableView<Question> getTable() {
+			if(table==null) {
+				table = new TreeTableView<>();
+				IGraphicConst.styleTreeTableView(table);
+				table.setTranslateY(80);
+				
+				TreeTableColumn<Question, String> theme = new TreeTableColumn<>("THEME");
+				theme.setCellValueFactory(new TreeItemPropertyValueFactory<>("theme"));
+				
+				TreeTableColumn<Question, String> answer = new TreeTableColumn<>("ANSWER");
+				answer.setCellValueFactory(new TreeItemPropertyValueFactory<>("answer"));
+				
+				//CLues
+				TreeTableColumn<Question, String> clue1 = new TreeTableColumn<>("1st clue");
+				clue1.setCellValueFactory(q -> new SimpleObjectProperty<>(q.getValue().getValue().getClues().get(0)));
+				
+				TreeTableColumn<Question, String> clue2 = new TreeTableColumn<>("2nd clue");
+				clue2.setCellValueFactory(q -> new SimpleObjectProperty<>(q.getValue().getValue().getClues().get(1)));
+				
+				TreeTableColumn<Question, String> clue3 = new TreeTableColumn<>("3d clue");
+				clue3.setCellValueFactory(q -> new SimpleObjectProperty<>(q.getValue().getValue().getClues().get(2)));
+				
+				//Adding clues to a parent columns
+				TreeTableColumn<Question, String> clues = new TreeTableColumn<>("CLUES");
+				clues.getColumns().addAll(clue1, clue2, clue3);
+				
+				TreeTableColumn<Question, String> author = new TreeTableColumn<>("AUTHOR");
+				author.setCellValueFactory(new TreeItemPropertyValueFactory<>("author"));
+				
+				table.getColumns().addAll(theme, answer, clues, author);
+				table.setShowRoot(false);
+				table.setRoot(getRoot());
+				table.setContextMenu(getContextMenu());
+			}
+			return table;
+		}
+		
+		public TreeItem<Question> getRoot() {
+			if(root == null) {
 				root = new TreeItem<>();
 				root.setExpanded(true);
 			}
 			return root;
 		}
 		
-		public Button getBtnDelete() {
-			if(btnDelete == null) {
-				btnDelete = new Button("DELETE");
-				IGraphicConst.styleButton(btnDelete);
+		public ContextMenu getContextMenu() {
+			if(contextMenu == null) {
+				contextMenu = new ContextMenu();
+				
+				MenuItem add = new MenuItem("Add");
+				add.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(getTable().getSelectionModel().getSelectedItem() == null) {
+							showElement(new AdminAdd());
+							return;
+						}
+						showElement(new AdminAdd(getTable().getSelectionModel().getSelectedItem().getValue().getTheme()));
+					}
+				});
+				MenuItem del = new MenuItem("Delete");
+				del.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(getTable().getSelectionModel().getSelectedItem() == null) {
+							MsgBox.dispalyOk("No item selected", "Select an element to delete it.");
+							return;
+						}
+						List<Question> toDel = new ArrayList<>();
+						for( TreeItem<Question> tq : getTable().getSelectionModel().getSelectedItems()) {
+							toDel.add(tq.getValue());
+						}
+						for(Question q : toDel) {
+							// if it's a deck
+							if(q.getAnswer().equalsIgnoreCase("")) {
+								if(MsgBox.displayYesNO("Delete ?", "This deck will be deleted : "
+										+"\nTheme : " + q.getTheme())) {
+									try {
+										admin.deleteDeck(q.getTheme());
+									} catch (DeckNotFoundException e) {
+										MsgBox.dispalyException(e);
+									} finally {
+										updateTable();
+									}
+								}
+							}
+							// if it's a question
+							else{
+								if(MsgBox.displayYesNO("Delete ?", "This question will be deleted : "
+										+"\nAuthor :\t" + q.getAuthor()
+										+ "\nTheme :\t" + q.getTheme() 
+										+ "\nClues :\t" + q.getClues().get(0)
+										+ "\n\t\t" + q.getClues().get(1)
+										+ "\n\t\t" + q.getClues().get(2)
+										+ "\nAnswer :\t" + q.getAnswer())) {
+									try {
+										admin.deleteQuestion(q);
+									} catch (QuestionNotFoundException | DeckNotFoundException e) {
+										MsgBox.dispalyException(e);
+									} finally {
+										updateTable();
+									}
+								}
+							}
+						}
+					}
+				});
+				MenuItem mod = new MenuItem("Modify");
+				mod.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(getTable().getSelectionModel().getSelectedItem() == null) {
+							MsgBox.dispalyOk("No item selected", "Select an element to modify it.");
+							return;
+						}
+					}
+				});
+				
+				contextMenu.getItems().addAll(add, del, mod);
 			}
-			return btnDelete;
+			return contextMenu;
 		}
 		
 		public ImageView getIvBack() {
@@ -341,6 +430,11 @@ public class AdminSettingsView extends StackPane {
 		private Label lblInfo;
 		private Button btnAdd;
 		private ImageView ivBack;
+		
+		public AdminAdd(String theme) {
+			this();
+			getCbbTheme().getSelectionModel().select(theme);
+		}
 		
 		public AdminAdd() {
 			
@@ -394,7 +488,7 @@ public class AdminSettingsView extends StackPane {
 			this.setCenter(gp);
 			
 		}
-
+		
 		public Label getLblTheme() {
 			if(lblTheme == null) {
 				lblTheme = new Label("SELECT A THEME : ");
@@ -514,7 +608,7 @@ public class AdminSettingsView extends StackPane {
 						if(getCbbTheme().getValue().isEmpty() || getTxtClue1().getText().isEmpty() 
 								|| getTxtClue2().getText().isEmpty() || getTxtClue3().getText().isEmpty() 
 								|| getTxtAnswer().getText().isEmpty()) {
-							MsgBox.dispalyOk("Missing input", "One required field hasn't been filled");
+							MsgBox.dispalyOk("Missing input", "One or more required fields haven't been filled");
 							return;
 						}
 						String theme = getCbbTheme().getValue(), answer = getTxtAnswer().getText();
@@ -523,19 +617,19 @@ public class AdminSettingsView extends StackPane {
 								+"\nAuthor :\t" + admin.getUsername()
 								+ "\nTheme :\t" + theme 
 								+ "\nClues :\t" + clues.get(0)
-								+ "\n\t\t\t" + clues.get(1)
-								+ "\n\t\t\t" + clues.get(2)
+								+ "\n\t\t" + clues.get(1)
+								+ "\n\t\t" + clues.get(2)
 								+ "\nAnswer :\t" + answer)) {
 							return;
 						}
 						try {
-							admin.addDeck(theme, clues, answer);
+							admin.addQuestion(theme, clues, answer);
 							MsgBox.dispalyOk("Question added !", "This question has been added : "
 									+"\nAuthor :\t" + admin.getUsername()
 									+ "\nTheme :\t" + theme 
 									+ "\nClues :\t" + clues.get(0)
-									+ "\n\t\t\t" + clues.get(1)
-									+ "\n\t\t\t" + clues.get(2)
+									+ "\n\t\t" + clues.get(1)
+									+ "\n\t\t" + clues.get(2)
 									+ "\nAnswer :\t" + answer );
 							getCbbTheme().getItems().clear();
 							for(Deck d : g.getDecks()) {
@@ -558,7 +652,7 @@ public class AdminSettingsView extends StackPane {
 			if(ivBack == null) {
 				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
 				IGraphicConst.styleImageView(ivBack);
-				ivBack.setOnMouseClicked(e -> showElement(new AdminMenu()));
+				ivBack.setOnMouseClicked(e -> showElement(new AdminModify()));
 			}
 			return ivBack;
 		}
