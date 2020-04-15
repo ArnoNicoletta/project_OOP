@@ -36,6 +36,10 @@ public class Admin {
 	public void deleteDeck(String theme, String answer) throws QuestionNotFoundException {
 		g.deleteQuestion(new Question(null, theme, null, answer));
 	}
+	
+	public void deleteDeck(Question q) throws QuestionNotFoundException {
+		g.deleteQuestion(q);
+	}
 	//Getters and Setters
 	public String getUsername() {
 		return username;
