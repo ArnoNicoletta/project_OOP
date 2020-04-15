@@ -4,11 +4,61 @@
       "author": "Rayan Tahri",
       "theme": "Nature",
       "clues": [
-        "I am the most used fossil energy in the contemporary industrial economy",
-        "I am a liquid rock of natural origin, a mineral oil composed, mainly of hydrocarbons",
-        "I am a yellowish black liquid found in geological formations below the surface of the Earth. I am..."
+        "I am an English naturalist and paleontologist, born on February 12, 1809 in Shrewsbury.",
+        "I revolutionized biology with my work The Origin of Species published in 1859",
+        "I am more known for having exposed the theory of evolution, I am ..."
       ],
-      "answer": "Petroleum"
+      "answer": "Charles Darwin"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "I\u0027m a block of freshwater ice drifting over a body of water",
+        "90% of my volume is located below the surface of the water",
+        "I\u0027m the one who sank the titanic, I\u0027m ..."
+      ],
+      "answer": "Iceberg"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "I am one of the rare natural materials with the maximum index on the scale of \u0027mohs\u0027.",
+        "The origin of my term comes from the ancient Greek : adámas meaning \u0027indomitable\u0027.",
+        "I am a solid form of the carbon element with its atoms arranged in a crystal structure. I am..."
+      ],
+      "answer": "Diamond"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "I am a generic term which designates several cereals belonging to the genus Triticum.",
+        "I am an annual plant of the family of grasses or Poaceae, cultivated in very many countries.",
+        "I am used for making pasta, I am ..."
+      ],
+      "answer": "Wheat"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "I am a natural region of South America",
+        "I have an area 5.500.000 km2. Mainly covered with forest.",
+        "I have the nickname \u0027lung of the earth\u0027. I am..."
+      ],
+      "answer": "Amazonia"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "In Zulu mythology, I am presented as the messenger of immortality",
+        "I am an animal belonging to the family of saurians. Defined by Constantine Samuel Rafinesque in 1815",
+        "I am known mainly for my ability to change color. I am..."
+      ],
+      "answer": "Chameleon"
     },
     {
       "author": "Rayan Tahri",
@@ -34,26 +84,6 @@
       "author": "Rayan Tahri",
       "theme": "Nature",
       "clues": [
-        "I am one of the rare natural materials with the maximum index on the scale of \u0027mohs\u0027.",
-        "The origin of my term comes from the ancient Greek : adámas meaning \u0027indomitable\u0027.",
-        "I am a solid form of the carbon element with its atoms arranged in a crystal structure. I am..."
-      ],
-      "answer": "Diamond"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
-        "I\u0027m a block of freshwater ice drifting over a body of water",
-        "90% of my volume is located below the surface of the water",
-        "I\u0027m the one who sank the titanic, I\u0027m ..."
-      ],
-      "answer": "Iceberg"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
         "I am the most complex organ in a vertebrate\u0027s body.",
         "I am located in the head, usually close to the sensory organs for senses such as vision.",
         "I am an organ that serves as the center of the nervous system in all vertebrate and most invertebrate animals. I am..."
@@ -64,41 +94,11 @@
       "author": "Rayan Tahri",
       "theme": "Nature",
       "clues": [
-        "In Zulu mythology, I am presented as the messenger of immortality",
-        "I am an animal belonging to the family of saurians. Defined by Constantine Samuel Rafinesque in 1815",
-        "I am known mainly for my ability to change color. I am..."
+        "I am the most used fossil energy in the contemporary industrial economy",
+        "I am a liquid rock of natural origin, a mineral oil composed, mainly of hydrocarbons",
+        "I am a yellowish black liquid found in geological formations below the surface of the Earth. I am..."
       ],
-      "answer": "Chameleon"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
-        "I am an English naturalist and paleontologist, born on February 12, 1809 in Shrewsbury.",
-        "I revolutionized biology with my work The Origin of Species published in 1859",
-        "I am more known for having exposed the theory of evolution, I am ..."
-      ],
-      "answer": "Charles Darwin"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
-        "I am a natural region of South America",
-        "I have an area 5.500.000 km2. Mainly covered with forest.",
-        "I have the nickname \u0027lung of the earth\u0027. I am..."
-      ],
-      "answer": "Amazonia"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
-        "I am a generic term which designates several cereals belonging to the genus Triticum.",
-        "I am an annual plant of the family of grasses or Poaceae, cultivated in very many countries.",
-        "I am used for making pasta, I am ..."
-      ],
-      "answer": "Wheat"
+      "answer": "Petroleum"
     }
   ]
 }
