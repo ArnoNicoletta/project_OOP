@@ -264,15 +264,24 @@ public class Game {
 	 * Allows to delete a question from the decks.
 	 * @param q : {@link Question}. The question to delete.
 	 * @throws QuestionNotFoundException
+	 * @throws DeckNotFoundException 
 	 */
-	public void deleteQuestion(Question q) throws QuestionNotFoundException {
+	public void deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
 		if(getDeck(q.getTheme()) == null) throw new QuestionNotFoundException(q);
 		for(Deck in : decks) {
 			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
-				in.deleteQuestion(q);
+				if(in.getSizeQuestions() == 1) {
+					System.out.println("empty");
+					deleteDeck(in.getTheme());
+				}
+				else {
+					in.deleteQuestion(q);
+					System.out.println(in);
+				}
+				break;
 			}
 		}
-		saveAllDecks();
+		addAllDeck();
 	}
 	
 	public void deleteDeck(String theme) throws DeckNotFoundException {

@@ -34,11 +34,11 @@ public class Admin {
 		g.addQuestion(new Question(username, theme, clues, answer));
 	}
 	
-	public void deleteQuestion(String theme, String answer) throws QuestionNotFoundException {
+	public void deleteQuestion(String theme, String answer) throws QuestionNotFoundException, DeckNotFoundException {
 		g.deleteQuestion(new Question(null, theme, null, answer));
 	}
 	
-	public void deleteQuestion(Question q) throws QuestionNotFoundException {
+	public void deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
 		g.deleteQuestion(q);
 	}
 	
