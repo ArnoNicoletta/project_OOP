@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import exception.DeckNotFoundException;
 import exception.EmptyPseudoException;
 import exception.IdenticalPseudoException;
 import exception.QuestionAlreadyExistException;
@@ -232,25 +233,56 @@ public class Game {
 		}
 		return true;
 	}
-	public boolean saveAllPlayers() {
-		DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss");
-		Date d = new Date();
-		String cleanDate = df.format(d);
-		for(Player p : players) {
-			try {
-				File f = new File("./src/resources/user_scores/score_" + cleanDate + ".json");
-				f.createNewFile();
-				Player.toJson(p, f);
-				//TODO Only the last in the list will be written atm (as we write multiple times the same file).
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
+	
+
+	// Methods to modify questions (used by admins)
+	
+	
+	/**
+	 * Allows to add a question in the decks.
+	 * If this question has the same theme as an already existing deck, the question will be added in this deck.
+	 * If no deck has the same theme, a new Deck will be created and added.
+	 * @param q : {@link Question}. The question to add.
+	 */
+	public void addQuestion(Question q) throws QuestionAlreadyExistException {
+		if(getDeck(q.getTheme()) != null) {
+			for(Deck in : decks) {
+				if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
+					in.addQuestion(q);
+				}
 			}
 		}
-		return true;
+		else {
+			Deck d = new Deck();
+			d.addQuestion(q);
+			this.addDeck(d);
+		}
+		saveAllDecks();
 	}
 	
+	/**
+	 * Allows to delete a question from the decks.
+	 * @param q : {@link Question}. The question to delete.
+	 * @throws QuestionNotFoundException
+	 */
+	public void deleteQuestion(Question q) throws QuestionNotFoundException {
+		if(getDeck(q.getTheme()) == null) throw new QuestionNotFoundException(q);
+		for(Deck in : decks) {
+			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
+				in.deleteQuestion(q);
+			}
+		}
+		saveAllDecks();
+	}
 	
+	public void deleteDeck(String theme) throws DeckNotFoundException {
+		Deck toDel = getDeck(theme);
+		if(toDel==null) throw new DeckNotFoundException(toDel);
+		File f = new File("./src/resources/questions/deck_" + toDel.getTheme() + ".json");
+		if(f.delete()) {
+			addAllDeck();
+		}
+	}
 	
 	// ************
 	// CRUD methods
@@ -289,6 +321,7 @@ public class Game {
 	 * All created decks will be added in the current {@link Game}
 	 */
 	public void addAllDeck() {
+		decks.clear();
 		for(File f : new File("./src/resources/questions").listFiles()) {
 			this.addDeck(f);
 		}
@@ -397,40 +430,6 @@ public class Game {
 	
 	
 	
-	// On questions (used by admins)
-	
-	
-	/**
-	 * Allows to a question in the decks.
-	 * If this question has the same theme as an already existing deck, the question will be added in this deck.
-	 * If no deck has the same theme, a new Deck will be created and added.
-	 * @param q : {@link Question}. The question to add.
-	 */
-	public void addQuestion(Question q) throws QuestionAlreadyExistException {
-		if(getDeck(q.getTheme()) != null) {
-			for(Deck in : decks) {
-				if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
-					in.addQuestion(q);
-				}
-			}
-		}
-		else {
-			Deck d = new Deck();
-			d.addQuestion(q);
-			this.addDeck(d);
-		}
-		saveAllDecks();
-	}
-	
-	public void deleteQuestion(Question q) throws QuestionNotFoundException {
-		if(getDeck(q.getTheme()) == null) throw new QuestionNotFoundException(q);
-		for(Deck in : decks) {
-			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
-				in.deleteQuestion(q);
-			}
-		}
-		saveAllDecks();
-	}
 	
 	// On players
 	

@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import exception.DeckNotFoundException;
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
 import exception.WrongLoginException;
@@ -29,16 +30,20 @@ public class Admin {
 		if(this.username==null && this.password == null) throw new WrongLoginException();
 	}
 	
-	public void addDeck(String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
+	public void addQuestion(String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
 		g.addQuestion(new Question(username, theme, clues, answer));
 	}
 	
-	public void deleteDeck(String theme, String answer) throws QuestionNotFoundException {
+	public void deleteQuestion(String theme, String answer) throws QuestionNotFoundException {
 		g.deleteQuestion(new Question(null, theme, null, answer));
 	}
 	
-	public void deleteDeck(Question q) throws QuestionNotFoundException {
+	public void deleteQuestion(Question q) throws QuestionNotFoundException {
 		g.deleteQuestion(q);
+	}
+	
+	public void deleteDeck(String theme) throws DeckNotFoundException {
+		g.deleteDeck(theme);
 	}
 	//Getters and Setters
 	public String getUsername() {
