@@ -71,6 +71,7 @@ public class Game {
 	 * Reset the {@link Game} instance.
 	 */
 	public static void reset() {
+		instance.sortHighscores();
 		instance.saveHighscores();
 		instance = new Game();
 		instance.addAllDeck();
@@ -700,6 +701,7 @@ public class Game {
 	 * Saves the highscores list in the json file where are stored the top 5 players.
 	 */
 	public void saveHighscores() {
+		sortHighscores();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(highscores);
 		

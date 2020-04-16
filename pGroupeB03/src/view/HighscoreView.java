@@ -76,6 +76,9 @@ public class HighscoreView extends GridPane{
 	}
 	
 	private void addPlayers() {
+		if(Game.getInstance().getHighscores().isEmpty()) {
+			this.add(IGraphicConst.styleBiggerLabel(new Label("No score yet")), 0, 1, 4, 1);
+		}
 		int i = 0;
 		for(Player p : Game.getInstance().getHighscores()) {
 			this.addPlayer(i++, p);
