@@ -4,21 +4,11 @@
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
-        "Created in the 12th and 13th centuries by Malcom Canmore, King of Scotland.",
-        "My term derives from the Gaelic word cabar, which refers to a wooden beam.",
-        "I am a traditional Scottish sporting event which consists of throwing a tree trunk or a beam more than 4 meters long. I am..."
+        "I am a basketball team founded in 1947 and I play my home games at the Staple Center.",
+        "I compete in the National Basketball Association (NBA), as a member of the league\u0027s Western Conference in the Pacific Division",
+        "I am an American professional basketball team based in Los Angeles. I am..."
       ],
-      "answer": "Caber"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "I am a term used in bowling.",
-        "I bring 10 points to the bowler, plus a bonus corresponding to the number of pins knocked down by the next two balls.",
-        "On the points table, I am marked with an X"
-      ],
-      "answer": "Strike"
+      "answer": "Los Angeles Lakers"
     },
     {
       "author": "Rayan Tahri",
@@ -29,26 +19,6 @@
         "I am throw at the start of a petanque game, I am ..."
       ],
       "answer": "Jack"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "I am a cyclist, born June 17, 1945.",
-        "Nicknamed the cannibal, I am one of the few cyclists to have won five Tours of France.",
-        "I am Belgian, my name is Edouard Louis Joseph better known by the name of ..."
-      ],
-      "answer": "Eddy Merckx"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "I am a basketball team founded in 1947 and I play my home games at the Staple Center.",
-        "I compete in the National Basketball Association (NBA), as a member of the league\u0027s Western Conference in the Pacific Division",
-        "I am an American professional basketball team based in Los Angeles. I am..."
-      ],
-      "answer": "Los Angeles Lakers"
     },
     {
       "author": "Rayan Tahri",
@@ -94,11 +64,41 @@
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
+        "I am a term used in bowling.",
+        "I bring 10 points to the bowler, plus a bonus corresponding to the number of pins knocked down by the next two balls.",
+        "On the points table, I am marked with an X"
+      ],
+      "answer": "Strike"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am a cyclist, born June 17, 1945.",
+        "Nicknamed the cannibal, I am one of the few cyclists to have won five Tours of France.",
+        "I am Belgian, my name is Edouard Louis Joseph better known by the name of ..."
+      ],
+      "answer": "Eddy Merckx"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
         "I am a great European competition created by UEFA.",
         "In 1960, the USSR imposed itself for the first edition.",
         "The nickname Euro followed by the year in which I take place is commonly used, I am..."
       ],
       "answer": "European Championship"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "Created in the 12th and 13th centuries by Malcom Canmore, King of Scotland.",
+        "My term derives from the Gaelic word cabar, which refers to a wooden beam.",
+        "I am a traditional Scottish sporting event which consists of throwing a tree trunk or a beam more than 4 meters long. I am..."
+      ],
+      "answer": "Caber"
     }
   ]
 }

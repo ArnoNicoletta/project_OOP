@@ -4,6 +4,16 @@
       "author": "Arno Nicoletta",
       "theme": "Academy Awards winners",
       "clues": [
+        "I am a 1994 American comedy-drama film directed by Robert Zemeckis based on the 1986 novel of the same name by Winstom Groom.",
+        "I earned over over US$677 million worlwide during theatrical run, sold over 12 million copies of my soundtrack and won 6 Academy Awards.",
+        "My story depicts several decades in the life of my main character, a slow-witted but kind-hearted man played by Tom Hanks."
+      ],
+      "answer": "Forrest Gump"
+    },
+    {
+      "author": "Arno Nicoletta",
+      "theme": "Academy Awards winners",
+      "clues": [
         "I am a black comedy thriller film directed by Bong Joon-ho in 2019.",
         "I tell the story of the members of a poor family who scheme to become employed by a wealthy family.",
         "I was the first non-English-speaking film to win the Academy Award for Best Picture."
@@ -29,16 +39,6 @@
         "I tell the story of a young FBI trainee, played by Jodie Foster, who seeks the advice of the imprisoned Dr. Hannibal Lecter, a brilliant psychiatric and cannibalistic serial killer"
       ],
       "answer": "The silence of the lambs"
-    },
-    {
-      "author": "Arno Nicoletta",
-      "theme": "Academy Awards winners",
-      "clues": [
-        "I am a 1994 American comedy-drama film directed by Robert Zemeckis based on the 1986 novel of the same name by Winstom Groom.",
-        "I earned over over US$677 million worlwide during theatrical run, sold over 12 million copies of my soundtrack and won 6 Academy Awards.",
-        "My story depicts several decades in the life of my main character, a slow-witted but kind-hearted man played by Tom Hanks."
-      ],
-      "answer": "Forrest Gump"
     }
   ]
 }
