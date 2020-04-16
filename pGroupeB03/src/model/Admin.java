@@ -45,6 +45,10 @@ public class Admin {
 	public void deleteDeck(String theme) throws DeckNotFoundException {
 		g.deleteDeck(theme);
 	}
+	
+	public void modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
+		g.modifyQuestion(oldQ, newQ);
+	}
 	//Getters and Setters
 	public String getUsername() {
 		return username;

@@ -21,11 +21,13 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.TreeTableView.TreeTableViewSelectionModel;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -225,7 +227,7 @@ public class AdminSettingsView extends StackPane {
 				btnModify.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						showElement(new AdminModify());
+						showElement(new AdminTreeTable());
 					}
 				});
 			}
@@ -242,7 +244,7 @@ public class AdminSettingsView extends StackPane {
 		
 		
 	}
-	class AdminModify extends BorderPane {
+	class AdminTreeTable extends BorderPane {
 		
 		private TreeTableView<Question> table;
 		private TreeItem<Question> root;
@@ -250,7 +252,7 @@ public class AdminSettingsView extends StackPane {
 		
 		private ImageView ivBack;
 		
-		public AdminModify() {
+		public AdminTreeTable() {
 			
 			this.setBackground(new Background(new BackgroundImage(
 					new Image(IGraphicConst.URL_PATH_IMG + "background/background_settings.png", false), 
@@ -290,6 +292,7 @@ public class AdminSettingsView extends StackPane {
 				
 				TreeTableColumn<Question, String> theme = new TreeTableColumn<>("THEME");
 				theme.setCellValueFactory(new TreeItemPropertyValueFactory<>("theme"));
+				theme.setEditable(true);
 				
 				TreeTableColumn<Question, String> answer = new TreeTableColumn<>("ANSWER");
 				answer.setCellValueFactory(new TreeItemPropertyValueFactory<>("answer"));
@@ -312,9 +315,11 @@ public class AdminSettingsView extends StackPane {
 				author.setCellValueFactory(new TreeItemPropertyValueFactory<>("author"));
 				
 				table.getColumns().addAll(theme, answer, clues, author);
+				table.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 				table.setShowRoot(false);
 				table.setRoot(getRoot());
 				table.setContextMenu(getContextMenu());
+				
 			}
 			return table;
 		}
@@ -397,6 +402,15 @@ public class AdminSettingsView extends StackPane {
 							MsgBox.dispalyOk("No item selected", "Select an element to modify it.");
 							return;
 						}
+						if(getTable().getSelectionModel().getSelectedItems().size()>1) {
+							MsgBox.dispalyOk("Select a single one question", "You can't modify multiple questions.");
+							return;
+						}
+						if(getTable().getSelectionModel().getSelectedItem().getValue().getAnswer().equalsIgnoreCase("")) {
+							MsgBox.dispalyOk("Select a question", "You can't modify a deck.");
+							return;
+						}
+						showElement(new AdminModify(getTable().getSelectionModel().getSelectedItem().getValue()));
 					}
 				});
 				
@@ -434,6 +448,7 @@ public class AdminSettingsView extends StackPane {
 		public AdminAdd(String theme) {
 			this();
 			getCbbTheme().getSelectionModel().select(theme);
+			getLblClue1().requestFocus();
 		}
 		
 		public AdminAdd() {
@@ -652,7 +667,257 @@ public class AdminSettingsView extends StackPane {
 			if(ivBack == null) {
 				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
 				IGraphicConst.styleImageView(ivBack);
-				ivBack.setOnMouseClicked(e -> showElement(new AdminModify()));
+				ivBack.setOnMouseClicked(e -> showElement(new AdminTreeTable()));
+			}
+			return ivBack;
+		}
+	}
+	
+	class AdminModify extends BorderPane {
+
+		private Label lblTheme;
+		private ComboBox<String> cbbTheme;
+		private Label lblClue1;
+		private TextField txtClue1;
+		private Label lblClue2;
+		private TextField txtClue2;
+		private Label lblClue3;
+		private TextField txtClue3;
+		private Label lblAnswer;
+		private TextField txtAnswer;
+		private Label lblInfo;
+		private Button btnModify;
+		private ImageView ivBack;
+		
+		Question q;
+		
+		public AdminModify(Question q) {
+			
+			this.q = q;
+			
+			getCbbTheme().getSelectionModel().select(q.getTheme());
+			getCbbTheme().setDisable(true);
+			getTxtClue1().setText(q.getClues().get(0));
+			getTxtClue2().setText(q.getClues().get(1));
+			getTxtClue3().setText(q.getClues().get(2));
+			getTxtAnswer().setText(q.getAnswer());
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER,  
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
+			
+			GridPane gp = new GridPane();
+			
+			gp.setAlignment(Pos.CENTER);
+			gp.setHgap(10);
+			gp.setVgap(0);
+			gp.setTranslateY(70);
+			
+			GridPane.setHalignment(getLblTheme(), HPos.LEFT);
+			gp.add(getLblTheme(), 0, 0);
+			GridPane.setHalignment(getCbbTheme(), HPos.CENTER);
+			gp.add(getCbbTheme(), 1, 0);
+			
+			GridPane.setHalignment(getLblClue1(), HPos.LEFT);
+			gp.add(getLblClue1(), 0, 1);
+			GridPane.setHalignment(getTxtClue1(), HPos.CENTER);
+			gp.add(getTxtClue1(), 1, 1);
+			
+			GridPane.setHalignment(getLblClue2(), HPos.LEFT);
+			gp.add(getLblClue2(), 0, 2);
+			GridPane.setHalignment(getTxtClue2(), HPos.CENTER);
+			gp.add(getTxtClue2(), 1, 2);
+			
+			GridPane.setHalignment(getLblClue3(), HPos.LEFT);
+			gp.add(getLblClue3(), 0, 3);
+			GridPane.setHalignment(getTxtClue3(), HPos.CENTER);
+			gp.add(getTxtClue3(), 1, 3);
+			
+			GridPane.setHalignment(getLblAnswer(), HPos.LEFT);
+			gp.add(getLblAnswer(), 0, 4);
+			GridPane.setHalignment(getTxtAnswer(), HPos.CENTER);
+			gp.add(getTxtAnswer(), 1, 4);
+			
+			GridPane.setHalignment(getLblInfo(), HPos.CENTER);
+			gp.add(getLblInfo(), 0, 5, 2, 1);
+			
+			GridPane.setHalignment(getIvBack(), HPos.LEFT);
+			gp.add(getIvBack(), 0, 6);
+			
+			GridPane.setHalignment(getBtnModify(), HPos.RIGHT);
+			gp.add(getBtnModify(), 1, 6);
+			
+			this.setCenter(gp);
+			
+		}
+		
+		public Label getLblTheme() {
+			if(lblTheme == null) {
+				lblTheme = new Label("SELECT A THEME : ");
+				IGraphicConst.styleLabel(lblTheme);
+			}
+			return lblTheme;
+		}
+
+		public ComboBox<String> getCbbTheme() {
+			if(cbbTheme == null) {
+				cbbTheme = new ComboBox<>();
+				cbbTheme.setTooltip(new Tooltip("Select a theme or create a new one."));
+				cbbTheme.setPromptText("Select a theme or create a new one.");
+				for(Deck d : g.getDecks()) {
+					cbbTheme.getItems().add(d.getTheme());
+				}
+				cbbTheme.setEditable(true);
+				cbbTheme.setVisibleRowCount(5);
+				cbbTheme.setMinWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				cbbTheme.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				cbbTheme.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				cbbTheme.setStyle(IGraphicConst.STYLE_TXT);
+				cbbTheme.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5, false) , new Insets(10))));
+				cbbTheme.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5,  false), null ,new Insets(10))));
+			}
+			return cbbTheme;
+		}
+		public Label getLblClue1() {
+			if(lblClue1 == null) {
+				lblClue1 = new Label("CLUE 1 : ");
+				IGraphicConst.styleLabel(lblClue1);
+			}
+			return lblClue1;
+		}
+
+		public TextField getTxtClue1() {
+			if(txtClue1 == null) {
+				txtClue1 = new TextField();
+				IGraphicConst.styleTextField(txtClue1);
+				txtClue1.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				txtClue1.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+			}
+			return txtClue1;
+		}
+
+		public Label getLblClue2() {
+			if(lblClue2 == null) {
+				lblClue2 = new Label("CLUE 2 : ");
+				IGraphicConst.styleLabel(lblClue2);
+			}
+			return lblClue2;
+		}
+
+		public TextField getTxtClue2() {
+			if(txtClue2 == null) {
+				txtClue2 = new TextField();
+				IGraphicConst.styleTextField(txtClue2);
+				txtClue2.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				txtClue2.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+			}
+			return txtClue2;
+		}
+
+		public Label getLblClue3() {
+			if(lblClue3 == null) {
+				lblClue3 = new Label("CLUE 3 : ");
+				IGraphicConst.styleLabel(lblClue3);
+			}
+			return lblClue3;
+		}
+
+		public TextField getTxtClue3() {
+			if(txtClue3 == null) {
+				txtClue3 = new TextField();
+				IGraphicConst.styleTextField(txtClue3);
+				txtClue3.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				txtClue3.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+			}
+			return txtClue3;
+		}
+		
+		public Label getLblAnswer() {
+			if(lblAnswer==null) {
+				lblAnswer = new Label("ANSWER :");
+				IGraphicConst.styleLabel(lblAnswer);
+			}
+			return lblAnswer;
+		}
+		public TextField getTxtAnswer() {
+			if(txtAnswer == null) {
+				txtAnswer = new TextField();
+				IGraphicConst.styleTextField(txtAnswer);
+				txtAnswer.setPrefWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+				txtAnswer.setMaxWidth(IGraphicConst.WIDTH_TXT_ADMIN);
+			}
+			return txtAnswer;
+		}
+		public Label getLblInfo() {
+			if(lblInfo == null) {
+				lblInfo = new Label("It is necessary to have a minimum of 10 questions per theme for it to be playable");
+				lblInfo.setStyle("-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+								"-fx-font-size: 11px;\r\n" + 
+								"-fx-font-weight: bold;");
+				lblInfo.setTextFill(Color.WHITE);
+				lblInfo.setCache(true);
+				lblInfo.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 1, 1, 0, 0));
+			}
+			return lblInfo;
+		}
+		public Button getBtnModify() {
+			if(btnModify == null) {
+				btnModify = new Button("MODIFY");
+				IGraphicConst.styleButton(btnModify);
+				btnModify.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(getCbbTheme().getValue().isEmpty() || getTxtClue1().getText().isEmpty() 
+								|| getTxtClue2().getText().isEmpty() || getTxtClue3().getText().isEmpty() 
+								|| getTxtAnswer().getText().isEmpty()) {
+							MsgBox.dispalyOk("Missing input", "One or more required fields haven't been filled");
+							return;
+						}
+						String theme = getCbbTheme().getValue(), answer = getTxtAnswer().getText();
+						List<String> clues = Arrays.asList(getTxtClue1().getText(), getTxtClue2().getText(), getTxtClue3().getText());
+						Question newQ = new Question(admin.getUsername(), theme, clues, answer);
+						if(!MsgBox.displayYesNO("Modify this question?", "This question will replaced the other one : "
+								+"\nAuthor :\t" + newQ.getAuthor()
+								+ "\nTheme :\t" + newQ.getTheme()
+								+ "\nClues :\t" + newQ.getClues().get(0)
+								+ "\n\t\t" + newQ.getClues().get(1)
+								+ "\n\t\t" + newQ.getClues().get(2)
+								+ "\nAnswer :\t" + newQ.getAnswer())) {
+							return;
+						}
+						try {
+							admin.modifyQuestion(q, newQ);
+							MsgBox.dispalyOk("Question modify !", "Question modify ! New question :  "
+									+"\nAuthor :\t" + newQ.getAuthor()
+									+ "\nTheme :\t" + newQ.getTheme()
+									+ "\nClues :\t" + newQ.getClues().get(0)
+									+ "\n\t\t" + newQ.getClues().get(1)
+									+ "\n\t\t" + newQ.getClues().get(2)
+									+ "\nAnswer :\t" + newQ.getAnswer() );
+							getCbbTheme().getItems().clear();
+							for(Deck d : g.getDecks()) {
+								getCbbTheme().getItems().add(d.getTheme());
+							}
+						} catch (QuestionNotFoundException | DeckNotFoundException  e) {
+							MsgBox.dispalyException(e);
+						} finally {
+							getTxtClue1().setText("");
+							getTxtClue2().setText("");
+							getTxtClue3().setText("");
+							getTxtAnswer().setText("");
+						}
+					}
+				});
+			}
+			return btnModify;
+		}
+		public ImageView getIvBack() {
+			if(ivBack == null) {
+				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
+				IGraphicConst.styleImageView(ivBack);
+				ivBack.setOnMouseClicked(e -> showElement(new AdminTreeTable()));
 			}
 			return ivBack;
 		}

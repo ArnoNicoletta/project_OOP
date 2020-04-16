@@ -125,7 +125,7 @@ public class Deck {
 	/**
 	 * Allows to remove a {@link Question} from the deck
 	 * @param index : {@link Integer}. The index of the {@link Question} you want to remove from the {@link Deck}.
-	 * @return {@link Boolean}. True if the {@link Question} q is well removed.
+	 * @return {@link Boolean}. <code>true</code> if the {@link Question} q is well removed.
 	 */
 	public boolean deleteQuestion(int index) {
 		if(questions.size()>index && index>=0) {
@@ -134,7 +134,22 @@ public class Deck {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Allows to modify a question.
+	 * @param oldQ : {@link Question}. The question to modify.
+	 * @param newQ : {@link Question}. The new question to put in place of the oldQ.
+	 * @return {@link Boolean}. <code>true</code> if the {@link Question} newQ is well added.
+	 * @throws QuestionNotFoundException
+	 */
+	public boolean modifyQuestion(Question oldQ, Question newQ) throws QuestionNotFoundException {
+		if(!questions.contains(oldQ)) {
+			throw new QuestionNotFoundException(oldQ);
+		}
+		questions.set(questions.indexOf(oldQ), newQ.clone());
+		return true;
+	}
+	
 	/**
 	 * Gets a {@link Question} at a specified index.
 	 * @param index : {@link Integer}. Index of the question.

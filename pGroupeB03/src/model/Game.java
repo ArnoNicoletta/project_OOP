@@ -6,11 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -271,27 +268,49 @@ public class Game {
 		for(Deck in : decks) {
 			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
 				if(in.getSizeQuestions() == 1) {
-					System.out.println("empty");
 					deleteDeck(in.getTheme());
+					break;
 				}
 				else {
 					in.deleteQuestion(q);
-					System.out.println(in);
+					break;
 				}
-				break;
 			}
 		}
 		addAllDeck();
 	}
 	
+	/**
+	 * Allows to delete an entire deck.
+	 * @param theme : {@link String}. The theme of the deck to be delete.
+	 * @throws DeckNotFoundException
+	 */
 	public void deleteDeck(String theme) throws DeckNotFoundException {
-		Deck toDel = getDeck(theme);
-		if(toDel==null) throw new DeckNotFoundException(toDel);
-		File f = new File("./src/resources/questions/deck_" + toDel.getTheme() + ".json");
+		if(getDeck(theme)==null) throw new DeckNotFoundException(theme);
+		File f = new File("./src/resources/questions/deck_" + theme + ".json");
 		if(f.delete()) {
 			addAllDeck();
 		}
 	}
+	
+	/**
+	 * Allows to modify a question.
+	 * @param oldQ : {@link Question}. The question to modify.
+	 * @param newQ : {@link Question}. The new question to put in place of the oldQ.
+	 * @throws DeckNotFoundException
+	 * @throws QuestionNotFoundException
+	 */
+	public void modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
+		if(getDeck(oldQ.getTheme()) == null) throw new DeckNotFoundException(oldQ.getTheme());
+		for(Deck in : decks) {
+			if(in.getTheme().equalsIgnoreCase(oldQ.getTheme())) {
+				in.modifyQuestion(oldQ, newQ);
+				break;
+			}
+		}
+		saveAllDecks();
+	}
+	
 	
 	// ************
 	// CRUD methods
