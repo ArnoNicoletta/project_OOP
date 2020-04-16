@@ -5,16 +5,16 @@ import model.Deck;
 @SuppressWarnings("serial")
 public class DeckNotFoundException extends Exception {
 	
-	private Deck d;
+	private String theme;
 	
-	public DeckNotFoundException(Deck d) {
+	public DeckNotFoundException(String theme) {
 		super("This doesn't seem to be in the game !");
-		this.d = d;
+		this.theme = theme;;
 	}
 	@Override
 	public String getMessage() {
 		// TODO Auto-generated method stub
 		return super.getMessage() + 
-				"\nTheme : " + d.getTheme() ;
+				"\nTheme : " + theme ;
 	}
 }
