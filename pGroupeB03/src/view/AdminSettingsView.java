@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import exception.DeckNotFoundException;
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
+import exception.WrongDeckFormatException;
 import exception.WrongLoginException;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -49,10 +51,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import model.Admin;
 import model.Deck;
 import model.Game;
 import model.Question;
+import model.RulesSettings;
 
 public class AdminSettingsView extends StackPane {
 
@@ -240,7 +244,23 @@ public class AdminSettingsView extends StackPane {
 				btnImport.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						
+						FileChooser fc = new FileChooser();
+						fc.setTitle("Import JSON file");
+						fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Deck file", "*.json"));
+						File f = fc.showOpenDialog(getScene().getWindow());
+						if(f == null || !f.exists()) {
+							MsgBox.dispalyOk("Error while selecting file", "An eror ocured while selecting file."
+																		+ "\nTry again.");
+							return;
+						}
+						try {
+							g.addDeck(f);
+							g.saveAllDecks();
+							MsgBox.dispalyOk("Import done !", "The deck has been imported.");
+						} catch (WrongDeckFormatException e) {
+							MsgBox.dispalyException(e);
+							return;
+						}
 					}
 				});
 			}

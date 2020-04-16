@@ -21,6 +21,7 @@ import exception.IdenticalPseudoException;
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
 import exception.TooMuchCharException;
+import exception.WrongDeckFormatException;
 
 /**
  * This class manages the whole game.
@@ -339,8 +340,9 @@ public class Game {
 	 * Allows to read a json format file which contains a deck and add it to the game.
 	 * @param f : {@link File}. The json file to read.
 	 * @return {@link Boolean}. <code>true</code> if the {@link Deck} is well created and added to the {@link Game}.
+	 * @throws WrongDeckFormatException 
 	 */
-	public boolean addDeck(File f) {
+	public boolean addDeck(File f) throws WrongDeckFormatException {
 		Deck d = Deck.fromJson(f);
 		return this.addDeck(d.clone());
 	}
@@ -352,7 +354,9 @@ public class Game {
 	public void addAllDeck() {
 		decks.clear();
 		for(File f : new File("./src/resources/questions").listFiles()) {
-			this.addDeck(f);
+			try {
+				this.addDeck(f);
+			} catch (WrongDeckFormatException e) {}
 		}
 	}
 	

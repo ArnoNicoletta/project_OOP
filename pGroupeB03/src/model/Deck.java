@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
+import exception.WrongDeckFormatException;
 
 
 /**
@@ -61,17 +62,17 @@ public class Deck {
 	 * Read a .json {@link File} and convert it into a {@link Deck}
 	 * @param file : {@link File}. The file to read. Must be in .json file format.
 	 * @return the created {@link Deck}
+	 * @throws WrongDeckFormatException 
 	 */
-	public static Deck fromJson(File file) {
+	public static Deck fromJson(File file) throws WrongDeckFormatException {
 		Deck ret = null;
 		Gson gson = new Gson();
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(file))){
 			ret = gson.fromJson(br, Deck.class);
 			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
+		if(ret==null) throw new WrongDeckFormatException(file);
 		return ret.clone();
 	}
 	
