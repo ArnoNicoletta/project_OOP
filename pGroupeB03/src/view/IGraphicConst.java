@@ -122,7 +122,7 @@ public interface IGraphicConst {
 	
 	//TreeTableView
 	
-	final double WIDTH_TREE_TABLE = 600, HEIGHT_TREE_TABLE = 300;
+	final double WIDTH_TREE_TABLE = 650, HEIGHT_TREE_TABLE = 325;
 	public static TreeTableView<?> styleTreeTableView(TreeTableView<?> tree){
 		tree.setMinSize(WIDTH_TREE_TABLE, HEIGHT_TREE_TABLE);
 		tree.setPrefSize(WIDTH_TREE_TABLE, HEIGHT_TREE_TABLE);
