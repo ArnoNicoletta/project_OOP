@@ -4,11 +4,31 @@
       "author": "Rayan Tahri",
       "theme": "Nature",
       "clues": [
+        "I am a generic term which designates several cereals belonging to the genus Triticum.",
+        "I am an annual plant of the family of grasses or Poaceae, cultivated in very many countries.",
+        "I am used for making pasta, I am ..."
+      ],
+      "answer": "Wheat"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
         "I am an English naturalist and paleontologist, born on February 12, 1809 in Shrewsbury.",
         "I revolutionized biology with my work The Origin of Species published in 1859",
         "I am more known for having exposed the theory of evolution, I am ..."
       ],
       "answer": "Charles Darwin"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Nature",
+      "clues": [
+        "I am a species described by Carl von Linné in 1758 in the 10th edition of his book Systema naturae",
+        "I am a species of primate belonging to the hominid family.",
+        "More commonly, I\u0027m called \u0027Modern Man\u0027,\u0027Man\u0027,\u0027Human\u0027,or \u0027Human Being\u0027. I am..."
+      ],
+      "answer": "Homo sapiens"
     },
     {
       "author": "Rayan Tahri",
@@ -34,16 +54,6 @@
       "author": "Rayan Tahri",
       "theme": "Nature",
       "clues": [
-        "I am a generic term which designates several cereals belonging to the genus Triticum.",
-        "I am an annual plant of the family of grasses or Poaceae, cultivated in very many countries.",
-        "I am used for making pasta, I am ..."
-      ],
-      "answer": "Wheat"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
         "I am a natural region of South America",
         "I have an area 5.500.000 km2. Mainly covered with forest.",
         "I have the nickname \u0027lung of the earth\u0027. I am..."
@@ -59,16 +69,6 @@
         "I am known mainly for my ability to change color. I am..."
       ],
       "answer": "Chameleon"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Nature",
-      "clues": [
-        "I am a species described by Carl von Linné in 1758 in the 10th edition of his book Systema naturae",
-        "I am a species of primate belonging to the hominid family.",
-        "More commonly, I\u0027m called \u0027Modern Man\u0027,\u0027Man\u0027,\u0027Human\u0027,or \u0027Human Being\u0027. I am..."
-      ],
-      "answer": "Homo sapiens"
     },
     {
       "author": "Rayan Tahri",
