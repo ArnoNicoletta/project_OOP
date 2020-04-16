@@ -236,6 +236,13 @@ public class AdminSettingsView extends StackPane {
 				btnImport = new Button("IMPORT QUESTIONS (json format)");
 				btnImport.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 				IGraphicConst.styleButton(btnImport);
+				
+				btnImport.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						
+					}
+				});
 			}
 			return btnImport;
 		}
@@ -313,7 +320,6 @@ public class AdminSettingsView extends StackPane {
 				author.setCellValueFactory(new TreeItemPropertyValueFactory<>("author"));
 				
 				table.getColumns().addAll(theme, answer, clues, author);
-				table.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 				table.setShowRoot(false);
 				table.setRoot(getRoot());
 				table.setContextMenu(getContextMenu());
@@ -421,6 +427,9 @@ public class AdminSettingsView extends StackPane {
 			if(ivBack == null) {
 				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
 				IGraphicConst.styleImageView(ivBack);
+				ivBack.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/button_back_nobackground.png"));
+				ivBack.setTranslateX(20);
+				ivBack.setTranslateY(-20);
 				ivBack.setOnMouseClicked(e -> showElement(new AdminMenu()));
 			}
 			return ivBack;
