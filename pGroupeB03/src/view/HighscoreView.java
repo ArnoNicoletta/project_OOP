@@ -13,6 +13,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
@@ -23,12 +24,15 @@ import model.Game;
 import model.Player;
 
 
-public class HighscoreView extends GridPane{
+public class HighscoreView extends BorderPane {
+	
 	private Label lblRank;
 	private Label lblPseudo;
 	private Label lblScore;
 	private Label lblTime;
-			
+	
+	private GridPane gp;
+	
 	public HighscoreView() {
 		
 		this.setBackground(new Background(new BackgroundImage(
@@ -37,20 +41,20 @@ public class HighscoreView extends GridPane{
 				BackgroundPosition.CENTER, 
 				new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 		
-		//Setup positioning
-		this.setAlignment(Pos.CENTER);
-		this.setHgap(100);
-		this.setVgap(20);
 		
 		//Titles
-		this.add(getLblRank(), 0, 0);
-		this.add(getLblPseudo(), 1, 0);
-		this.add(getLblScore(), 2, 0);
-		this.add(getLblTime(), 3, 0);
+		getGp().add(getLblRank(), 0, 0);
+		getGp().add(getLblPseudo(), 1, 0);
+		getGp().add(getLblScore(), 2, 0);
+		getGp().add(getLblTime(), 3, 0);
 
 		
 		//Content
 		this.addPlayers();
+		
+		//CENTER
+		this.setCenter(getGp());
+		
 	}
 	
 	private void addPlayer(int rank, Player p) {
@@ -60,7 +64,7 @@ public class HighscoreView extends GridPane{
 		lbl.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(20, false) , null)));
 		lbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
 		
-		this.add(lbl, 1, rank+1, 3, 1);
+		getGp().add(lbl, 1, rank+1, 3, 1);
 		
 		ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_" + (rank+1) + ".png");
 		ivPlayerRank.setFitWidth(IGraphicConst.WIDTH_RANK*0.9);
@@ -69,15 +73,15 @@ public class HighscoreView extends GridPane{
 		Label lblPlayerScore = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%1d", p.getScore())));
 		Label lblPlayerTime = IGraphicConst.styleLabel(new Label(String.format(Locale.US, "%-2.2f", p.getTime())));
 		
-		this.add(ivPlayerRank, 0, rank+1);
-		this.add(lblPlayerPseudo, 1, rank+1);
-		this.add(lblPlayerScore, 2, rank+1);
-		this.add(lblPlayerTime, 3, rank+1);
+		getGp().add(ivPlayerRank, 0, rank+1);
+		getGp().add(lblPlayerPseudo, 1, rank+1);
+		getGp().add(lblPlayerScore, 2, rank+1);
+		getGp().add(lblPlayerTime, 3, rank+1);
 	}
 	
 	private void addPlayers() {
 		if(Game.getInstance().getHighscores().isEmpty()) {
-			this.add(IGraphicConst.styleBiggerLabel(new Label("No score yet")), 0, 1, 4, 1);
+			getGp().add(IGraphicConst.styleBiggerLabel(new Label("No score yet")), 0, 1, 4, 1);
 		}
 		int i = 0;
 		for(Player p : Game.getInstance().getHighscores()) {
@@ -112,5 +116,15 @@ public class HighscoreView extends GridPane{
 			IGraphicConst.styleLabel(lblTime);
 		}
 		return lblTime;
+	}
+	public GridPane getGp() {
+		if(gp == null) {
+			gp = new GridPane();
+			gp.setAlignment(Pos.TOP_CENTER);
+			gp.setHgap(100);
+			gp.setVgap(20);
+			gp.setTranslateY(175);
+		}
+		return gp;
 	}
 }
