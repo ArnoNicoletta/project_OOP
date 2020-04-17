@@ -398,15 +398,14 @@ public class GameView extends StackPane {
 			hbTop.getChildren().addAll(getLblPlayer(), getIvScore(), getLblTimer());
 			this.setTop(hbTop);
 			
-			//LEFT
+			//CENTER LEFT
 			VBox vbLeft = new VBox(15);
 			vbLeft.setPadding(new Insets(0, 5, 10, 25));
 			vbLeft.setAlignment(Pos.CENTER_RIGHT);
 			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			vbLeft.toFront();
-			this.setLeft(vbLeft);
 			
-			//CENTER
+			//CENTER RIGHT
 			VBox vbCenter = new VBox(10);
 			vbCenter.setAlignment(Pos.CENTER);
 			vbCenter.setPadding(new Insets(5, 50, 15, 10));
@@ -415,10 +414,17 @@ public class GameView extends StackPane {
 			hbCenterBottom.setAlignment(Pos.CENTER);
 			hbCenterBottom.getChildren().addAll(getBtnPass(), getBtnPause(), getBtnValidate());
 			
-
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
-			this.setCenter(vbCenter);
 			
+			
+			//CENTER
+			HBox hbCenter = new HBox();
+			hbCenter.setAlignment(Pos.CENTER);
+			hbCenter.getChildren().addAll(vbLeft, vbCenter);
+			this.setCenter(hbCenter);
+			
+			
+			//Init game stuffs
 			fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTimelineTimer().playFromStart();
@@ -435,9 +441,6 @@ public class GameView extends StackPane {
 				getTimelineTimer().pause();
 				if(MsgBox.displayPause(g.getPlayer().toString(), g.getUsingDeck().getTheme())) {
 					play();
-				}
-				else {
-					//TODO back to menu
 				}
 			}
 		}
@@ -558,12 +561,15 @@ public class GameView extends StackPane {
 				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerFirstLetter.setCursor(Cursor.HAND);
-//				ivJokerFirstLetter.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
 					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getCurrentQuestion()).getAnswer().substring(0, 1));
-					ivJokerFirstLetter.setDisable(true);
-					ivJokerFirstLetter.setOpacity(0.5);
+					getIvJokerFirstLetter().setDisable(true);
+					getIvJokerFirstLetter().setOpacity(0.5);
+					getIvJokerExtraPass().setDisable(true);
+					getIvJokerExtraPass().setOpacity(0.5);
+					getIvJokerBonusTime().setDisable(true);
+					getIvJokerBonusTime().setOpacity(0.5);
 				}); 
 			}
 			return ivJokerFirstLetter;
@@ -576,12 +582,15 @@ public class GameView extends StackPane {
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerExtraPass.setCursor(Cursor.HAND);
-//				ivJokerExtraPass.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					nextQuestion();
-					ivJokerExtraPass.setDisable(true);
-					ivJokerExtraPass.setOpacity(0.5);
+					getIvJokerFirstLetter().setDisable(true);
+					getIvJokerFirstLetter().setOpacity(0.5);
+					getIvJokerExtraPass().setDisable(true);
+					getIvJokerExtraPass().setOpacity(0.5);
+					getIvJokerBonusTime().setDisable(true);
+					getIvJokerBonusTime().setOpacity(0.5);
 				});
 			}
 			return ivJokerExtraPass;
@@ -595,12 +604,15 @@ public class GameView extends StackPane {
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
 				ivJokerBonusTime.setCursor(Cursor.HAND);
 				ivJokerBonusTime.toFront();
-//				ivJokerBonusTime.setTranslateX(200); //TODO joker
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + RulesSettings.JOKER_TIME);
-					ivJokerBonusTime.setDisable(true);
-					ivJokerBonusTime.setOpacity(0.5);
+					getIvJokerFirstLetter().setDisable(true);
+					getIvJokerFirstLetter().setOpacity(0.5);
+					getIvJokerExtraPass().setDisable(true);
+					getIvJokerExtraPass().setOpacity(0.5);
+					getIvJokerBonusTime().setDisable(true);
+					getIvJokerBonusTime().setOpacity(0.5);
 				});
 			}
 			return ivJokerBonusTime;
