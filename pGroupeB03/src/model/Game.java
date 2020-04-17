@@ -263,19 +263,20 @@ public class Game {
 	 * @throws DeckNotFoundException 
 	 */
 	public void deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
-		if(getDeck(q.getTheme()) == null) throw new QuestionNotFoundException(q);
+		if(getDeck(q.getTheme()) == null) throw new DeckNotFoundException(q.getTheme());
+		Deck d = null;
 		for(Deck in : decks) {
 			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
-				if(in.getSizeQuestions() == 1) {
-					deleteDeck(in.getTheme());
-					break;
-				}
-				else {
-					in.deleteQuestion(q);
-					break;
-				}
+				d = in;
 			}
 		}
+		if(d.getSizeQuestions() == 1) {
+			deleteDeck(d.getTheme());
+		}
+		else {
+			d.deleteQuestion(q);
+		}
+		saveAllDecks();
 		addAllDeck();
 	}
 	
