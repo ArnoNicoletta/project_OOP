@@ -27,7 +27,8 @@ import javafx.scene.paint.Color;
 public interface IGraphicConst {
 	
 	final String BASE_COLOR = "#793F54";
-	
+	final String BACKGROUND_TOPCOLOR = "#AD6A65";
+	final String BACKGROUND_BOTCOLOR = "#E7BC97";
 	//Button
 	
 	final double WIDTH_BUTTON = 350, HEIGHT_BUTTON = 35;
