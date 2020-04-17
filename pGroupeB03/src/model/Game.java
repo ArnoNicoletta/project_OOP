@@ -697,7 +697,6 @@ public class Game {
 		if(highscores.size()>5) {
 			highscores = highscores.subList(0, 5);
 		}
-		System.out.println(highscores);
 	}
 	
 	/**
