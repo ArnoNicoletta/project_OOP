@@ -60,11 +60,11 @@ import model.RulesSettings;
 public class GameView extends StackPane {
 	
 	//Game vars
-	private Game game;
+	private Game g;
 	
 	public GameView() {
 		
-		this.game = Game.getInstance();
+		this.g = Game.getInstance();
 		this.showElement(new PlayerSelection());
 	}
 	
@@ -75,7 +75,7 @@ public class GameView extends StackPane {
 	}
 	// Game elements
 	public Game getGame() {
-		return game;
+		return g;
 	}
 	
 	
@@ -360,9 +360,8 @@ public class GameView extends StackPane {
 	class GamePane extends BorderPane {
 		
 		//Game vars
-		private Game g = Game.getInstance();
 		private SimpleDoubleProperty timer = new SimpleDoubleProperty(RulesSettings.getRound_time_seconds());
-		private String fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
+		private String fullClues;
 		private int scorePos = 0;
 		private SimpleStringProperty clues = new SimpleStringProperty();
 		private int cluesPos = 0;
@@ -420,6 +419,7 @@ public class GameView extends StackPane {
 			vbCenter.getChildren().addAll(getLblClues(), getTxtAnswer(), hbCenterBottom);
 			this.setCenter(vbCenter);
 			
+			fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTimelineTimer().playFromStart();
 			pause();

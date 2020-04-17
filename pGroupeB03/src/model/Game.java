@@ -81,12 +81,11 @@ public class Game {
 	
 	public void replay() {
 		saveHighscores();
-		usedDecks = new ArrayList<>();
-		removeAllDecks();
+		this.usedDecks = new ArrayList<>();
 		addAllDeck();
 		shuffleDecks();
-		randomChoice();
 		players.forEach(p -> p.setScore(0));
+		randomChoice();
 		setCurrentPlayer(0);
 		setCurrentQuestion(0);
 		initHighscores();
@@ -150,7 +149,7 @@ public class Game {
 	 * @return {@link String}. The clue asked.
 	 */
 	public String getClues(int index) {
-		return getUsingDeck().getQuestion(currentQuestion).getClues().get(index);
+		return getUsingDeck().getQuestion(getCurrentQuestion()).getClues().get(index);
 	}
 	
 	/**
