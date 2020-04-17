@@ -72,7 +72,6 @@ public class Game {
 	 * Reset the {@link Game} instance.
 	 */
 	public static void reset() {
-		instance.sortHighscores();
 		instance.saveHighscores();
 		instance = new Game();
 		instance.addAllDeck();
@@ -81,7 +80,6 @@ public class Game {
 	}
 	
 	public void replay() {
-		sortHighscores();
 		saveHighscores();
 		usedDecks = new ArrayList<>();
 		removeAllDecks();
@@ -699,6 +697,7 @@ public class Game {
 		if(highscores.size()>5) {
 			highscores = highscores.subList(0, 5);
 		}
+		System.out.println(highscores);
 	}
 	
 	/**
