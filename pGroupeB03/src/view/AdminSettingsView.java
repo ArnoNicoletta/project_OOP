@@ -56,7 +56,6 @@ import model.Admin;
 import model.Deck;
 import model.Game;
 import model.Question;
-import model.RulesSettings;
 
 public class AdminSettingsView extends StackPane {
 
@@ -307,6 +306,7 @@ public class AdminSettingsView extends StackPane {
 				}
 				getRoot().getChildren().add(di);
 			}
+			getTable().getSelectionModel().clearSelection();
 		}
 		
 		public TreeTableView<Question> getTable() {
