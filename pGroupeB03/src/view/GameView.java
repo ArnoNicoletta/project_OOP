@@ -523,7 +523,7 @@ public class GameView extends StackPane {
 			if(timelineTimer==null) {
 				timelineTimer = new Timeline();
 				timelineTimer.setCycleCount(Timeline.INDEFINITE);
-				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
+				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(RulesSettings.getTime_gap_millis()), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
 						timer.setValue(timer.get() - 0.025);
