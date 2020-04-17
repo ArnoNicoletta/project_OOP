@@ -682,7 +682,7 @@ public class Game {
 	public void initHighscores() {
 		ArrayList<Player> ret = new ArrayList<>();
 		Gson gson = new Gson();
-		try(BufferedReader br = new BufferedReader(new FileReader("./src/resources/user_scores/highscores.json"))){
+		try(BufferedReader br = new BufferedReader(new FileReader("./src/resources/user/highscores.json"))){
 			ret = gson.fromJson(br, new TypeToken<ArrayList<Player>>() {}.getType());
 			br.close();
 		} catch (Exception e) {
@@ -709,7 +709,7 @@ public class Game {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(highscores);
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("./src/resources/user_scores/highscores.json"))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("./src/resources/user/highscores.json"))){
 			bw.write(json);
 			bw.close();
 		} catch(IOException e) {
