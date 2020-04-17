@@ -1,13 +1,20 @@
 package view;
 
+import java.util.Arrays;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -33,21 +40,30 @@ public class MsgBox{
 		window.setOnCloseRequest(e -> answer = false);
 		
 		Label lbl = new Label(message);
+		IGraphicConst.styleLabel(lbl);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setPadding(new Insets(5));
 		lbl.setWrapText(true);
 		Button btnYes = new Button("Yes");
+		IGraphicConst.styleButton(btnYes);
 		btnYes.setOnAction(ev -> {
 			answer = true;
 			window.close();
 		});
 		Button btnNo = new Button("No");
+		IGraphicConst.styleButton(btnNo);
 		btnNo.setOnAction(ev -> {
 			answer = false;
 			window.close();
 		});
 		
 		BorderPane bp = new BorderPane(lbl);
+		bp.setBackground(new Background(new BackgroundFill(
+				new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, Arrays.asList(
+						new Stop(0.1f, Color.web(IGraphicConst.BACKGROUND_TOPCOLOR)), 
+						new Stop(1.0f,  Color.web(IGraphicConst.BACKGROUND_BOTCOLOR)))), 
+				null, null)));
+		
 		HBox hbBottom = new HBox(10);
 		hbBottom.setAlignment(Pos.CENTER_RIGHT);
 		hbBottom.setPadding(new Insets(5));
@@ -75,13 +91,21 @@ public class MsgBox{
 		window.setResizable(false);
 		
 		Label lbl = new Label(message);
+		IGraphicConst.styleLabel(lbl);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setPadding(new Insets(5));
 		lbl.setWrapText(true);
 		Button btnOk = new Button("Ok");
+		IGraphicConst.styleButton(btnOk);
 		btnOk.setOnAction(ev -> window.close());
 		
 		BorderPane bp = new BorderPane(lbl);
+		bp.setBackground(new Background(new BackgroundFill(
+				new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, Arrays.asList(
+						new Stop(0.1f, Color.web(IGraphicConst.BACKGROUND_TOPCOLOR)), 
+						new Stop(1.0f,  Color.web(IGraphicConst.BACKGROUND_BOTCOLOR)))), 
+				null, null)));
+		
 		HBox hbBottom = new HBox(10);
 		hbBottom.setAlignment(Pos.CENTER_RIGHT);
 		hbBottom.setPadding(new Insets(5));
@@ -118,31 +142,32 @@ public class MsgBox{
 		window.setOnCloseRequest(e -> answer = false);
 		
 		Label lblPause = new Label("GAME WAITING");
+		IGraphicConst.styleBiggerLabel(lblPause);
 		lblPause.setTextFill(Color.DARKGRAY);
 		lblPause.setAlignment(Pos.CENTER);
 		lblPause.setPadding(new Insets(5));
 		
 		Label lblInfos = new Label("Player : " + player 
 				+ "\nTheme : " + theme);
+		IGraphicConst.styleLabel(lblInfos);
 		lblInfos.setAlignment(Pos.CENTER);
 		lblInfos.setPadding(new Insets(5));
 		lblInfos.setWrapText(true);
 		
-		Button btnExit = new Button("EXIT");
-		btnExit.setPrefSize(IGraphicConst.WIDTH_BUTTON/2, IGraphicConst.HEIGHT_BUTTON);
-		btnExit.setOnAction(e -> {
-			answer = false;
-			window.close();
-		});
-		
 		Button btnPlay = new Button("PLAY");
-		btnPlay.setPrefSize(IGraphicConst.WIDTH_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+		IGraphicConst.styleButton(btnPlay);
+		btnPlay.setPrefSize(Integer.MAX_VALUE, IGraphicConst.HEIGHT_BUTTON);
 		btnPlay.setOnAction(e -> {
 			answer = true;
 			window.close();
 		});
 		
 		BorderPane bp = new BorderPane(lblInfos);
+		bp.setBackground(new Background(new BackgroundFill(
+				new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, Arrays.asList(
+						new Stop(0.1f, Color.web(IGraphicConst.BACKGROUND_TOPCOLOR)), 
+						new Stop(1.0f,  Color.web(IGraphicConst.BACKGROUND_BOTCOLOR)))), 
+				null, null)));
 		HBox hbTop = new HBox();
 		hbTop.setAlignment(Pos.CENTER);
 		hbTop.getChildren().add(lblPause);
@@ -150,7 +175,8 @@ public class MsgBox{
 		HBox hbBottom = new HBox(5);
 		hbBottom.setAlignment(Pos.CENTER_RIGHT);
 		hbBottom.setPadding(new Insets(5));
-		hbBottom.getChildren().addAll(btnExit, btnPlay);
+		hbBottom.getChildren().addAll(btnPlay);
+		hbBottom.setPrefWidth(Integer.MAX_VALUE);
 		bp.setBottom(hbBottom);
 		
 		Scene scene = new Scene(bp, 512, 288);
