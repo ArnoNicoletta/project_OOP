@@ -51,11 +51,31 @@ public class Deck {
 		return questions.get(0).getTheme();
 	}
 	
+	/**
+	 * Gives the all the questions in the deck
+	 * @return {@link List}<{@link Question}>. The questions.
+	 */
 	public List<Question> getQuestions() {
 		List<Question> ret = new ArrayList<>();
 		questions.forEach(q -> ret.add(q.clone()));
 		return ret;
 	}
+	
+	/**
+	 * Tells if there is only one theme in this instance.
+	 * Useful when adding decks from a json file.
+	 * @return {@link Boolean}. <code>true</code> if this has an unique theme, <code>false</code> otherwise
+	 */
+	public boolean hasUniqueTheme() {
+		for(Question q : questions) {
+			if(!q.getTheme().equalsIgnoreCase(this.getTheme())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	//JSON methods
 	
 	/**
@@ -208,9 +228,7 @@ public class Deck {
 	public Deck clone() {
 		Deck ret = new Deck();
 		for(Question q : questions) {
-			try {
-				ret.addQuestion(q.clone());
-			} catch (QuestionAlreadyExistException e) {}
+			ret.questions.add(q.clone()); // Not using ret.addQuestion(q) because
 		}
 		return ret;
 	}
