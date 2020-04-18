@@ -7,8 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -216,7 +216,7 @@ public class Game {
 	 * Allows to save all the decks in the current {@link Game}.
 	 * Decks will be saved in json format file.
 	 * @return {@link Boolean}. <code>true</code> when decks have been saved, <code>false</code> if any error occurred.
-	 * @see model.Deck.toJson
+	 * @see model.Deck
 	 */
 	public boolean saveAllDecks() {
 		for(Deck d : decks) {
@@ -233,7 +233,28 @@ public class Game {
 		return true;
 	}
 	
-
+	/**
+	 * Allows to export all the decks in a specified file.
+	 * @param f : {@link File}. The file to write in.
+	 */
+	public void exportAllDecks(File f) {
+		List<Question> lq = new ArrayList<>();
+		for(Deck in : decks) {
+			lq.addAll(in.getQuestions());
+		}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(lq);
+		json = "{\r\n" + 
+				"  \"questions\": " + json + "\r\n" + 
+						"}";
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(f))){
+			bw.write(json);
+			bw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// Methods to modify questions (used by admins)
 	
 	
@@ -355,7 +376,7 @@ public class Game {
 						toAdd.addQuestion(q);
 					} catch (QuestionAlreadyExistException e) {}
 				});
-				this.addDeck(toAdd);
+				this.addDeck(toAdd.clone());
 			});
 			return true;
 		}

@@ -1,6 +1,7 @@
 package view;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import model.Admin;
 import model.Deck;
@@ -203,6 +205,7 @@ public class AdminSettingsView extends StackPane {
 		
 		private Button btnModify;
 		private Button btnImport;
+		private Button btnExport;
 		
 		public AdminMenu() {
 			
@@ -213,7 +216,7 @@ public class AdminSettingsView extends StackPane {
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			VBox vb = new VBox();
-			vb.getChildren().addAll(getBtnModify(),getBtnImport());
+			vb.getChildren().addAll(getBtnModify(),getBtnImport(), getBtnExport());
 			vb.setSpacing(30);
 			vb.setAlignment(Pos.CENTER);
 			vb.setTranslateY(40);
@@ -265,7 +268,37 @@ public class AdminSettingsView extends StackPane {
 			}
 			return btnImport;
 		}
-		
+		public Button getBtnExport() {
+			if(btnExport == null) {
+				btnExport = new Button("EXPORT ALL QUESTIONS");
+				btnExport.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnExport);
+				
+				btnExport.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						DirectoryChooser dc = new DirectoryChooser();
+						dc.setTitle("Select a folder");
+						File dir = dc.showDialog(getScene().getWindow());
+						if(dir==null || !dir.exists()) {
+							MsgBox.dispalyOk("Error while selecting folder", "An eror ocured while selecting folder."
+									+ "\nTry again.");
+							return;
+						}
+						File f = new File(dir.getAbsolutePath()+ "/decks.json");
+						try {
+							f.createNewFile();
+						} catch (IOException e) {
+							MsgBox.dispalyException(e);
+						}
+						g.exportAllDecks(f);
+						MsgBox.dispalyOk("Export done ! ", "The questions have been exported"
+								+ "\nFile : " + f.getAbsolutePath());
+					}
+				});
+			}
+			return btnExport;
+		}
 		
 	}
 	class AdminTreeTable extends BorderPane {
