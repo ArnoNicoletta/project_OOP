@@ -4,21 +4,11 @@
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
-        "I am an international sporting event which brings together summer sport and winter sport.",
-        "I am considered the world\u0027s foremost sports competition with more than 200 nations participating",
-        "I am symbolized by a flag formed by five rings of different colors representing the five continents, I am..."
+        "Created in the 12th and 13th centuries by Malcom Canmore, King of Scotland.",
+        "My term derives from the Gaelic word cabar, which refers to a wooden beam.",
+        "I am a traditional Scottish sporting event which consists of throwing a tree trunk or a beam more than 4 meters long. I am..."
       ],
-      "answer": "Olympic Games"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "I am a small wooden ball that serves as a goal.",
-        "I have a diameter of 3 cm and I have the name of a small animal.",
-        "I am throw at the start of a petanque game, I am ..."
-      ],
-      "answer": "Jack"
+      "answer": "Caber"
     },
     {
       "author": "Rayan Tahri",
@@ -34,41 +24,21 @@
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
-        "Created in the 12th and 13th centuries by Malcom Canmore, King of Scotland.",
-        "My term derives from the Gaelic word cabar, which refers to a wooden beam.",
-        "I am a traditional Scottish sporting event which consists of throwing a tree trunk or a beam more than 4 meters long. I am..."
+        "I am a small wooden ball that serves as a goal.",
+        "I have a diameter of 3 cm and I have the name of a small animal.",
+        "I am throw at the start of a petanque game, I am ..."
       ],
-      "answer": "Caber"
+      "answer": "Jack"
     },
     {
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
-        "I am a cyclist, born June 17, 1945.",
-        "Nicknamed the cannibal, I am one of the few cyclists to have won five Tours of France.",
-        "I am Belgian, my name is Edouard Louis Joseph better known by the name of ..."
+        "I am an international sporting event which brings together summer sport and winter sport.",
+        "I am considered the world\u0027s foremost sports competition with more than 200 nations participating",
+        "I am symbolized by a flag formed by five rings of different colors representing the five continents, I am..."
       ],
-      "answer": "Eddy Merckx"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "I am the oldest tennis tournament in the world and is regarded by many as the most prestigious.",
-        "I am one of the Grand Slam tournaments and I\u0027m playing on outdoor grass courts.",
-        "I am located in the city of London I am…"
-      ],
-      "answer": "Wimbledon"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Sport",
-      "clues": [
-        "Born on August 1, 1954 and died on October 28, 2006 in Norwich,I am a Jamaican boxer naturalized Canadian.",
-        "I am known to be one of the five boxers to have beat Mohamed Ali in 1981 after 10 tedious rounds and a spectacular match.",
-        "I was also world boxing champion in 1986 before losing my title to Mike Tyson, I am..."
-      ],
-      "answer": "Trevor Berbik"
+      "answer": "Olympic Games"
     },
     {
       "author": "Rayan Tahri",
@@ -94,11 +64,41 @@
       "author": "Rayan Tahri",
       "theme": "Sport",
       "clues": [
+        "Born on August 1, 1954 and died on October 28, 2006 in Norwich,I am a Jamaican boxer naturalized Canadian.",
+        "I am known to be one of the five boxers to have beat Mohamed Ali in 1981 after 10 tedious rounds and a spectacular match.",
+        "I was also world boxing champion in 1986 before losing my title to Mike Tyson, I am..."
+      ],
+      "answer": "Trevor Berbik"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
         "I am a basketball team founded in 1947 and I play my home games at the Staple Center.",
         "I compete in the National Basketball Association (NBA), as a member of the league\u0027s Western Conference in the Pacific Division",
         "I am an American professional basketball team based in Los Angeles. I am..."
       ],
       "answer": "Los Angeles Lakers"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am the oldest tennis tournament in the world and is regarded by many as the most prestigious.",
+        "I am one of the Grand Slam tournaments and I\u0027m playing on outdoor grass courts.",
+        "I am located in the city of London I am…"
+      ],
+      "answer": "Wimbledon"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Sport",
+      "clues": [
+        "I am a cyclist, born June 17, 1945.",
+        "Nicknamed the cannibal, I am one of the few cyclists to have won five Tours of France.",
+        "I am Belgian, my name is Edouard Louis Joseph better known by the name of ..."
+      ],
+      "answer": "Eddy Merckx"
     }
   ]
 }
