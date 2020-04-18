@@ -8,8 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -342,7 +345,21 @@ public class Game {
 	 */
 	public boolean addDeck(File f) throws WrongDeckFormatException {
 		Deck d = Deck.fromJson(f);
-		return this.addDeck(d.clone());
+		if(!d.hasUniqueTheme()) {
+			List<Question> lq = d.getQuestions();
+			Map<String, List<Question>> map = lq.stream().collect(Collectors.groupingBy(Question::getTheme));
+			map.keySet().forEach(s -> {
+				Deck toAdd = new Deck();
+				map.get(s).forEach(q -> {
+					try {
+						toAdd.addQuestion(q);
+					} catch (QuestionAlreadyExistException e) {}
+				});
+				this.addDeck(toAdd);
+			});
+			return true;
+		}
+		else return this.addDeck(d.clone());
 	}
 	
 	/**
