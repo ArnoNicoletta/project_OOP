@@ -12,6 +12,7 @@ public class RulesSettings {
 	//Game rules
 	public final static double JOKER_TIME = 10;
 	private static int number_round = 1;
+	private static int max_score = 4;
 	private static double round_time_seconds = 45;
 	private static double time_gap_millis = 25;
 	//UI rules
@@ -22,6 +23,10 @@ public class RulesSettings {
 	public static void setNumber_round(int number_round) throws WrongRuleValueException {
 		if(number_round<1 || number_round>5) throw new WrongRuleValueException(""+number_round);
 		RulesSettings.number_round = number_round;
+	}
+	public static void setMax_score(int max_score) throws WrongRuleValueException {
+		if(max_score<=0 || max_score > 10) throw new WrongRuleValueException(""+ max_score);
+		RulesSettings.max_score = max_score;
 	}
 	public static void setRound_time_seconds(double round_time_seconds) throws WrongRuleValueException {
 		if(round_time_seconds<15 || round_time_seconds>90) throw new WrongRuleValueException(""+ round_time_seconds);
@@ -40,6 +45,9 @@ public class RulesSettings {
 	//Getters
 	public static int getNumber_round() {
 		return number_round;
+	}
+	public static int getMax_score() {
+		return max_score;
 	}
 	public static double getRound_time_seconds() {
 		return round_time_seconds;
