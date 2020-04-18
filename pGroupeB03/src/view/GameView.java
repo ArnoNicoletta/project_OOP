@@ -133,7 +133,7 @@ public class GameView extends StackPane {
 		 * @see getIvAdd()
 		 */
 		private void addPlayer() {
-			if(this.count>=RulesSettings.MAX_PLAYER) {
+			if(this.count>=RulesSettings.getMax_player()) {
 				return;
 			}
 			getlLblPlayer().add(IGraphicConst.styleLabel(new Label("PLAYER " + (this.count+1))));
@@ -606,7 +606,7 @@ public class GameView extends StackPane {
 				ivJokerBonusTime.toFront();
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
-					timer.setValue(timer.get() + RulesSettings.JOKER_TIME);
+					timer.setValue(timer.get() + RulesSettings.getJoker_time());
 					getIvJokerFirstLetter().setDisable(true);
 					getIvJokerFirstLetter().setOpacity(0.5);
 					getIvJokerExtraPass().setDisable(true);

@@ -5,12 +5,12 @@ import exception.WrongRuleValueException;
 public class RulesSettings {
 	
 	//Player rules
-	public final static int MAX_CHAR = 16;
-	public final static int MAX_PLAYER = 3;
+	private static int max_char = 16;
+	private static int max_player = 3;
 	//Question and Deck rules
-	public final static int MIN_QUESTIONS = 10;
+	private static int min_questions = 10;
 	//Game rules
-	public final static double JOKER_TIME = 10;
+	private static double joker_time = 10;
 	private static int number_round = 1;
 	private static int max_score = 4;
 	private static double round_time_seconds = 45;
@@ -20,6 +20,23 @@ public class RulesSettings {
 	private static boolean sound_enabled = true;
 	
 	//Setters
+	
+	public static void setMax_char(int max_char) throws WrongRuleValueException {
+		if(max_char<5 || max_char > 32) throw new WrongRuleValueException(""+max_char);
+		RulesSettings.max_char = max_char;
+	}
+	public static void setMax_player(int max_player) throws WrongRuleValueException {
+		if(max_player<1 || max_player > 8) throw new WrongRuleValueException(""+max_player);
+		RulesSettings.max_player = max_player;
+	}
+	public static void setMin_questions(int min_questions) throws WrongRuleValueException {
+		if(min_questions<getMax_score() || min_questions > 20) throw new WrongRuleValueException(""+min_questions);
+		RulesSettings.min_questions = min_questions;
+	}
+	public static void setJoker_time(double joker_time) throws WrongRuleValueException {
+		if(joker_time<5 || joker_time > getRound_time_seconds()/4) throw new WrongRuleValueException(""+joker_time);
+		RulesSettings.joker_time = joker_time;
+	}
 	public static void setNumber_round(int number_round) throws WrongRuleValueException {
 		if(number_round<1 || number_round>5) throw new WrongRuleValueException(""+number_round);
 		RulesSettings.number_round = number_round;
@@ -60,6 +77,18 @@ public class RulesSettings {
 	}
 	public static boolean getSound_enabled() {
 		return sound_enabled;
+	}
+	public static int getMax_char() {
+		return max_char;
+	}
+	public static int getMax_player() {
+		return max_player;
+	}
+	public static int getMin_questions() {
+		return min_questions;
+	}
+	public static double getJoker_time() {
+		return joker_time;
 	}
 	
 }
