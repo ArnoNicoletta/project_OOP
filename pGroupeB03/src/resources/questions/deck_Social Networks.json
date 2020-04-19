@@ -14,6 +14,16 @@
       "author": "Loïc Lécolier",
       "theme": "Social Networks",
       "clues": [
+        "I am available on all smartphones working with Android or IOS for free.",
+        "I am used to share photos and videos since 2011.",
+        "I am an application represented by a white ghost on a yellow background."
+      ],
+      "answer": "Snapchat"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
         "Originating on Japan, I became popular worldwide in the 2010s after being added to several mobile operating systems.",
         "I\u0027m now used a lot when someone sends a message.",
         "I am used to show facial expressions, objects, symbols, etc... by message."
@@ -24,11 +34,71 @@
       "author": "Loïc Lécolier",
       "theme": "Social Networks",
       "clues": [
-        "I am available on all smartphones working with Android or IOS for free.",
-        "I am used to share photos and videos since 2011.",
-        "I am an application represented by a white ghost on a yellow background."
+        "I’m a little icon to check on youtube when we like a video",
+        "I also have an opposite at my sides in red color.",
+        "I am represented by a blue thumb, I am ..."
       ],
-      "answer": "Snapchat"
+      "answer": "Like"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Social Networks",
+      "clues": [
+        "I am an advertising technique that uses the promotion of a product in different media.",
+        "I am generally found in audiovisual form.",
+        "We also use the term \u0027branded integration deal\u0027, I am ..."
+      ],
+      "answer": "Product placement"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
+        "I am a social network created on March 21, 2006.",
+        "I am represented by a little blue bird.",
+        "I allow a user to send short messages, called tweets, for free. I am..."
+      ],
+      "answer": "Twitter"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
+        "I am the most followed personality on Instagram.",
+        "I am a soccer star playing in an Italian club.",
+        "I have Portuguese nationality I am ..."
+      ],
+      "answer": "Cristiano Ronaldo"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
+        "I represent a group of people on most social networks.",
+        "Some personalities count me in millions.",
+        "I am strongly present on Instagram, I am ..."
+      ],
+      "answer": "Follower"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
+        "I’m known to be a video hosting website and social media",
+        "My users can send, watch, comment, rate and share streaming videos.",
+        "I was created in February 2005 by Steve Chen, Chad Hurley and Jawed Karim. I am..."
+      ],
+      "answer": "Youtube"
+    },
+    {
+      "author": "Loïc Lécolier",
+      "theme": "Social Networks",
+      "clues": [
+        "I am the art of portraying real or fictitious events in words, images, and sounds.",
+        "I am very practiced on snapchat and instagram.",
+        "Most of the time I am activated by pressing a fictitious bubble. I am"
+      ],
+      "answer": "Story"
     }
   ]
 }
