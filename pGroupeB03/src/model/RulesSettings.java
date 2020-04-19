@@ -34,7 +34,7 @@ public class RulesSettings {
 		RulesSettings.min_questions = min_questions;
 	}
 	public static void setJoker_time(double joker_time) throws WrongRuleValueException {
-		if(joker_time<5 || joker_time > getRound_time_seconds()/4) throw new WrongRuleValueException(""+joker_time);
+		if(joker_time<5 || joker_time > getRound_time_seconds()) throw new WrongRuleValueException(""+joker_time);
 		RulesSettings.joker_time = joker_time;
 	}
 	public static void setNumber_round(int number_round) throws WrongRuleValueException {
