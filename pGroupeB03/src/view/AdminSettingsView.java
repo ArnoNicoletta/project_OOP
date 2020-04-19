@@ -2,9 +2,13 @@ package view;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import exception.DeckNotFoundException;
 import exception.QuestionAlreadyExistException;
@@ -19,6 +23,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -58,6 +63,7 @@ import model.Admin;
 import model.Deck;
 import model.Game;
 import model.Question;
+import model.RulesSettings;
 
 public class AdminSettingsView extends StackPane {
 
@@ -203,6 +209,7 @@ public class AdminSettingsView extends StackPane {
 
 	class AdminMenu extends BorderPane{
 		
+		private Button btnAdminSettings;
 		private Button btnModify;
 		private Button btnImport;
 		private Button btnExport;
@@ -216,24 +223,27 @@ public class AdminSettingsView extends StackPane {
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
 			VBox vb = new VBox();
-			vb.getChildren().addAll(getBtnModify(),getBtnImport(), getBtnExport());
-			vb.setSpacing(30);
+			vb.getChildren().addAll(getBtnAdminSettings(), getBtnModify(),getBtnImport(), getBtnExport());
+			vb.setSpacing(20);
 			vb.setAlignment(Pos.CENTER);
-			vb.setTranslateY(40);
+			vb.setTranslateY(50);
 			this.setCenter(vb);
 		}
-		
+		public Button getBtnAdminSettings() {
+			if(btnAdminSettings==null) {
+				btnAdminSettings = new Button("GAME SETTINGS");
+				btnAdminSettings.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
+				IGraphicConst.styleButton(btnAdminSettings);
+				btnAdminSettings.setOnAction(e -> showElement(new AdminGameSettings()));
+			}
+			return btnAdminSettings;
+		}
 		public Button getBtnModify() {
 			if(btnModify == null) {
 				btnModify = new Button("ADD/REMOVE/MODIFY QUESTIONS");
 				btnModify.setPrefSize(IGraphicConst.WIDTH_LARGE_BUTTON, IGraphicConst.HEIGHT_BUTTON);
 				IGraphicConst.styleButton(btnModify);
-				btnModify.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						showElement(new AdminTreeTable());
-					}
-				});
+				btnModify.setOnAction(e -> showElement(new AdminTreeTable()));
 			}
 			return btnModify;
 		}
@@ -301,6 +311,160 @@ public class AdminSettingsView extends StackPane {
 		}
 		
 	}
+	
+	
+class AdminGameSettings extends BorderPane {
+		
+		private List<Label> lLblInputSettings = new ArrayList<>();
+		private Map<TextField, Method> mInputSettings = new LinkedHashMap<>();
+		private Map<CheckBox, Method> mChoiceSettings = new LinkedHashMap<>();
+		
+		private GridPane gp;
+		private Button btnSave;
+		private ImageView ivBack;
+		
+		public AdminGameSettings() {
+			
+			this.setBackground(new Background(new BackgroundImage(
+					new Image(IGraphicConst.URL_PATH_IMG + "background/background_settings.png", false), 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+					BackgroundPosition.CENTER,  
+					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
+			
+			
+			//CENTER
+			getGp().setTranslateY(50);
+			this.setCenter(getGp());
+			
+			
+			//Bottom
+			HBox hbBottom = new HBox();
+			hbBottom.setAlignment(Pos.TOP_CENTER);
+			hbBottom.getChildren().addAll(getIvBack());
+			this.setBottom(getIvBack());
+			
+		}
+		
+		private void initElements() {
+			
+			for(Field f : RulesSettings.class.getDeclaredFields()) {
+				if(f.getType() == double.class || f.getType() == int.class) {
+					Label lbl = new Label(f.getName());
+					GridPane.setHalignment(lbl, HPos.LEFT);
+					TextField txt = new TextField();
+					GridPane.setHalignment(txt, HPos.CENTER);
+					Method m=null;
+					try  {
+						m = RulesSettings.class.getDeclaredMethod(
+								"set"+f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1), 
+								f.getType());
+						txt.setText(RulesSettings.class.getDeclaredMethod(
+								"get"+ f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1))
+								.invoke(null).toString());
+					} catch (Exception e) { e.printStackTrace();}
+					lLblInputSettings.add(lbl);
+					mInputSettings.put(txt, m);
+				}
+				else if(f.getType() == boolean.class) {
+					CheckBox cb = new CheckBox(f.getName());
+					GridPane.setHalignment(cb, HPos.CENTER);
+					Method m = null;
+					try {
+						cb.setSelected((boolean) RulesSettings.class.getDeclaredMethod(
+								"get"+ f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1))
+								.invoke(null));
+						m = RulesSettings.class.getDeclaredMethod(
+								"set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1), 
+								f.getType());
+					} catch (Exception e) { e.printStackTrace();}
+					mChoiceSettings.put(cb, m);
+				}
+			}
+		}
+		
+		private void initGp() {
+			initElements();
+			int x = 0, y = 0, i;
+			for(i=0;i<lLblInputSettings.size();i++) {
+				getGp().add(lLblInputSettings.get(i), x++, y);
+				getGp().add((TextField) mInputSettings.keySet().toArray()[i], x++, y);
+				if(x>=4) {
+					x=0;
+					y++;
+				}
+				else getGp().add(new Label("  "), x++, y);
+			}
+			for(i=0;i<mChoiceSettings.size();i++) {
+				getGp().add((CheckBox) mChoiceSettings.keySet().toArray()[i], x, y, 2, 1);
+				x +=3;
+				if(x>=4) {
+					x=0;
+					y++;
+				}
+			}
+			getGp().add(getBtnSave(), 4, ++y);
+		}
+		
+		private void save() {
+			mInputSettings.forEach((txt, m) -> {
+				try {
+					if(m.getGenericParameterTypes()[0] == int.class) {
+						m.invoke(null, Integer.parseInt(txt.getText()));
+					}
+					else if(m.getGenericParameterTypes()[0] == double.class) {
+						m.invoke(null, Double.parseDouble(txt.getText()));
+					}
+				} catch (Exception e) {
+					MsgBox.dispalyException(e);
+					return;
+				}
+			});
+			mChoiceSettings.forEach((cb, m) -> {
+				try {
+					m.invoke(m, cb.isSelected());
+				} catch (Exception e) {
+					MsgBox.dispalyException(e);
+					return;
+				}
+			});
+			MsgBox.dispalyOk("Saved !", "Settings have been saved !");
+		}
+		
+		public GridPane getGp() {
+			if(gp==null) {
+				gp = new GridPane();
+				gp.setAlignment(Pos.CENTER);
+				gp.setHgap(10);
+				gp.setVgap(10);
+				initGp();
+			}
+			return gp;
+		}
+		
+		public Button getBtnSave() {
+			if(btnSave==null) {
+				btnSave = new Button("SAVE");
+				IGraphicConst.styleButton(btnSave);
+				GridPane.setHalignment(btnSave, HPos.RIGHT);
+				btnSave.setOnAction(e -> save());
+			}
+			return btnSave;
+		}
+		
+		public ImageView getIvBack() {
+			if(ivBack == null) {
+				ivBack = new ImageView(IGraphicConst.URL_PATH_IMG + "icons/button_back.png");
+				IGraphicConst.styleImageView(ivBack);
+				ivBack.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/button_back_nobackground.png"));
+				ivBack.setTranslateX(20);
+				ivBack.setTranslateY(-20);
+				ivBack.setOnMouseClicked(e -> showElement(new AdminMenu()));
+			}
+			return ivBack;
+		}
+	}
+	
+	
 	class AdminTreeTable extends BorderPane {
 		
 		private TreeTableView<Question> table;
