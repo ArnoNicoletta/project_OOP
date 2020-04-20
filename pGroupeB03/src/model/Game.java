@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import exception.DeckNotFoundException;
 import exception.EmptyPseudoException;
 import exception.IdenticalPseudoException;
+import exception.NotEnoughDeckException;
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
 import exception.TooMuchCharException;
@@ -81,7 +82,7 @@ public class Game {
 		instance.initHighscores();
 	}
 	
-	public void replay() {
+	public void replay() throws NotEnoughDeckException {
 		saveHighscores();
 		this.usedDecks = new ArrayList<>();
 		addAllDeck();
@@ -121,13 +122,18 @@ public class Game {
 	/**
 	 * Gives a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
 	 * @param nb : {@link Integer}. The <code>size-1</code> of the returned {@link List}.
-	 * As it is made to play the game, it will give <code>nb</code> elements instead of <code>nb-1</code> elements.
+	 * As it is made to play the game, it will give <code>nb</code> elements instead of <code>nb-1</code> elements,
+	 * and it will check if the decks have 
 	 * @return {@link List}<{@link Deck}>.
+	 * @throws NotEnoughDeckException 
 	 */
-	public List<Deck> randomChoice(int nb){
+	public List<Deck> randomChoice(int nb) throws NotEnoughDeckException{
 		if(decks.size()<=nb) return null;
 		List<Deck> ret = new ArrayList<>();
-		List<Deck> tmp = this.getDecks();
+		List<Deck> tmp = getDecks().parallelStream()
+							.filter(d -> d.getSizeQuestions()>=RulesSettings.getMin_questions())
+							.collect(Collectors.toList());
+		if(tmp.size()<nb) throw new NotEnoughDeckException(nb);
 		Random rand = new Random();
 		for(int i=0;i<=nb;i++) {
 			int index = rand.nextInt(tmp.size());
@@ -140,8 +146,9 @@ public class Game {
 	/**
 	 * Stores a <code>pseudo-random</code> {@link List} of {@link Deck} from the current {@link Game} decks with a given size.
 	 * This list of deck will replace all the decks in the game.
+	 * @throws NotEnoughDeckException 
 	 */
-	public void randomChoice() {
+	public void randomChoice() throws NotEnoughDeckException {
 		updateAllDecks(randomChoice(getNumberOfPlayers()));
 	}
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import exception.NotEnoughDeckException;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -268,8 +269,14 @@ public class GameView extends StackPane {
 								return ;
 							}
 						}
+						
+						try {
+							getGame().randomChoice();
+						} catch (NotEnoughDeckException e) {
+							MsgBox.dispalyException(e);
+							return;
+						}
 						getGame().setCurrentPlayer(0);
-						getGame().randomChoice();
 						showElement(new ThemeSelection());
 					}
 				});
@@ -813,7 +820,12 @@ public class GameView extends StackPane {
 				btnReplay.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						getGame().replay();
+						try {
+							getGame().replay();
+						} catch (NotEnoughDeckException e) {
+							MsgBox.dispalyException(e);
+							return;
+						}
 						showElement(new ThemeSelection());
 					}
 				});
