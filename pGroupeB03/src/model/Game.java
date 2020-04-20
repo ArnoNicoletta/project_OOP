@@ -168,7 +168,7 @@ public class Game {
 	 * @return {@link Boolean}. <code>true</code> if finished.
 	 */
 	public boolean isFinished(Deck d) {
-		return getCurrentQuestion() >= d.getSizeQuestions()-1 || getPlayer(getCurrentPlayer()).getScore() == 4;
+		return getCurrentQuestion() >= d.getSizeQuestions()-1 || getPlayer(getCurrentPlayer()).getScore() == RulesSettings.getMax_score();
 	}
 	
 	/**

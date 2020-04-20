@@ -35,7 +35,7 @@ public class Player {
 	}
 	
 	public boolean addPoint() {
-		return ++score <=4;
+		return ++score <= RulesSettings.getMax_score();
 	}
 	
 	//JSON methods
@@ -89,7 +89,7 @@ public class Player {
 		return score;
 	}
 	public void setScore(int score) {
-		if(score>=0 && score<=4)
+		if(score>=0 && score<=RulesSettings.getMax_score())
 			this.score = score;
 	}
 	public double getTime() {
