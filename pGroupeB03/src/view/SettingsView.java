@@ -155,11 +155,11 @@ public class SettingsView extends StackPane {
 			gp.setVgap(15);
 			gp.setTranslateY(50);
 			
-			GridPane.setHalignment(getLblNbRound(),HPos.LEFT);
-			gp.add(getLblNbRound(), 0, 0);
-			
-			GridPane.setHalignment(getTxtNbRound(),HPos.CENTER);
-			gp.add(getTxtNbRound(), 1, 0);
+//			GridPane.setHalignment(getLblNbRound(),HPos.LEFT);
+//			gp.add(getLblNbRound(), 0, 0);
+//			
+//			GridPane.setHalignment(getTxtNbRound(),HPos.CENTER);
+//			gp.add(getTxtNbRound(), 1, 0);
 			
 			GridPane.setHalignment(getLblTime(),HPos.LEFT);
 			gp.add(getLblTime(), 0, 1);
