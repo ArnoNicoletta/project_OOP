@@ -506,6 +506,7 @@ class AdminGameSettings extends BorderPane {
 			getTable().getSelectionModel().clearSelection();
 		}
 		
+		@SuppressWarnings("unchecked")
 		public TreeTableView<Question> getTable() {
 			if(table==null) {
 				table = new TreeTableView<>();

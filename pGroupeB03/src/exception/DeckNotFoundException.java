@@ -1,7 +1,5 @@
 package exception;
 
-import model.Deck;
-
 @SuppressWarnings("serial")
 public class DeckNotFoundException extends Exception {
 	

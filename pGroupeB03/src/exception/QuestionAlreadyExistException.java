@@ -2,6 +2,7 @@ package exception;
 
 import model.Question;
 
+@SuppressWarnings("serial")
 public class QuestionAlreadyExistException extends Exception {
 	
 	private Question q;
