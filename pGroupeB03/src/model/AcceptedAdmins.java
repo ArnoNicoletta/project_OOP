@@ -2,7 +2,7 @@ package model;
 
 public enum AcceptedAdmins {
 	
-	HELHA("Admin", "helha"),
+	HELHA("admin", "helha"),
 	ARNO_NICOLETTA("Arno Nicoletta", "helha"),
 	RAYAN_TAHRI("Rayan Tahri", "helha"),
 	LOIC_LECOLIER("Loïc Lécolier", "helha");
