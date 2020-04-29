@@ -17,7 +17,7 @@ public class Admin {
 	private String username;
 	private String password;
 	
-	private Game g = Game.getInstance();
+	private GameDecks g = GameDecks.getInstance();
 	
 	public Admin(String username, String password) throws WrongLoginException {
 		

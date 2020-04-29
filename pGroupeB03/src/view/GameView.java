@@ -45,7 +45,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.Deck;
-import model.Game;
+import model.GameDecks;
+import model.GameDecksAndPlayers;
 import model.Player;
 import model.RulesSettings;
 
@@ -61,11 +62,11 @@ import model.RulesSettings;
 public class GameView extends StackPane {
 	
 	//Game vars
-	private Game g;
+	private GameDecksAndPlayers g;
 	
 	public GameView() {
 		
-		this.g = Game.getInstance();
+		this.g = GameDecksAndPlayers.getInstance();
 		this.showElement(new PlayerSelection());
 	}
 	
@@ -75,7 +76,7 @@ public class GameView extends StackPane {
 		element.setVisible(true);
 	}
 	// Game elements
-	public Game getGame() {
+	public GameDecksAndPlayers getGame() {
 		return g;
 	}
 	
@@ -276,7 +277,7 @@ public class GameView extends StackPane {
 							MsgBox.dispalyException(e);
 							return;
 						}
-						getGame().setCurrentPlayer(0);
+						getGame().setPosPlayer(0);
 						showElement(new ThemeSelection());
 					}
 				});
@@ -317,7 +318,7 @@ public class GameView extends StackPane {
 		
 		public Label getLblPlayer() {
 			if(lblPlayer==null) {
-				lblPlayer = new Label(getGame().getPlayer(getGame().getCurrentPlayer()) + 
+				lblPlayer = new Label(getGame().getPlayer(getGame().getPosPlayer()) + 
 						" , SELECT A THEME ");
 				IGraphicConst.styleLabel(lblPlayer);
 			}
@@ -432,7 +433,7 @@ public class GameView extends StackPane {
 			
 			
 			//Init game stuffs
-			fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
+			fullClues = g.getClue(0) + " " + g.getClue(1) + " " + g.getClue(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTimelineTimer().playFromStart();
 			pause();
@@ -479,10 +480,10 @@ public class GameView extends StackPane {
 				return;
 			}
 			
-			g.nextCurrentQuestion();
+			g.nextPosQuestion();
 			updateIvScore(g.getPlayer().getScore(), scorePos);
 			cluesPos = 0;
-			fullClues = g.getClues(0) + " " + g.getClues(1) + " " + g.getClues(2);
+			fullClues = g.getClue(0) + " " + g.getClue(1) + " " + g.getClue(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTxtAnswer().setText("");
 			getTxtAnswer().requestFocus();
@@ -496,13 +497,13 @@ public class GameView extends StackPane {
 			
 			g.getPlayer().setTime(RulesSettings.getRound_time_seconds() - Double.parseDouble(getLblTimer().getText()));
 			if(g.isFinished()) {
-				Game.reset();
+				GameDecks.reset();
 				showElement(new Ranking());
 				return;
 			}
 			//Setting up next Player
-			g.nextCurrentPlayer();
-			g.setCurrentQuestion(0);
+			g.nextPosPlayer();
+			g.setPosQuestion(0);
 			//Setting up GUI
 			showElement(new ThemeSelection());
 		}
@@ -570,7 +571,7 @@ public class GameView extends StackPane {
 				ivJokerFirstLetter.setCursor(Cursor.HAND);
 				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
 				ivJokerFirstLetter.setOnMouseClicked(e -> {
-					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getCurrentQuestion()).getAnswer().substring(0, 1));
+					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer().substring(0, 1));
 					getIvJokerFirstLetter().setDisable(true);
 					getIvJokerFirstLetter().setOpacity(0.5);
 					getIvJokerExtraPass().setDisable(true);
@@ -777,7 +778,7 @@ public class GameView extends StackPane {
 		}
 		
 		private void addPlayers() {
-			getGame().sortPlayers();
+			getGame().endGame();
 			for(int i=0; i<getGame().getNumberOfPlayers(); i++) {
 				this.addPlayer(i);
 			}

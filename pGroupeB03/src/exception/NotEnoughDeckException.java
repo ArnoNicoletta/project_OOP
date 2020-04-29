@@ -1,6 +1,6 @@
 package exception;
 
-import model.Game;
+import model.GameDecks;
 
 @SuppressWarnings("serial")
 public class NotEnoughDeckException extends Exception {
@@ -8,7 +8,7 @@ public class NotEnoughDeckException extends Exception {
 	private int wanted;
 	
 	public NotEnoughDeckException(int wanted) {
-		super("The current Game doesn't have enough deck, only : " + Game.getInstance().getDecks().size() + "decks.");
+		super("The current Game doesn't have enough deck, only : " + GameDecks.getInstance().getDecks().size() + "decks.");
 		this.wanted = wanted;
 	}
 	

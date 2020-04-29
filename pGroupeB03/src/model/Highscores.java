@@ -15,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class Highscores {
 	
-	private final String path = "./src/resources/user/highscores.json";
+	private final String PATH = "./src/resources/user/highscores.json";
 	private List<Player> highscores;
 	
 	private static Highscores instance;
@@ -47,7 +47,7 @@ public class Highscores {
 	private void initHighscores() {
 		ArrayList<Player> ret = new ArrayList<>();
 		Gson gson = new Gson();
-		try(BufferedReader br = new BufferedReader(new FileReader(path))){
+		try(BufferedReader br = new BufferedReader(new FileReader(PATH))){
 			ret = gson.fromJson(br, new TypeToken<ArrayList<Player>>() {}.getType());
 			br.close();
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class Highscores {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(highscores);
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(PATH))){
 			bw.write(json);
 			bw.close();
 		} catch(IOException e) {

@@ -19,7 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Deck;
-import model.Game;
+import model.GameDecks;
 
 public class MsgBox{
 	
@@ -128,7 +128,7 @@ public class MsgBox{
 	
 	
 	/**
-	 * Displays a new window ( {@link Stage} ) called when the {@link Game} is paused.
+	 * Displays a new window ( {@link Stage} ) called when the {@link GameDecks} is paused.
 	 * @param player : {@link String}. The pseudo of the player currently playing.
 	 * @param theme : {@link String}. The theme of the {@link Deck} currently played.
 	 * @return {@link Boolean} : <code>true</code> if the player want to continue, <code>false</code> otherwise.

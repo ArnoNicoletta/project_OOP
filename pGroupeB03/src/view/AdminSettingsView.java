@@ -61,14 +61,14 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import model.Admin;
 import model.Deck;
-import model.Game;
+import model.GameDecks;
 import model.Question;
 import model.RulesSettings;
 
 public class AdminSettingsView extends StackPane {
 
 	private Admin admin;
-	private Game g = Game.getInstance();
+	private GameDecks g = GameDecks.getInstance();
 	
 	public AdminSettingsView() {
 		this.showElement(new AdminLogin());
