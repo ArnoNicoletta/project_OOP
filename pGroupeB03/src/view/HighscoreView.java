@@ -20,7 +20,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.Game;
+import model.Highscores;
 import model.Player;
 
 
@@ -32,6 +32,8 @@ public class HighscoreView extends BorderPane {
 	private Label lblTime;
 	
 	private GridPane gp;
+	
+	private Highscores highscores = Highscores.getInstance();
 	
 	public HighscoreView() {
 		
@@ -80,11 +82,11 @@ public class HighscoreView extends BorderPane {
 	}
 	
 	private void addPlayers() {
-		if(Game.getInstance().getHighscores().isEmpty()) {
+		if(highscores.getHighscores().isEmpty()) {
 			getGp().add(IGraphicConst.styleBiggerLabel(new Label("No score yet")), 0, 1, 4, 1);
 		}
 		int i = 0;
-		for(Player p : Game.getInstance().getHighscores()) {
+		for(Player p : highscores.getHighscores()) {
 			this.addPlayer(i++, p);
 		}
 	}
