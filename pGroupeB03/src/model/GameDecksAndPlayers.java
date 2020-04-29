@@ -16,6 +16,8 @@ public class GameDecksAndPlayers extends GameDecks {
 	private List<Deck> usedDecks;
 	private int posQuestion;
 	
+	private static GameDecksAndPlayers instance;
+	
 	protected GameDecksAndPlayers() {
 		super();
 		this.players = new ArrayList<>();
@@ -27,6 +29,12 @@ public class GameDecksAndPlayers extends GameDecks {
 			instance = new GameDecksAndPlayers();
 		}
 		return (GameDecksAndPlayers) instance;
+	}
+	/**
+	 * Reset the {@link GameDecks} instance.
+	 */
+	public static void reset() {
+		instance = new GameDecksAndPlayers();
 	}
 	/**
 	 * Allows to replay a game by keeping the players and choosing new decks.
