@@ -34,6 +34,7 @@ public class GameDecksAndPlayers extends GameDecks {
 	 * Reset the {@link GameDecks} instance.
 	 */
 	public static void reset() {
+		GameDecks.reset();
 		instance = new GameDecksAndPlayers();
 	}
 	/**
