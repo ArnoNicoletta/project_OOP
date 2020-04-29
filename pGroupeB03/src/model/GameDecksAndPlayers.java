@@ -16,7 +16,7 @@ public class GameDecksAndPlayers extends GameDecks {
 	private List<Deck> usedDecks;
 	private int posQuestion;
 	
-	private static GameDecksAndPlayers instance;
+	protected static GameDecksAndPlayers instance;
 	
 	protected GameDecksAndPlayers() {
 		super();
