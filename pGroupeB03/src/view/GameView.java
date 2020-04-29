@@ -66,6 +66,7 @@ public class GameView extends StackPane {
 	
 	public GameView() {
 		
+		GameDecksAndPlayers.reset();
 		this.g = GameDecksAndPlayers.getInstance();
 		this.showElement(new PlayerSelection());
 	}
@@ -379,7 +380,7 @@ public class GameView extends StackPane {
 		private Timeline timelineTimer;
 		private Label lblTimer;
 		
-		private ImageView ivJokerFirstLetter;
+		private ImageView ivJokerLetters;
 		private ImageView ivJokerExtraPass;
 		private ImageView ivJokerBonusTime;
 		
@@ -410,7 +411,7 @@ public class GameView extends StackPane {
 			VBox vbLeft = new VBox(15);
 			vbLeft.setPadding(new Insets(0, 5, 10, 25));
 			vbLeft.setAlignment(Pos.CENTER_RIGHT);
-			vbLeft.getChildren().addAll(getIvJokerFirstLetter(), getIvJokerExtraPass(), getIvJokerBonusTime());
+			vbLeft.getChildren().addAll(getIvJokerLetters(), getIvJokerExtraPass(), getIvJokerBonusTime());
 			vbLeft.toFront();
 			
 			//CENTER RIGHT
@@ -486,6 +487,7 @@ public class GameView extends StackPane {
 			fullClues = g.getClue(0) + " " + g.getClue(1) + " " + g.getClue(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTxtAnswer().setText("");
+			getTxtAnswer().setPromptText("");
 			getTxtAnswer().requestFocus();
 		}
 		
@@ -561,26 +563,44 @@ public class GameView extends StackPane {
 			}
 			return lblTimer;
 		}
-		public ImageView getIvJokerFirstLetter() {
-			if(ivJokerFirstLetter==null) {
-				ivJokerFirstLetter = new ImageView();
-				if(RulesSettings.getFaced_joker()) ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
-				else ivJokerFirstLetter.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
-				ivJokerFirstLetter.setFitWidth(IGraphicConst.WIDTH_JOKER);
-				ivJokerFirstLetter.setFitHeight(IGraphicConst.HEIGHT_JOKER);
-				ivJokerFirstLetter.setCursor(Cursor.HAND);
-				Tooltip.install(ivJokerFirstLetter, new Tooltip("First letter of the answer !"));
-				ivJokerFirstLetter.setOnMouseClicked(e -> {
-					getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer().substring(0, 1));
-					getIvJokerFirstLetter().setDisable(true);
-					getIvJokerFirstLetter().setOpacity(0.5);
-					getIvJokerExtraPass().setDisable(true);
-					getIvJokerExtraPass().setOpacity(0.5);
-					getIvJokerBonusTime().setDisable(true);
-					getIvJokerBonusTime().setOpacity(0.5);
-				}); 
+		private void disableJokers() {
+			getIvJokerLetters().setDisable(true);
+			getIvJokerLetters().setOpacity(0.5);
+			getIvJokerExtraPass().setDisable(true);
+			getIvJokerExtraPass().setOpacity(0.5);
+			getIvJokerBonusTime().setDisable(true);
+			getIvJokerBonusTime().setOpacity(0.5);
+		}
+		public ImageView getIvJokerLetters() {
+			if(ivJokerLetters==null) {
+				ivJokerLetters = new ImageView();
+				if(RulesSettings.getFaced_joker()) ivJokerLetters.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/arno.png"));
+				else ivJokerLetters.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
+				ivJokerLetters.setFitWidth(IGraphicConst.WIDTH_JOKER);
+				ivJokerLetters.setFitHeight(IGraphicConst.HEIGHT_JOKER);
+				ivJokerLetters.setCursor(Cursor.HAND);
+				Tooltip.install(ivJokerLetters, new Tooltip("Hangman !"));
+				ivJokerLetters.setOnMouseClicked(e -> {
+					String answer = g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer();
+//					getTxtAnswer().setPromptText(answer
+//					.replaceAll("[a,e,i,o,u,y]", "_"));
+//					getTxtAnswer().setPromptText(answer
+//							.replaceAll("[b, c, d, f, g, h, j, k, l, m, n, p, q, r, s, t, v, w, x, z ]", "_"));
+					String tmp="";
+					for(int i=0;i<answer.length();i++) {
+						if(i%2!=0) {
+							if(answer.charAt(i) != ' ') tmp += "_";
+						}
+						else {
+							tmp += answer.charAt(i);
+						}
+					}
+					getTxtAnswer().setPromptText(tmp);
+					getBtnPause().requestFocus();
+					disableJokers();
+				});
 			}
-			return ivJokerFirstLetter;
+			return ivJokerLetters;
 		}
 		public ImageView getIvJokerExtraPass() {
 			if(ivJokerExtraPass==null) {
@@ -593,12 +613,7 @@ public class GameView extends StackPane {
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					nextQuestion();
-					getIvJokerFirstLetter().setDisable(true);
-					getIvJokerFirstLetter().setOpacity(0.5);
-					getIvJokerExtraPass().setDisable(true);
-					getIvJokerExtraPass().setOpacity(0.5);
-					getIvJokerBonusTime().setDisable(true);
-					getIvJokerBonusTime().setOpacity(0.5);
+					disableJokers();
 				});
 			}
 			return ivJokerExtraPass;
@@ -615,12 +630,7 @@ public class GameView extends StackPane {
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + RulesSettings.getJoker_time());
-					getIvJokerFirstLetter().setDisable(true);
-					getIvJokerFirstLetter().setOpacity(0.5);
-					getIvJokerExtraPass().setDisable(true);
-					getIvJokerExtraPass().setOpacity(0.5);
-					getIvJokerBonusTime().setDisable(true);
-					getIvJokerBonusTime().setOpacity(0.5);
+					disableJokers();
 				});
 			}
 			return ivJokerBonusTime;
