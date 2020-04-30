@@ -24,10 +24,10 @@ public class Question {
 	 * @param answer : String. The answer of the question.
 	 */
 	public Question(String author, String theme, List<String> clues, String answer) {
-		this.author = author;
-		this.theme = theme;
-		this.clues = clues;
-		this.answer = answer;
+		this.setAuthor(author);
+		this.setTheme(theme);
+		this.setClues(clues);
+		this.setAnswer(answer);
 	}
 	
 	//Getters and setters
