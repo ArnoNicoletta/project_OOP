@@ -77,12 +77,12 @@ public class Question {
 		if (answer == null) {
 			if (other.answer != null)
 				return false;
-		} else if (!answer.equals(other.answer))
+		} else if (!answer.equalsIgnoreCase(other.answer))
 			return false;
 		if (theme == null) {
 			if (other.theme != null)
 				return false;
-		} else if (!theme.equals(other.theme))
+		} else if (!theme.equalsIgnoreCase(other.theme))
 			return false;
 		return true;
 	}
