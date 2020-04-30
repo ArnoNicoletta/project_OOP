@@ -91,7 +91,7 @@ public class Deck {
 		try(BufferedReader br = new BufferedReader(new FileReader(file))){
 			ret = gson.fromJson(br, Deck.class);
 			br.close();
-		} catch (Exception e) {}
+		} catch (IOException e) {}
 		if(ret==null) throw new WrongDeckFormatException(file);
 		return ret.clone();
 	}
