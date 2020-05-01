@@ -127,10 +127,7 @@ public class GameDecks {
 				f.createNewFile();
 				Deck.toJson(d, f);
 				
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
+			} catch (IOException e) {}
 		}
 		return true;
 	}
