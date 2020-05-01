@@ -1,18 +1,21 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exception.QuestionAlreadyExistException;
+import exception.WrongDeckFormatException;
 import model.Deck;
 import model.GameDecks;
 import model.Question;
@@ -23,6 +26,7 @@ class TestGameDecks {
 	static GameDecks g;
 	static List<Deck> decks;
 	static Deck d;
+	static List<Question> questions;
 	Question q = new Question("author", "theme", Arrays.asList("","",""), "answer");
 	
 	
@@ -31,19 +35,36 @@ class TestGameDecks {
 		g = GameDecks.getInstance();
 		decks = (List<Deck>) Explorateur.getField(g, "decks");
 		d = new Deck();
+		questions = (List<Question>) Explorateur.getField(d, "questions");
+	}
+
+	@BeforeEach
+	public void resetG() {
+		g.removeAllDecks();
+		decks.clear();
+		d = new Deck();
+		questions = (List<Question>) Explorateur.getField(d, "questions");
 	}
 	
 	@AfterAll
 	public static void deleteUnused() {
 		File f = new File("./src/resources/questions/deck_theme.json");
 		if(f.exists()) f.delete();
+		File test = new File("test.json");
+		if(test.exists()) test.delete();
 	}
 	
-	@BeforeEach
-	public void resetG() {
-		g.removeAllDecks();
-		decks.clear();
-		d = new Deck();
+	
+	// ***********************
+	//			TESTS
+	// ***********************
+	
+	@SuppressWarnings("static-access")
+	@Test
+	public void resetTest() {
+		questions.add(q);
+		decks.add(d);
+		assertNotEquals(g, g.reset());
 	}
 	
 	@Test
@@ -56,7 +77,7 @@ class TestGameDecks {
 	@Test
 	public void addSameQuestion() throws QuestionAlreadyExistException {
 		g.addQuestion(q);
-		Assertions.assertThrows(QuestionAlreadyExistException.class, 
+		Assert.assertThrows(QuestionAlreadyExistException.class, 
 				() -> g.addQuestion(new Question("author", "theme", Arrays.asList("","",""), "answer")));
 	}
 	
@@ -69,4 +90,21 @@ class TestGameDecks {
 		g.addQuestion(different);
 		assertEquals(decks.size(), 1);
 	}
+	
+	@Test
+	public void testIO() throws QuestionAlreadyExistException, WrongDeckFormatException {
+		questions.add(q);
+		questions.add(new Question("author", "anotherTheme", Arrays.asList("","",""), "anotherAnswer"));
+		assertEquals(2, questions.size());
+		assertFalse(d.hasUniqueTheme());
+		decks.add(d);
+		File test = new File("test.json");
+		Deck.toJson(d, test);
+		assertEquals(1, decks.size());
+		decks.clear();
+		g.addDeck(test);
+		assertEquals(2, decks.size());
+	}
+	
+	
 }
