@@ -16,7 +16,6 @@ class TestQuestion {
 	
 	Question q;
 	
-	
 	@BeforeEach
 	public void initQ() {
 		q = new Question("author", "theme", Arrays.asList("","",""), "answer");
