@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,7 +46,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.Deck;
-import model.GameDecks;
 import model.GameDecksAndPlayers;
 import model.Player;
 import model.RulesSettings;
@@ -374,6 +374,8 @@ public class GameView extends StackPane {
 		private int scorePos = 0;
 		private SimpleStringProperty clues = new SimpleStringProperty();
 		private int cluesPos = 0;
+		List<String> gradient;
+		int index = 0;
 		//GUI vars
 		private Label lblPlayer;
 		private ImageView ivScore;
@@ -459,7 +461,15 @@ public class GameView extends StackPane {
 		}
 		
 		private void checkAnswer() {
+			getTimelineTimer().pause();
+			gradient = Arrays.asList("#000000");
+			List<String> fromBlackToGreen = Arrays.asList("#000000", "#001700", "#002E00", "#004600", "#005D00", "#007400", 
+														  "#008B00", "#00A200", "#00B900", "#00D100", "#00E800", "#00FF00");
+			List<String> fromBlackToRed = Arrays.asList("#000000", "#170000", "#2E0000", "#460000", "#5D0000", "#740000", 
+					  									"#8B0000", "#A20000", "#B90000", "#D10000", "#E80000", "#FF0000");
+			index = 0;
 			String s = getTxtAnswer().getText();
+			getTxtAnswer().setText(g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer());
 			if(g.isRightAnswer(s)) {
 				if(scorePos<g.getPlayer().getScore()) {
 					scorePos++;
@@ -468,11 +478,33 @@ public class GameView extends StackPane {
 					g.addPoint();
 					scorePos++;
 				}
+				gradient = fromBlackToGreen;
 			}
 			else {
-				getTxtAnswer().setText("");
 				scorePos = 0;
+				gradient = fromBlackToRed;
 			}
+			Timeline transition = new Timeline();
+			transition.setCycleCount(gradient.size());
+			transition.getKeyFrames().add(new KeyFrame(Duration.millis(RulesSettings.getTime_gap_answer()), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					
+				getTxtAnswer().setStyle("-fx-font-family: \"Roboto Black\", sans-serif;\r\n" + 
+										"-fx-font-size: 15px;\r\n" + 
+										"-fx-font-weight: bold;\r\n" + 
+										"-fx-text-inner-color : " + gradient.get(index++) +";");
+				}
+			}));
+			transition.playFromStart();
+			
+			transition.setOnFinished(e -> {
+				getTxtAnswer().setStyle(IGraphicConst.STYLE_TXT);
+				getTxtAnswer().setText("");
+				getTxtAnswer().setPromptText("");
+				getTxtAnswer().requestFocus();
+				getTimelineTimer().play();
+			});
 		}
 		
 		private void nextQuestion() {
@@ -486,9 +518,6 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			fullClues = g.getClue(0) + " " + g.getClue(1) + " " + g.getClue(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
-			getTxtAnswer().setText("");
-			getTxtAnswer().setPromptText("");
-			getTxtAnswer().requestFocus();
 		}
 		
 		private void finishThisRound() {
@@ -539,8 +568,8 @@ public class GameView extends StackPane {
 				timelineTimer.getKeyFrames().add(new KeyFrame(Duration.millis(RulesSettings.getTime_gap_millis()), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						timer.setValue(timer.get() - 0.025);
-						if(timer.get() <= 0.025) {
+						timer.setValue(timer.get() - RulesSettings.getTime_gap_millis()/1000);
+						if(timer.get() <= RulesSettings.getTime_gap_millis()/1000) {
 							timelineTimer.stop();
 							finishThisRound();
 						}
@@ -588,8 +617,8 @@ public class GameView extends StackPane {
 //							.replaceAll("[b, c, d, f, g, h, j, k, l, m, n, p, q, r, s, t, v, w, x, z ]", "_"));
 					String tmp="";
 					for(int i=0;i<answer.length();i++) {
-						if(i%2!=0) {
-							if(answer.charAt(i) != ' ') tmp += "_";
+						if(i%2!=0 && answer.charAt(i) != ' ') {
+							tmp += "_";
 						}
 						else {
 							tmp += answer.charAt(i);
