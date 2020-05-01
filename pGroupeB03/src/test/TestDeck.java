@@ -2,19 +2,25 @@ package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exception.QuestionAlreadyExistException;
 import exception.QuestionNotFoundException;
+import exception.WrongDeckFormatException;
 import model.Deck;
 import model.Question;
 
@@ -32,6 +38,11 @@ class TestDeck {
 		questions = (List<Question>) Explorateur.getField(d, "questions");
 	}
 	
+	@AfterAll
+	public static void deleteUnused() {
+		File test = new File("test.json");
+		if(test.exists()) test.delete();
+	}
 	
 	
 	@Test
@@ -132,10 +143,34 @@ class TestDeck {
 		questions.add(new Question("author", "theme", Arrays.asList("","",""), "8"));
 		questions.add(new Question("author", "theme", Arrays.asList("","",""), "9"));
 		questions.add(new Question("author", "theme", Arrays.asList("","",""), "10"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "11"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "12"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "13"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "14"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "15"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "16"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "17"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "18"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "19"));
+		questions.add(new Question("author", "theme", Arrays.asList("","",""), "20"));
 		List<Question> tmp = new ArrayList<>();
 		tmp.addAll(questions);
 		d.shuffleQuestions();
 		assertNotEquals(tmp, questions);
+	}
+	
+	@Test
+	public void testIO() throws WrongDeckFormatException {
+		questions.add(q);
+		Deck.toJson(d, new File("test.json"));
+		assertTrue(new File("test.json").exists());
+		Deck tmpD = new Deck();
+		List<Question> tmpQ = (List<Question>) Explorateur.getField(tmpD, "questions");
+		tmpQ.addAll(questions);
+		d = Deck.fromJson(new File("test.json"));
+		assertEquals(tmpD, d);
+		Assert.assertThrows(WrongDeckFormatException.class, () -> d = Deck.fromJson(new File(".")));
+		assertDoesNotThrow(() -> Deck.toJson(d, new File("")));
 	}
 	
 }
