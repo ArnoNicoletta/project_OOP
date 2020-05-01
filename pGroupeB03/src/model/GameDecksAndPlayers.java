@@ -33,9 +33,10 @@ public class GameDecksAndPlayers extends GameDecks {
 	/**
 	 * Reset the {@link GameDecks} instance.
 	 */
-	public static void reset() {
+	public static GameDecksAndPlayers reset() {
 		GameDecks.reset();
 		instance = new GameDecksAndPlayers();
+		return instance;
 	}
 	/**
 	 * Allows to replay a game by keeping the players and choosing new decks.

@@ -58,11 +58,13 @@ public class GameDecks {
 	
 	/**
 	 * Reset the {@link GameDecks} instance.
+	 * @return {@link GameDecks} instance.
 	 */
-	public static void reset() {
+	public static GameDecks reset() {
 		instance = new GameDecks();
 		instance.addAllDeck();
 		instance.shuffleDecks();
+		return instance;
 	}
 	
 	/**
