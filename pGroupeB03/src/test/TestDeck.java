@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -173,4 +172,18 @@ class TestDeck {
 		assertDoesNotThrow(() -> Deck.toJson(d, new File("")));
 	}
 	
+	@Test
+	public void testHashCode() {
+		assertNotEquals(new Object().hashCode(), d.hashCode());
+	}
+	
+	@Test
+	public void testToString() {
+		questions.add(q);
+		String s="";
+		for (Question q : questions) {
+			s = s + q.toString() + "\n";
+		}
+		assertEquals(s, d.toString());
+	}
 }
