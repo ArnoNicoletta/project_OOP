@@ -108,9 +108,7 @@ public class Deck {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
 			bw.write(json);
 			bw.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		} catch(IOException e) {}
 	}
 	
 	// CRUD methods
