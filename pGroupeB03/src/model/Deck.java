@@ -228,7 +228,7 @@ public class Deck {
 	public Deck clone() {
 		Deck ret = new Deck();
 		for(Question q : questions) {
-			ret.questions.add(q.clone()); // Not using ret.addQuestion(q) because of imported deck
+			ret.questions.add(q.clone());
 		}
 		return ret;
 	}
