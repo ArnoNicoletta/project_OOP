@@ -15,6 +15,7 @@ public class RulesSettings {
 	private static int max_score = 4;
 	private static double round_time_seconds = 45;
 	private static double time_gap_millis = 25;
+	private static double time_gap_answer = 30;
 	//UI rules
 	private static boolean faced_joker = true;
 	private static boolean sound_enabled = true;
@@ -53,13 +54,20 @@ public class RulesSettings {
 		if(time_gap_millis>500 || time_gap_millis<20) throw new WrongRuleValueException(""+ time_gap_millis);
 		RulesSettings.time_gap_millis = time_gap_millis;
 	}
+	public static void setTime_gap_answer(double time_gap_answer) throws WrongRuleValueException {
+		if(time_gap_answer>1000 || time_gap_answer<20) throw new WrongRuleValueException(""+ time_gap_answer);
+		RulesSettings.time_gap_answer = time_gap_answer;
+	}
 	public static void setFaced_joker(boolean faced_joker) {
 		RulesSettings.faced_joker = faced_joker;
 	}
 	public static void setSound_enabled(boolean sound_enabled) {
 		RulesSettings.sound_enabled = sound_enabled;
 	}
+	
+	
 	//Getters
+	
 	public static int getNumber_round() {
 		return number_round;
 	}
@@ -71,6 +79,9 @@ public class RulesSettings {
 	}
 	public static double getTime_gap_millis() {
 		return time_gap_millis;
+	}
+	public static double getTime_gap_answer() {
+		return time_gap_answer;
 	}
 	public static boolean getFaced_joker() {
 		return faced_joker;
@@ -90,5 +101,4 @@ public class RulesSettings {
 	public static double getJoker_time() {
 		return joker_time;
 	}
-	
 }
