@@ -607,8 +607,8 @@ public class GameView extends StackPane {
 				else ivJokerLetters.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerLetters.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerLetters.setFitHeight(IGraphicConst.HEIGHT_JOKER);
-				ivJokerLetters.setCursor(Cursor.HAND);
 				Tooltip.install(ivJokerLetters, new Tooltip("Hangman !"));
+				ivJokerLetters.setCursor(Cursor.HAND);
 				ivJokerLetters.setOnMouseClicked(e -> {
 					String answer = g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer();
 //					getTxtAnswer().setPromptText(answer
@@ -638,8 +638,8 @@ public class GameView extends StackPane {
 				else ivJokerExtraPass.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerExtraPass.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerExtraPass.setFitHeight(IGraphicConst.HEIGHT_JOKER);
-				ivJokerExtraPass.setCursor(Cursor.HAND);
 				Tooltip.install(ivJokerExtraPass, new Tooltip("Pass for free !"));
+				ivJokerExtraPass.setCursor(Cursor.HAND);
 				ivJokerExtraPass.setOnMouseClicked(e -> {
 					nextQuestion();
 					disableJokers();
@@ -654,9 +654,8 @@ public class GameView extends StackPane {
 				else ivJokerBonusTime.setImage(new Image(IGraphicConst.URL_PATH_IMG + "icons/icon_joker.png"));
 				ivJokerBonusTime.setFitWidth(IGraphicConst.WIDTH_JOKER);
 				ivJokerBonusTime.setFitHeight(IGraphicConst.HEIGHT_JOKER);
-				ivJokerBonusTime.setCursor(Cursor.HAND);
-				ivJokerBonusTime.toFront();
 				Tooltip.install(ivJokerBonusTime, new Tooltip("More time !"));
+				ivJokerBonusTime.setCursor(Cursor.HAND);
 				ivJokerBonusTime.setOnMouseClicked(e -> {
 					timer.setValue(timer.get() + RulesSettings.getJoker_time());
 					disableJokers();
