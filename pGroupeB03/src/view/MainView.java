@@ -29,7 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import model.GameDecks;
+import model.GameDecksAndPlayers;
 
 /**
  * {@link BorderPane} that manages all the views.
@@ -92,8 +92,9 @@ public class MainView extends BorderPane {
 				public void handle(MouseEvent event) {
 					boolean sure = MsgBox.displayYesNO("Back to menu?", "Are you sure you want to go back to menu?");
 					if(sure) {
-						if(getStack().getChildren().get(0) instanceof GameView) {
-							GameDecks.reset();
+						if(getStack().getChildren().get(0) instanceof GameView || 
+								getStack().getChildren().get(0) instanceof SettingsView) {
+							GameDecksAndPlayers.reset();
 						}
 						showElement(getMainMenu());
 						ivHome.setVisible(false);
