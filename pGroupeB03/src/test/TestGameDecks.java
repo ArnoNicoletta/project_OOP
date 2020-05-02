@@ -59,12 +59,11 @@ class TestGameDecks {
 	//			TESTS
 	// ***********************
 	
-	@SuppressWarnings("static-access")
 	@Test
 	public void resetTest() {
 		questions.add(q);
 		decks.add(d);
-		assertNotEquals(g, g.reset());
+		assertNotEquals(g, GameDecks.reset());
 	}
 	
 	@Test
