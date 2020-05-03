@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.RulesSettings;
 import view.IGraphicConst;
 import view.MainView;
 import view.MsgBox;
@@ -30,6 +31,7 @@ public class Main extends Application {
 				event.consume();
 				if(MsgBox.displayYesNO("Exit", "Are you sure you want to exit?")) {
 					primaryStage.close();
+					RulesSettings.saveSettings();
 				}
 			});
 		} catch(Exception e) {
@@ -38,6 +40,10 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		//Loading user settings
+		RulesSettings.loadSettings();
+		//launching GUI
 		launch(args);
+		
 	}
 }

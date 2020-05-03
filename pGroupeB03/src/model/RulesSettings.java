@@ -1,5 +1,19 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import exception.WrongRuleValueException;
 
 public class RulesSettings {
@@ -21,6 +35,61 @@ public class RulesSettings {
 	private static boolean sound_enabled = true;
 	
 	private static boolean show_answer = false;
+	
+	
+	public static void loadSettings() {
+		
+		Map<String, Double> map = null;
+		Gson gson = new Gson();
+		
+		try(BufferedReader br = new BufferedReader(new FileReader("./src/resources/user/settings.json"))){
+			map = gson.fromJson(br, new TypeToken<LinkedHashMap<String, Double>>() {}.getType());
+			br.close();
+		} catch (IOException e) {
+			return;
+		}
+		if(map==null || map.isEmpty()) return;
+		
+		for(String name : map.keySet()) {
+			try {
+				Field f = RulesSettings.class.getDeclaredField(name);
+				Method m = RulesSettings.class.getDeclaredMethod(
+						"set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1), 
+						f.getType());
+				if(f.getType() == double.class) {
+					m.invoke(null, map.get(name));
+				}
+				else if(f.getType() == int.class) {
+					m.invoke(null, map.get(name).intValue());
+				}
+				else if(f.getType() == boolean.class) {
+					m.invoke(null, (map.get(name)==1.0) ? true : false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void saveSettings() {
+		
+		Map<String, Double> map = new LinkedHashMap<>();
+		map.put("number_round", (double) getNumber_round());
+		map.put("round_time_seconds", getRound_time_seconds());
+		map.put("faced_joker", (getFaced_joker() ? 1.0 : 0) );
+		map.put("sound_enabled",(getSound_enabled() ? 1.0 : 0));
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(map);
+		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("./src/resources/user/settings.json"))){
+			bw.write(json);
+			bw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//Setters
 	
 	public static void setMax_char(int max_char) throws WrongRuleValueException {
