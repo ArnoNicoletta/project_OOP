@@ -10,10 +10,10 @@ import exception.WrongLoginException;
 /**
  * This class manages admin.
  * @author ArRaLo
- * @see QuestionsOperation
+ * @see QuestionOperation
  * @see AcceptedAdmins
  */
-public class Admin implements QuestionsOperation {
+public class Admin implements QuestionOperation {
 	
 	private String username;
 	private String password;

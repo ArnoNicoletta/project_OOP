@@ -12,7 +12,7 @@ import exception.QuestionNotFoundException;
  * @see Admin
  * @see GameDecks
  */
-public interface QuestionsOperation {
+public interface QuestionOperation {
 	
 	/**
 	 * Allows to add a question in the decks.

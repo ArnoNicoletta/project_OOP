@@ -22,11 +22,11 @@ import exception.WrongDeckFormatException;
 /**
  * This class manages list of {@link Deck}.
  * @author ArRaLo
- * @see QuestionsOperation
+ * @see QuestionOperation
  * @see model.Deck
  * @see model.Question
  */
-public class GameDecks implements QuestionsOperation {
+public class GameDecks implements QuestionOperation {
 	
 	private final String PATH = "./src/resources/questions";
 	private List<Deck> decks;

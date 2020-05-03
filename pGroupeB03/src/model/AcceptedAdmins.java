@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * {@link Enum} of the registered admins.
+ * @author ArRaLo
+ * @see Admin
+ */
 public enum AcceptedAdmins {
 	
 	HELHA("admin", "helha"),
