@@ -10,9 +10,10 @@ import exception.WrongLoginException;
 /**
  * This class manages admin.
  * @author ArRaLo
+ * @see QuestionsOperation
  * @see AcceptedAdmins
  */
-public class Admin {
+public class Admin implements QuestionsOperation {
 	
 	private String username;
 	private String password;
@@ -30,24 +31,28 @@ public class Admin {
 		if(this.username==null && this.password == null) throw new WrongLoginException();
 	}
 	
-	public void addQuestion(String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
-		g.addQuestion(new Question(username, theme, clues, answer));
+	@Override
+	public boolean addQuestion(String author, String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
+		return g.addQuestion(username, theme, clues, answer);
 	}
 	
-	public void deleteQuestion(String theme, String answer) throws QuestionNotFoundException, DeckNotFoundException {
-		g.deleteQuestion(new Question(null, theme, null, answer));
+	public boolean addQuestion(String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
+		return g.addQuestion(username, theme, clues, answer);
 	}
 	
-	public void deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
-		g.deleteQuestion(q);
+	@Override
+	public boolean deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
+		return g.deleteQuestion(q);
 	}
 	
-	public void deleteDeck(String theme) throws DeckNotFoundException {
-		g.deleteDeck(theme);
+	@Override
+	public boolean deleteDeck(String theme) throws DeckNotFoundException {
+		return g.deleteDeck(theme);
 	}
 	
-	public void modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
-		g.modifyQuestion(oldQ, newQ);
+	@Override
+	public boolean modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
+		return g.modifyQuestion(oldQ, newQ);
 	}
 	//Getters and Setters
 	public String getUsername() {

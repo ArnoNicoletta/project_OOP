@@ -20,13 +20,13 @@ import exception.QuestionNotFoundException;
 import exception.WrongDeckFormatException;
 
 /**
- * This class manages the whole game.
+ * This class manages list of {@link Deck}.
  * @author ArRaLo
+ * @see QuestionsOperation
  * @see model.Deck
  * @see model.Question
- * @see model.Player
  */
-public class GameDecks {
+public class GameDecks implements QuestionsOperation {
 	
 	private final String PATH = "./src/resources/questions";
 	private List<Deck> decks;
@@ -158,13 +158,11 @@ public class GameDecks {
 	
 	// Methods to modify questions (used by admins)
 	
+	@Override
+	public boolean addQuestion(String author, String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
+		return this.addQuestion(new Question(author, theme, clues, answer));
+	}
 	
-	/**
-	 * Allows to add a question in the decks.
-	 * If this question has the same theme as an already existing deck, the question will be added in this deck.
-	 * If no deck has the same theme, a new Deck will be created and added.
-	 * @param q : {@link Question}. The question to add.
-	 */
 	public boolean addQuestion(Question q) throws QuestionAlreadyExistException {
 		if(getDeck(q.getTheme()) != null) {
 			for(Deck in : decks) {
@@ -182,12 +180,8 @@ public class GameDecks {
 		return true;
 	}
 	
-	/**
-	 * Allows to delete a question from the decks.
-	 * @param q : {@link Question}. The question to delete.
-	 * @throws QuestionNotFoundException
-	 * @throws DeckNotFoundException 
-	 */
+	
+	@Override
 	public boolean deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
 		if(getDeck(q.getTheme()) == null) throw new DeckNotFoundException(q.getTheme());
 		Deck d = null;
@@ -207,11 +201,7 @@ public class GameDecks {
 		return true;
 	}
 	
-	/**
-	 * Allows to delete an entire deck.
-	 * @param theme : {@link String}. The theme of the deck to be delete.
-	 * @throws DeckNotFoundException
-	 */
+	@Override
 	public boolean deleteDeck(String theme) throws DeckNotFoundException {
 		if(getDeck(theme)==null) throw new DeckNotFoundException(theme);
 		File f = new File("./src/resources/questions/deck_" + theme + ".json");
@@ -222,13 +212,7 @@ public class GameDecks {
 		return false;
 	}
 	
-	/**
-	 * Allows to modify a question.
-	 * @param oldQ : {@link Question}. The question to modify.
-	 * @param newQ : {@link Question}. The new question to put in place of the oldQ.
-	 * @throws DeckNotFoundException
-	 * @throws QuestionNotFoundException
-	 */
+	@Override
 	public boolean modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
 		if(getDeck(oldQ.getTheme()) == null) throw new DeckNotFoundException(oldQ.getTheme());
 		for(Deck in : decks) {
