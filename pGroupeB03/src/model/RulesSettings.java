@@ -65,9 +65,7 @@ public class RulesSettings {
 				else if(f.getType() == boolean.class) {
 					m.invoke(null, (map.get(name)==1.0) ? true : false);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} catch (Exception e) {}
 		}
 	}
 	
@@ -85,9 +83,7 @@ public class RulesSettings {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("./src/resources/user/settings.json"))){
 			bw.write(json);
 			bw.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		} catch(IOException e) {return;}
 	}
 	
 	//Setters
