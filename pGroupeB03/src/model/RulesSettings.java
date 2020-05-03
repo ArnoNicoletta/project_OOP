@@ -20,6 +20,7 @@ public class RulesSettings {
 	private static boolean faced_joker = true;
 	private static boolean sound_enabled = true;
 	
+	private static boolean show_answer = false;
 	//Setters
 	
 	public static void setMax_char(int max_char) throws WrongRuleValueException {
@@ -64,7 +65,9 @@ public class RulesSettings {
 	public static void setSound_enabled(boolean sound_enabled) {
 		RulesSettings.sound_enabled = sound_enabled;
 	}
-	
+	public static void setShow_answer(boolean show_answer) {
+		RulesSettings.show_answer = show_answer;
+	}
 	
 	//Getters
 	
@@ -100,5 +103,8 @@ public class RulesSettings {
 	}
 	public static double getJoker_time() {
 		return joker_time;
+	}
+	public static boolean getShow_answer() {
+		return show_answer;
 	}
 }

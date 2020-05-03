@@ -381,7 +381,7 @@ public class GameView extends StackPane {
 		private ImageView ivScore;
 		private Timeline timelineTimer;
 		private Label lblTimer;
-		
+		private Timeline transition = new Timeline();
 		private ImageView ivJokerLetters;
 		private ImageView ivJokerExtraPass;
 		private ImageView ivJokerBonusTime;
@@ -391,6 +391,8 @@ public class GameView extends StackPane {
 		private Button btnPass;
 		private Button btnPause;
 		private Button btnValidate;
+		
+		private Label lblAnswer;
 		
 		public GamePane() {
 			
@@ -440,9 +442,19 @@ public class GameView extends StackPane {
 			clues.setValue("" + fullClues.charAt(cluesPos++));
 			getTimelineTimer().playFromStart();
 			pause();
+			
+			
+
+			//Bottom
+			getLblAnswer().setText(g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer());
+			if(RulesSettings.getShow_answer()) this.setBottom(getLblAnswer());
 		}
 		
 		private void play() {
+			if(transition.getStatus() == Status.PAUSED) {
+				transition.play();
+				return;
+			}
 			if(getTimelineTimer().getStatus() == Status.STOPPED || getTimelineTimer().getStatus() == Status.PAUSED) {
 				getTimelineTimer().play();
 			}
@@ -450,9 +462,13 @@ public class GameView extends StackPane {
 		private void pause() {
 			if(getTimelineTimer().getStatus() == Status.RUNNING) {
 				getTimelineTimer().pause();
-				if(MsgBox.displayPause(g.getPlayer().toString(), g.getUsingDeck().getTheme())) {
-					play();
-				}
+			}
+			else if(transition.getStatus() == Status.RUNNING) {
+				transition.pause();
+			}
+			
+			if(MsgBox.displayPause(g.getPlayer().toString(), g.getUsingDeck().getTheme())) {
+				play();
 			}
 		}
 		
@@ -484,7 +500,7 @@ public class GameView extends StackPane {
 				scorePos = 0;
 				gradient = fromBlackToRed;
 			}
-			Timeline transition = new Timeline();
+			transition = new Timeline();
 			transition.setCycleCount(gradient.size());
 			transition.getKeyFrames().add(new KeyFrame(Duration.millis(RulesSettings.getTime_gap_answer()), new EventHandler<ActionEvent>() {
 				@Override
@@ -497,7 +513,6 @@ public class GameView extends StackPane {
 				}
 			}));
 			transition.playFromStart();
-			
 			transition.setOnFinished(e -> {
 				getTxtAnswer().setStyle(IGraphicConst.STYLE_TXT);
 				getTxtAnswer().setText("");
@@ -518,6 +533,7 @@ public class GameView extends StackPane {
 			cluesPos = 0;
 			fullClues = g.getClue(0) + " " + g.getClue(1) + " " + g.getClue(2);
 			clues.setValue("" + fullClues.charAt(cluesPos++));
+			getLblAnswer().setText(g.getUsingDeck().getQuestion(g.getPosQuestion()).getAnswer());
 		}
 		
 		private void finishThisRound() {
@@ -748,6 +764,14 @@ public class GameView extends StackPane {
 				});
 			}
 			return btnValidate;
+		}
+		public Label getLblAnswer() {
+			if(lblAnswer==null) {
+				lblAnswer = new Label();
+				IGraphicConst.styleLabel(lblAnswer);
+				lblAnswer.setAlignment(Pos.BASELINE_CENTER);
+			}
+			return lblAnswer;
 		}
 		
 	}
