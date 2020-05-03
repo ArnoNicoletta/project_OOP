@@ -54,12 +54,9 @@ public class Admin implements QuestionsOperation {
 	public boolean modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
 		return g.modifyQuestion(oldQ, newQ);
 	}
-	//Getters and Setters
+	//Getters
 	public String getUsername() {
 		return username;
-	}
-	public String getPassword() {
-		return password;
 	}
 	//Basic methods
 	@Override
