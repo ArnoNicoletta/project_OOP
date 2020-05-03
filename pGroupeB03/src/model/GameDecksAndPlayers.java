@@ -84,8 +84,8 @@ public class GameDecksAndPlayers extends GameDecks {
 	 * @param d : {@link Deck}. 
 	 * @return {@link Boolean}. <code>true</code> if finished.
 	 */
-	public boolean isFinished(Deck d) {
-		return getPosQuestion() >= d.getSizeQuestions()-1 || getPlayer(getPosPlayer()).getScore() == RulesSettings.getMax_score();
+	public boolean isDeckFinished() {
+		return getPosQuestion() >= getUsingDeck().getSizeQuestions()-1 || getPlayer(getPosPlayer()).getScore() == RulesSettings.getMax_score();
 	}
 	
 	/**

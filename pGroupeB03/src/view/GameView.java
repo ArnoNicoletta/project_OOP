@@ -508,7 +508,7 @@ public class GameView extends StackPane {
 		}
 		
 		private void nextQuestion() {
-			if(g.isFinished(g.getUsingDeck())) {
+			if(g.isDeckFinished()) {
 				finishThisRound();
 				return;
 			}
