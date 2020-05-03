@@ -93,7 +93,7 @@ public class GameDecksAndPlayers extends GameDecks {
 	 * i.e. if all players have already played.
 	 * @return {@link Boolean}. <code>true</code> if finished
 	 */
-	public boolean isFinished() {
+	public boolean isGameFinished() {
 		return getPosPlayer() >= getNumberOfPlayers() - 1;
 	}
 

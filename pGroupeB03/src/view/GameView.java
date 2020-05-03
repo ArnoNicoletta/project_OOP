@@ -527,7 +527,7 @@ public class GameView extends StackPane {
 			}
 			
 			g.getPlayer().setTime(RulesSettings.getRound_time_seconds() - Double.parseDouble(getLblTimer().getText()));
-			if(g.isFinished()) {
+			if(g.isGameFinished()) {
 				GameDecksAndPlayers.reset();
 				showElement(new Ranking());
 				return;
