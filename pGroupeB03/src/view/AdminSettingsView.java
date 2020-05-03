@@ -65,6 +65,11 @@ import model.GameDecks;
 import model.Question;
 import model.RulesSettings;
 
+/**
+ * {@link StackPane} including all the views for the admin parts.
+ * @author ArRaLo
+ * @see Admin
+ */
 public class AdminSettingsView extends StackPane {
 
 	private Admin admin;
