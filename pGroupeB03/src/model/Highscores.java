@@ -2,6 +2,7 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,6 +32,17 @@ public class Highscores {
 			instance.sortHighscores();
 		}
 		return instance;
+	}
+	
+	public void reset() {
+		File f = new File(PATH);
+		if(f.exists()) {
+			f.delete();
+			try {
+				f.createNewFile();
+			} catch (IOException e) {}
+		}
+		highscores.clear();
 	}
 	
 	public List<Player> getHighscores(){

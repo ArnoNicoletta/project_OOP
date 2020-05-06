@@ -1,5 +1,8 @@
 package view;
 
+import java.io.File;
+import java.io.IOException;
+
 import exception.WrongRuleValueException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +25,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import model.Highscores;
 import model.RulesSettings;
 
 public class SettingsView extends StackPane {
@@ -137,6 +141,8 @@ public class SettingsView extends StackPane {
 		private TextField txtTime;
 		private CheckBox cbJoker;
 		private CheckBox cbSound;
+		private Button btnRestore;
+		private Button btnDelHighscores;
 		private Button btnSave;
 		private ImageView ivBack;
 		
@@ -175,11 +181,17 @@ public class SettingsView extends StackPane {
 			
 			gp.add(new Label(), 0, 3);
 			
+//			GridPane.setHalignment(getBtnRestore(), HPos.LEFT);
+//			gp.add(getBtnRestore(), 0, 4);
+			
+			GridPane.setHalignment(getBtnDelHighscores(), HPos.CENTER);
+			gp.add(getBtnDelHighscores(), 1, 4);
+			
 			GridPane.setHalignment(getIvBack(), HPos.LEFT);
-			gp.add(getIvBack(), 0, 4);
+			gp.add(getIvBack(), 0, 5);
 			
 			GridPane.setHalignment(getBtnSave(),HPos.RIGHT);
-			gp.add(getBtnSave(), 1, 4);
+			gp.add(getBtnSave(), 1, 5);
 			
 			this.setCenter(gp);
 		}
@@ -236,6 +248,46 @@ public class SettingsView extends StackPane {
 				IGraphicConst.styleCheckBox(cbSound);
 			}
 			return cbSound;
+		}
+		
+		public Button getBtnRestore() {
+			if(btnRestore==null) {
+				btnRestore = new Button("Default settings");
+				IGraphicConst.styleButton(btnRestore);
+				btnRestore.setOnAction(e -> {
+					if(!MsgBox.displayYesNO("Restore default?", "Are you sure you want to \nrestore default settings?")) {
+						return;
+					}
+					File f = new File("./src/resources/user/settings.json");
+					if(f.exists()) {
+						f.delete();
+						try {
+							f.createNewFile();
+						} catch (IOException e1) {}
+					}
+					RulesSettings.loadSettings();
+					MsgBox.dispalyOk("Done", "Settings have been reset");
+
+					showElement(new UserSettings());
+				});
+			}
+			return btnRestore;
+		}
+		
+		public Button getBtnDelHighscores() {
+			if(btnDelHighscores==null) {
+				btnDelHighscores = new Button("Reset highscores");
+				IGraphicConst.styleButton(btnDelHighscores);
+				btnDelHighscores.setOnAction(e -> {
+					if(!MsgBox.displayYesNO("Reset highscores?", "Are you sure you want to \ndelete all current scores?")) {
+						return;
+					}
+					
+					Highscores.getInstance().reset();
+					MsgBox.dispalyOk("Done", "Highscores have been reset");
+				});
+			}
+			return btnDelHighscores;
 		}
 		
 		public Button getBtnSave() {
