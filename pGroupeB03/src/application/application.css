@@ -1,10 +1,15 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 @font-face {
-    src: url("./../../src/resources/fonts/K2D-Medium.ttf"),
-    	 url("./../../src/resources/fonts/Roboto-Black.ttf"),
-    	 url("./../../src/resources/fonts/Roboto-Medium.ttf"),
+    src: url("./../../src/resources/fonts/Roboto-Black.ttf");
 }
+@font-face {
+	src: url("./../../src/resources/fonts/K2D-Medium.ttf");
+}
+@font-face {
+	src: url("./../../src/resources/fonts/Roboto-Medium.ttf");
+}
+
 
 /* Border around the text */
 #lblClickContinueWaitingScreen .text{
