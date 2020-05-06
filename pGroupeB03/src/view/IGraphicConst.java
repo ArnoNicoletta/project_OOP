@@ -91,7 +91,7 @@ public interface IGraphicConst {
 	
 	//ImageView
 	
-	final String URL_PATH_IMG = "file:./src/resources/images/";
+	final String URL_PATH_IMG = "/resources/images/";
 	final double WIDTH_BACKGROUND = 675, HEIGHT_BACKGROUND = 506;
 	final double WIDTH_JOKER = 100, HEIGHT_JOKER = 100;
 	final double WIDTH_RANK = 50, HEIGHT_RANK = 50;
