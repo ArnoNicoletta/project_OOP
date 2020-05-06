@@ -1,13 +1,13 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 @font-face {
-    src: url("./../../src/resources/fonts/Roboto-Black.ttf");
+    src: url("./fonts/Roboto-Black.ttf");
 }
 @font-face {
-	src: url("./../../src/resources/fonts/K2D-Medium.ttf");
+	src: url("./fonts/K2D-Medium.ttf");
 }
 @font-face {
-	src: url("./../../src/resources/fonts/Roboto-Medium.ttf");
+	src: url("./fonts/Roboto-Medium.ttf");
 }
 
 
