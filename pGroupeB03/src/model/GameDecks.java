@@ -160,10 +160,7 @@ public class GameDecks implements QuestionOperation {
 	
 	@Override
 	public boolean addQuestion(String author, String theme, List<String> clues, String answer) throws QuestionAlreadyExistException {
-		return this.addQuestion(new Question(author, theme, clues, answer));
-	}
-	
-	public boolean addQuestion(Question q) throws QuestionAlreadyExistException {
+		Question q = new Question(author, theme, clues, answer);
 		if(getDeck(q.getTheme()) != null) {
 			for(Deck in : decks) {
 				if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
@@ -180,6 +177,9 @@ public class GameDecks implements QuestionOperation {
 		return true;
 	}
 	
+	public boolean addQuestion(Question q) throws QuestionAlreadyExistException {
+		return this.addQuestion(q.getAuthor(), q.getTheme(), q.getClues(), q.getAnswer());
+	}
 	
 	@Override
 	public boolean deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
