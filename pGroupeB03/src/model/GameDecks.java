@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -123,14 +124,14 @@ public class GameDecks implements QuestionOperation {
 	 * @see model.Deck
 	 */
 	public boolean saveAllDecks() {
-		for(Deck d : decks) {
+		decks.parallelStream().forEach((d) -> {
 			try {
 				File f = new File(PATH + "/deck_" + d.getTheme() + ".json");
 				f.createNewFile();
 				Deck.toJson(d, f);
 				
 			} catch (IOException e) {}
-		}
+		});
 		return true;
 	}
 	
