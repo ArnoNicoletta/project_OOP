@@ -94,7 +94,7 @@ public class GameDecks implements QuestionOperation {
 	 * @throws NotEnoughDeckException 
 	 */
 	public List<Deck> randomChoice(int nb) throws NotEnoughDeckException{
-		if(decks.size()<=nb) return null;
+		if(decks.size()<=nb) throw new NotEnoughDeckException(nb);
 		List<Deck> ret = new ArrayList<>();
 		List<Deck> tmp = getDecks().parallelStream()
 							.filter(d -> d.getSizeQuestions()>=RulesSettings.getMin_questions())
