@@ -311,6 +311,7 @@ public class GameView extends StackPane {
 			
 			//Center
 			VBox vbCenter = new VBox(10);
+			vbCenter.setTranslateY(50);
 			vbCenter.getChildren().add(getLblPlayer());
 			vbCenter.getChildren().addAll(getlBtnTheme());
 			vbCenter.setAlignment(Pos.CENTER);
@@ -782,12 +783,14 @@ public class GameView extends StackPane {
 	 * @author ArRaLo
 	 *
 	 */
-	class Ranking extends GridPane {
+	class Ranking extends BorderPane {
 		
 		private Label lblRank;
 		private Label lblPseudo;
 		private Label lblScore;
 		private Label lblTime;
+		
+		private GridPane gp;
 		
 		private Button btnReplay;
 				
@@ -800,19 +803,16 @@ public class GameView extends StackPane {
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(IGraphicConst.WIDTH_BACKGROUND, IGraphicConst.HEIGHT_BACKGROUND, false, false, false, false))));
 			
-			//Setup positioning
-			this.setAlignment(Pos.CENTER);
-			this.setHgap(50);
-			this.setVgap(25);
-			
 			//Titles
-			this.add(getLblRank(), 0, 0);
-			this.add(getLblPseudo(), 1, 0);
-			this.add(getLblScore(), 2, 0);
-			this.add(getLblTime(), 3, 0);
+			getGp().add(getLblRank(), 0, 0);
+			getGp().add(getLblPseudo(), 1, 0);
+			getGp().add(getLblScore(), 2, 0);
+			getGp().add(getLblTime(), 3, 0);
 			
 			//Content
 			this.addPlayers();
+			
+			this.setCenter(getGp());
 		}
 		
 		private void addPlayer(int pos) {
@@ -822,7 +822,7 @@ public class GameView extends StackPane {
 			lbl.setBackground(new Background(new BackgroundFill(Color.web("#793F54"), new CornerRadii(20, false) , null)));
 			lbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20,  false), new BorderWidths(2))));
 			
-			this.add(lbl, 1, pos+1, 3, 1);
+			getGp().add(lbl, 1, pos+1, 3, 1);
 			
 			Player p = getGame().getPlayer(pos);
 			ImageView ivPlayerRank = new ImageView(IGraphicConst.URL_PATH_IMG + "rank/rank_"+ (pos+1) + ".png");
@@ -832,10 +832,10 @@ public class GameView extends StackPane {
 			Label lblPlayerScore = IGraphicConst.styleLabel(new Label(""+p.getScore()));
 			Label lblPlayerTime = IGraphicConst.styleLabel(new Label(""+String.format(Locale.US, "%-2.2f",p.getTime())));
 			
-			this.add(ivPlayerRank, 0, pos+1);
-			this.add(lblPlayerPseudo, 1, pos+1);
-			this.add(lblPlayerScore, 2, pos+1);
-			this.add(lblPlayerTime, 3, pos+1);
+			getGp().add(ivPlayerRank, 0, pos+1);
+			getGp().add(lblPlayerPseudo, 1, pos+1);
+			getGp().add(lblPlayerScore, 2, pos+1);
+			getGp().add(lblPlayerTime, 3, pos+1);
 			
 		}
 		
@@ -844,7 +844,18 @@ public class GameView extends StackPane {
 			for(int i=0; i<getGame().getNumberOfPlayers(); i++) {
 				this.addPlayer(i);
 			}
-			this.add(getBtnReplay(), 0, getGame().getNumberOfPlayers() + 1, 4, 1);
+			getGp().add(getBtnReplay(), 0, getGame().getNumberOfPlayers() + 1, 4, 1);
+		}
+		
+		public GridPane getGp() {
+			if(gp==null) {
+				gp = new GridPane();
+				gp.setAlignment(Pos.CENTER);
+				gp.setHgap(50);
+				gp.setVgap(25);
+				gp.setTranslateY(50);
+			}
+			return gp;
 		}
 		
 		public Label getLblRank() {
