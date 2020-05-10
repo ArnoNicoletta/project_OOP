@@ -9,6 +9,13 @@ import exception.IdenticalPseudoException;
 import exception.NotEnoughDeckException;
 import exception.TooMuchCharException;
 
+/**
+ * This class manages the game itself. 
+ * It uses list of Deck inherited from {@link GameDecks} and add players to it.
+ * @author ArRaLo
+ * @see GameDecks
+ * @see Player
+ */
 public class GameDecksAndPlayers extends GameDecks {
 	
 	private List<Player> players;
