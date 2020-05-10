@@ -183,13 +183,13 @@ public class GameDecks implements QuestionOperation {
 	
 	@Override
 	public boolean deleteQuestion(Question q) throws QuestionNotFoundException, DeckNotFoundException {
-		if(getDeck(q.getTheme()) == null) throw new DeckNotFoundException(q.getTheme());
 		Deck d = null;
 		for(Deck in : decks) {
 			if(in.getTheme().equalsIgnoreCase(q.getTheme())) {
 				d = in;
 			}
 		}
+		if(d == null) throw new DeckNotFoundException(q.getTheme());
 		if(d.getSizeQuestions() == 1 && d.getQuestion(0).equals(q)) {
 			deleteDeck(d.getTheme());
 		}
