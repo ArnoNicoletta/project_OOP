@@ -190,7 +190,7 @@ public class GameDecks implements QuestionOperation {
 				d = in;
 			}
 		}
-		if(d.getSizeQuestions() == 1) {
+		if(d.getSizeQuestions() == 1 && d.getQuestion(0).equals(q)) {
 			deleteDeck(d.getTheme());
 		}
 		else {
