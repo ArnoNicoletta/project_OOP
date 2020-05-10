@@ -123,7 +123,7 @@ public class GameDecks implements QuestionOperation {
 	 * @see model.Deck
 	 */
 	public boolean saveAllDecks() {
-		decks.parallelStream().forEach((d) -> {
+		decks.parallelStream().filter(d -> d.hasUniqueTheme()).forEach((d) -> {
 			try {
 				File f = new File(PATH + "/deck_" + d.getTheme() + ".json");
 				f.createNewFile();
