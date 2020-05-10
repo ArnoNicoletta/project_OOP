@@ -205,11 +205,10 @@ public class GameDecks implements QuestionOperation {
 	public boolean deleteDeck(String theme) throws DeckNotFoundException {
 		if(getDeck(theme)==null) throw new DeckNotFoundException(theme);
 		File f = new File("./src/resources/questions/deck_" + theme + ".json");
-		if(f.delete()) {
+		if(!f.exists() || f.delete()) {
 			addAllDeck();
-			return true;
 		}
-		return false;
+		return true;
 	}
 	
 	@Override
