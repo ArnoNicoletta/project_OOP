@@ -94,7 +94,7 @@ public class GameDecks implements QuestionOperation {
 	 * @throws NotEnoughDeckException 
 	 */
 	public List<Deck> randomChoice(int nb) throws NotEnoughDeckException{
-		if(decks.size()<=nb) throw new NotEnoughDeckException(nb);
+		if(nb<1) throw new NotEnoughDeckException(nb);
 		List<Deck> ret = new ArrayList<>();
 		List<Deck> tmp = getDecks().parallelStream()
 							.filter(d -> d.getSizeQuestions()>=RulesSettings.getMin_questions())
@@ -213,6 +213,7 @@ public class GameDecks implements QuestionOperation {
 	
 	@Override
 	public boolean modifyQuestion(Question oldQ, Question newQ) throws DeckNotFoundException, QuestionNotFoundException {
+		if(oldQ == null || newQ == null) return false;
 		if(getDeck(oldQ.getTheme()) == null) throw new DeckNotFoundException(oldQ.getTheme());
 		for(Deck in : decks) {
 			if(in.getTheme().equalsIgnoreCase(oldQ.getTheme())) {
@@ -299,13 +300,11 @@ public class GameDecks implements QuestionOperation {
 	 * Allows to remove a {@link Deck} from the Game.
 	 * @param d : {@link Deck}. The {@link Deck} to remove.
 	 * @return {@link Boolean}. <code>true</code> if the {@link Deck} is well removed.
+	 * @throws DeckNotFoundException 
 	 */
-	public boolean removeDeck(Deck d) {
-		if(decks.contains(d)) {
-			decks.remove(d);
-			return true;
-		}
-		return false;
+	public boolean removeDeck(Deck d) throws DeckNotFoundException {
+		if(!decks.contains(d)) throw new DeckNotFoundException(d.getTheme());
+		return decks.remove(d);
 	}
 	
 	/**
