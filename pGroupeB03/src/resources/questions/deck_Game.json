@@ -4,31 +4,11 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am a fifth generation video game console produced by Sony Computer Entertainment from 1994.",
-        "I was the first machine in the PlayStation range.",
-        "My official abbreviation being PS, I am .."
+        "I am a two-player strategy board game played on a checkered board",
+        "Each player has 16 pieces of white or black colors.",
+        "The objective is to checkmate the opponent\u0027s king by placing it under an inescapable threat of capture. I am..."
       ],
-      "answer": "PlayStation"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
-        "I am a series of video games developed and published by Ubisoft.",
-        "My name is from a famous lady gaga song.",
-        "The objective of my game is to dance, following the movements of the dancers, I am ..."
-      ],
-      "answer": "Just Dance"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
-        "I am the generic name of a series of football video games.",
-        "In football, I am the best-selling game.",
-        "My full name is \u0027The Fédération Internationale de Football Association\u0027, I am..."
-      ],
-      "answer": "FIFA"
+      "answer": "Chess"
     },
     {
       "author": "Rayan Tahri",
@@ -44,11 +24,41 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
+        "I am a video game character having a twin brother",
+        "I practice the profession of plumber with green overalls",
+        "My twin brother is the famous character Mario, I am ..."
+      ],
+      "answer": "Luigi"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Game",
+      "clues": [
+        "I am a fifth generation video game console produced by Sony Computer Entertainment from 1994.",
+        "I was the first machine in the PlayStation range.",
+        "My official abbreviation being PS, I am .."
+      ],
+      "answer": "PlayStation"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Game",
+      "clues": [
         "I was designed by Gunpei Yokoi and Nintendo Research \u0026 Development 1",
         "I first appeared on the Japanese market in 1989.",
         "I am a fourth generation 8-bit portable video game console developed and manufactured by Nintendo. I am.."
       ],
       "answer": "GameBoy"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Game",
+      "clues": [
+        "I am an entertainment machine most often equipped with a coin mechanism.",
+        "typically i\u0027m installed in public businesses such as restaurants, bars and amusement arcades.",
+        "My golden age is usually defined as a period beginning sometime in the late 1970s and ending sometime in the mid-1980s. I am..."
+      ],
+      "answer": "Arcade game"
     },
     {
       "author": "Rayan Tahri",
@@ -64,21 +74,11 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am a two-player strategy board game played on a checkered board",
-        "Each player has 16 pieces of white or black colors.",
-        "The objective is to checkmate the opponent\u0027s king by placing it under an inescapable threat of capture. I am..."
+        "I am the generic name of a series of football video games.",
+        "In football, I am the best-selling game.",
+        "My full name is \u0027The Fédération Internationale de Football Association\u0027, I am..."
       ],
-      "answer": "Chess"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
-        "I am a video game character having a twin brother",
-        "I practice the profession of plumber with green overalls",
-        "My twin brother is the famous character Mario, I am ..."
-      ],
-      "answer": "Luigi"
+      "answer": "FIFA"
     },
     {
       "author": "Rayan Tahri",
@@ -94,11 +94,11 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am an entertainment machine most often equipped with a coin mechanism.",
-        "typically i\u0027m installed in public businesses such as restaurants, bars and amusement arcades.",
-        "My golden age is usually defined as a period beginning sometime in the late 1970s and ending sometime in the mid-1980s. I am..."
+        "I am a series of video games developed and published by Ubisoft.",
+        "My name is from a famous lady gaga song.",
+        "The objective of my game is to dance, following the movements of the dancers, I am ..."
       ],
-      "answer": "Arcade game"
+      "answer": "Just Dance"
     }
   ]
 }
