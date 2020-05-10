@@ -338,7 +338,7 @@ class AdminGameSettings extends BorderPane {
 			
 			
 			//CENTER
-			getGp().setTranslateY(50);
+			getGp().setTranslateY(70);
 			this.setCenter(getGp());
 			
 			
