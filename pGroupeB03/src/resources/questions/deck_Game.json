@@ -4,21 +4,21 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am a two-player strategy board game played on a checkered board",
-        "Each player has 16 pieces of white or black colors.",
-        "The objective is to checkmate the opponent\u0027s king by placing it under an inescapable threat of capture. I am..."
+        "I am a series of video games developed and published by Ubisoft.",
+        "My name is from a famous lady gaga song.",
+        "The objective of my game is to dance, following the movements of the dancers, I am ..."
       ],
-      "answer": "Chess"
+      "answer": "Just Dance"
     },
     {
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am a series of action-adventure video games produced by the Japanese company Nintendo.",
-        "I am a saga focused on action and adventure.",
-        "The hero of my adventure is called Link, I am..."
+        "I am a video game created by Tōru Iwatani for the Japanese company Namco, released in Japan on May 22, 1980",
+        "My goal is to eat little balls in a labirynthe while avoiding ghosts.",
+        "I have often been compared to a cheese, I am..."
       ],
-      "answer": "The Lenged of Zelda"
+      "answer": "Pac-Man"
     },
     {
       "author": "Rayan Tahri",
@@ -44,11 +44,41 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
+        "I am a series of quiz video games developed by Relentless Software since 2005.",
+        "I\u0027m playing with buzzers - a set of four simple controllers that consist of four colored response buttons and a red buzzer.",
+        "I was very successful on ps2, I am ..."
+      ],
+      "answer": "Buzz!"
+    },
+    {
+      "author": "Arno Nicoletta",
+      "theme": "Game",
+      "clues": [
+        "I am a series of action-adventure video games produced by the Japanese company Nintendo.",
+        "I am a saga focused on action and adventure.",
+        "The hero of my adventure is called Link, I am..."
+      ],
+      "answer": "The Legend of Zelda"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Game",
+      "clues": [
         "I was designed by Gunpei Yokoi and Nintendo Research \u0026 Development 1",
         "I first appeared on the Japanese market in 1989.",
         "I am a fourth generation 8-bit portable video game console developed and manufactured by Nintendo. I am.."
       ],
       "answer": "GameBoy"
+    },
+    {
+      "author": "Rayan Tahri",
+      "theme": "Game",
+      "clues": [
+        "I am a two-player strategy board game played on a checkered board",
+        "Each player has 16 pieces of white or black colors.",
+        "The objective is to checkmate the opponent\u0027s king by placing it under an inescapable threat of capture. I am..."
+      ],
+      "answer": "Chess"
     },
     {
       "author": "Rayan Tahri",
@@ -64,41 +94,11 @@
       "author": "Rayan Tahri",
       "theme": "Game",
       "clues": [
-        "I am a video game created by Tōru Iwatani for the Japanese company Namco, released in Japan on May 22, 1980",
-        "My goal is to eat little balls in a labirynthe while avoiding ghosts.",
-        "I have often been compared to a cheese, I am..."
-      ],
-      "answer": "Pac-Man"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
         "I am the generic name of a series of football video games.",
         "In football, I am the best-selling game.",
         "My full name is \u0027The Fédération Internationale de Football Association\u0027, I am..."
       ],
       "answer": "FIFA"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
-        "I am a series of quiz video games developed by Relentless Software since 2005.",
-        "I\u0027m playing with buzzers - a set of four simple controllers that consist of four colored response buttons and a red buzzer.",
-        "I was very successful on ps2, I am ..."
-      ],
-      "answer": "Buzz!"
-    },
-    {
-      "author": "Rayan Tahri",
-      "theme": "Game",
-      "clues": [
-        "I am a series of video games developed and published by Ubisoft.",
-        "My name is from a famous lady gaga song.",
-        "The objective of my game is to dance, following the movements of the dancers, I am ..."
-      ],
-      "answer": "Just Dance"
     }
   ]
 }
